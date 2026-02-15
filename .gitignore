@@ -1,0 +1,52 @@
+# Data and large outputs
+data/*.fastq
+data/*.fastq.gz
+data/*clean*
+results/*.bam
+results/*.bai
+results/*.vcf
+results/*.vcf.gz
+
+# Reference and indexes
+reference/*.fna
+reference/*.fna.gz
+reference/*.fai
+reference/*.amb
+reference/*.ann
+reference/*.bwt
+reference/*.pac
+reference/*.sa
+
+# Logs
+logs/
+# big data / outputs
+data/*.fastq
+data/*.fastq.gz
+data/*.fastq.gz.*
+data/*clean*
+results/*.sam
+results/*.bam
+results/*.bai
+results/*.vcf
+results/*.vcf.gz
+
+# tools / binaries / source clones
+bwa/
+bwa
+fastp
+fastp.1
+
+# reference files
+reference/*.fna
+reference/*.fna.gz
+reference/*.fa
+reference/*.fa.gz
+reference/*.fai
+reference/*.amb
+reference/*.ann
+reference/*.bwt
+reference/*.pac
+reference/*.sa
+
+# logs
+logs/
