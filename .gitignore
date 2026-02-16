@@ -5,6 +5,13 @@ data/*clean*
 results/*.bam
 results/*.bai
 results/*.vcf
+.RData
+.Rhistory
+*.fastq
+*.bam
+*.sam
+*.vcf
+*.zip
 results/*.vcf.gz
 
 # Reference and indexes
