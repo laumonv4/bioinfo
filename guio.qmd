@@ -1,0 +1,133 @@
+---
+title: "Pràctica8.BLAST"
+author: "Laura Monleón"
+format: html
+editor: visual
+---
+
+## Ejercicio 1
+
+## Enmascarar e indexar los proteomas
+
+```{bash}
+if [ ! -e ../../data/buchnera.paa ]; then
+   # Creamos un archivo para enmascarar zonas de baja complejidad:
+   if [ ! -e buchnera_seg.asnb ]; then
+      segmasker -in ../../data/buchnera.fa \
+                -infmt fasta \
+                -parse_seqids \
+                -outfmt maskinfo_asn1_bin \
+                -out ../../data/buchnera_seg.asnb
+   fi
+   # Y indexamos el archivo FASTA para BLAST:
+   makeblastdb  -in ../../data/buchnera.fa \
+                -input_type fasta \
+                -dbtype prot \
+                -parse_seqids \
+                -mask_data ../../data/buchnera_seg.asnb \
+                -out ../../data/buchnera \
+                -title "Proteoma de Buchnera"
+fi
+# Hay que repetir todo esto para Blochmannia.
+```
+
+```{bash}
+if [ ! -e ../../data/blochmannia.paa ]; then
+   # Creamos un archivo para enmascarar zonas de baja complejidad:
+   if [ ! -e blochmannia_seg.asnb ]; then
+      segmasker -in ../../data/blochmannia.fa \
+                -infmt fasta \
+                -parse_seqids \
+                -outfmt maskinfo_asn1_bin \
+                -out ../../data/blochmannia_seg.asnb
+   fi
+   # Y indexamos el archivo FASTA para BLAST:
+   makeblastdb  -in ../../data/blochmannia.fa \
+                -input_type fasta \
+                -dbtype prot \
+                -parse_seqids \
+                -mask_data ../../data/blochmannia_seg.asnb \
+                -out ../../data/blochmannia \
+                -title "Proteoma de Blochmannia"
+fi
+```
+
+Función match para comparar y cruzar la información de dos tablas. AL tener ya una columna adicoinal con los identificadores de Buchnera que corresponden a cada una de la sporteínas de Blochmannia puedo comparar si el query es igual a la busqueda inversa. Si lo son puedo sacar la tabla de coincidencias.
+
+Podríamos comprobar si en las parejas que realmente coincide, comprobar si los valores E son fiables. Puedo mirar si hay muchos gaps o no, mirar si la longitud de la query, el subject etc, en comparación son muy grandes o no. Para ver su distribución puedo hacerlo con un histograma.
+
+##Ejercicio 2
+
+# PSI-BLAST
+
+```{bash}
+# Como Swissprot debería estar ya descargada en `../../data`, podemos sacar
+# de ahí la secuencia de la proteína escogida:
+blastdbcmd -db ../../data/swissprot -entry P39615 -out P39615.fa
+
+# Y ahora la usamos como query en psi-blast:
+psiblast -db ../../data/swissprot \
+         -query P39615.fa \
+         -out P39615.blastout.txt \
+         -evalue 0.1 \
+         -outfmt 7 \
+         -inclusion_ethresh 0.001 \
+         -num_iterations 7 \
+         -matrix BLOSUM62
+```
+```{bash}
+# Como Swissprot debería estar ya descargada en `../../data`, podemos sacar
+# de ahí la secuencia de la proteína escogida:
+blastdbcmd -db ../../data/swissprot -entry B1AJI8 -out B1AJI8.fa
+
+# Y ahora la usamos como query en psi-blast:
+psiblast -db ../../data/swissprot \
+         -query B1AJI8.fa \
+         -out B1AJI8.blastout.txt \
+         -evalue 0.1 \
+         -outfmt 7 \
+         -inclusion_ethresh 0.001 \
+         -num_iterations 7 \
+         -matrix BLOSUM62
+```
+Semejanza entre las proteínas de la misma superfamilia es bastante ténue.
+```{bash}
+for proteina in Q9CC1 P39615 B1AJI8 P47343; do
+blastdbcmd -db ../../data/swissprot -entry $proteina -out $proteina.fa
+psiblast -db ../../data/swissprot \
+         -out B1AJI8.blastout.txt \
+         -evalue 0.1 \
+         -outfmt 7 \
+         -inclusion_ethresh 0.01 \
+         -num_iterations 7 \
+         -matrix BLOSUM45
+```
+```
+Para poder leer este archivo generado en R hay que tener en cuenta que el formato de salida número 6 hubiera sido más comodo que el formato de salida número 7. Así me da los resultados sin cabeceras ni nada.
+Poder incorporar los resultados a R tiene su utilidad.
+
+
+Consulta la ayuda de psiblast y asegúrate de entender para qué sirven los argumentos que hemos usado. Por ejemplo, ¿cuál es la diferencia entre -evalue y -inclusion_ethresh?¿Cómo harías que la búsqueda fuera más sensible todavía?
+
+##Ejercicio 3
+#Origen de la contaminación en un archivo FASTQ
+```{r}
+library('Biostrings')
+unmapped <- readDNAStringSet('../../data/contaminacion.fa.gz')
+n <- length(unmapped)
+muestra <- unmapped[sample(1:n, 20)]
+writeXStringSet(muestra, 'muestra.fa')
+
+```
+```{bash}
+if [ ! -e resultado.txt ]; then
+   blastn -query muestra.fa \
+          -db nr \
+          -out resultado.txt \
+          -outfmt '6 qaccver saccver length qlen qstart qend evalue bitscore staxid' \
+          -max_target_seqs 1 \
+          -evalue 0.001 \
+          -remote
+fi
+```
+
