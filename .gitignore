@@ -57,3 +57,14 @@ reference/*.sa
 
 # logs
 logs/
+*.phr
+*.pin
+*.psq
+*.pot
+*.pto
+*.pdb
+*.pog
+*.pos
+*.ptf
+*.faa
+*.gz
