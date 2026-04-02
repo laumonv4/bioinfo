@@ -68,3 +68,15 @@ logs/
 *.ptf
 *.faa
 *.gz
+# bioinfo extra
+*.fa
+*.faa
+*.fasta
+*.pab
+*.pac
+*.pjs
+*.ppd
+*.md5
+*.sqlite3
+*.bai
+*.stats.txt
