@@ -59,20 +59,8 @@ kable(genomas) %>% kable_styling()
 :::{.callout-note icon=false}
 ## Desafío
 1. ¿Qué diferencia hay entre las líneas 7 y 8 de la tabla anterior?
-Las filas 7 y 8 son iguales en todo excepto en Assembly.Accession:
-
-Fila 7: GCF_003719485.1
-
-Fila 8: GCA_003719485.1
-GCA_... = GenBank assembly accession (registro en GenBank)
-
-GCF_... = RefSeq assembly accession (curado/seleccionado por NCBI RefSeq, normalmente derivado o enlazado al GenBank correspondiente)
-
-Representan la misma asamblea biológica, pero en dos colecciones distintas (GenBank vs RefSeq). Por eso te aparecen como “duplicadas” si solo miras el organismo.
-El resto (Organism, Assembly.Level, Assembly.Status) es idéntico.
 2. Busca una función de R que te permita identificar las líneas repetidas en un
    marco de datos.
-La función duplicated() permite identificar filas repetidas en un dataframe. Aplicándola al conjunto de datos no se detectaron registros duplicados, lo que indica que cada genoma listado es único respecto al conjunto de variables analizadas
 :::
 
 # Ordenar una tabla
