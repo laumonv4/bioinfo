@@ -1,0 +1,156 @@
+---
+title: "Practica10"
+author: "Laura Monleón"
+format: html
+editor: visual
+---
+Revisión de los datos
+
+Los datos están en formato FASTA porque contienen sólo lecturas de alta calidad, y `hifiasm` no utiliza la información de las calidades de cada base. El archivo está comprimido. Antes de empezar el ensamblaje deberíamos tener una idea de la cantidad de datos que tenemos. Si lo necesitas, utiliza una inteligencia artificial para responder las preguntas siguientes y anota en un bloque de código las órdenes utilizadas. Puedes hacerlo con instrucciones de Bash o de R, pero R necesitará cargar en memoria el archivo entero, lo que no sería muy práctico si se tratara de un archivo 10 o 50 veces mayor.
+Ejercicio 1
+
+    ¿Cuántas secuencias contiene el archivo? tiene un total de 13812 secuencias que ha podido calcular gracias a que cada una de ellas empieza por el símbolo >. Como es un archivo fasta lo que hacemos es contar las cabeceras
+```{bash}
+zgrep -c "^>" ../../data/At4.10.fa.gz
+```
+
+    ¿Qué longitudes mínima, media y máxima tienen las secuencias? Primero ha calculado la longitud de cada secuencia y luego los estadísticos, obteniendo como resultado que la longitud mínima encontrada es de 2942 pb, la media es de 18143,6pb, y la máxima longitud sea de 59075 pb.
+Zcat es la versión para archivos comprimidos de cat. Lo que está entre las llaves que siguen a BEGIN se ejecuta antes que cualquier otra cosa. En la úlyima secuencia añadimos la información de esta última por si tiene información importante que debamos añadir al recuento, para que no pase desapercibida. 
+```{bash}
+zcat ../../data/At4.10.fa.gz | \
+awk '
+BEGIN {min=1e12; max=0; sum=0; n=0}
+/^>/ {
+  if (seqlen>0) {
+    if (seqlen<min) min=seqlen;
+    if (seqlen>max) max=seqlen;
+    sum+=seqlen;
+    n++;
+  }
+  seqlen=0;
+  next
+}
+{
+  seqlen+=length($0)
+}
+END {
+  # última secuencia
+  if (seqlen>0) {
+    if (seqlen<min) min=seqlen;
+    if (seqlen>max) max=seqlen;
+    sum+=seqlen;
+    n++;
+  }
+  print "min:", min;
+  print "mean:", sum/n;
+  print "max:", max;
+}'
+```
+
+    ¿Cuál es el número total de bases? el número total de bases del archivo analizado es de 250599484. Hemos utilizado un comando preciso que hace el recuento sin tener en cuenta los saltos de línea.
+```{bash}
+zcat ../../data/At4.10.fa.gz | \
+grep -v "^>" | \
+tr -d '\n' | \
+wc -c
+```
+  
+    Si se estimara que el genoma a ensamblar fuera de sólo 19 millones de bases, ¿cuál sería la cobertura esperada? para calcular la cobertura esperada dividimos el número total de bases por el tamaño del genoma, lo que nos da un resultado de 13,19x. En término medio, cada nucleótido se ha leido una media de 13 veces. Esto significa que habrá lugares que se habrán secuenciado 20 veces, otros tan solo 3 veces y otros sitios que no se hayan secuenciado ninguna vez. Por lo tanto, podemos considerar una cobertura baja. Necesitaríamos el doble de cobertura para poder deiferenciar los haplotipos materno y paterno
+```{bash}
+TOTAL_BASES=$(zcat ../../data/At4.10.fa.gz | grep -v "^>" | tr -d '\n' | wc -c)
+
+echo "$TOTAL_BASES / 19000000" | bc -l
+```
+    
+Ensamblaje
+
+El programa hifiasm produce varios archivos de salida. Para tener la carpeta de trabajo ordenada, es recomendable crear un subcarpeta donde poder guardarlos. Si fuéramos a probar más de una estrategia de ensamblado, guardaríamos los resultados de cada intento en una carpeta diferente, que podríamos nombrar asm1, asm2, etc. Aunque sólo realicemos un ensamblaje, crearemos la carpeta asm1 para guardar los resultados en ella.
+```{bash}
+# Con la ejecución condicional nos ahorramos algún mensaje de error:
+if [ ! -d asm1 ]; then mkdir asm1; fi
+```
+```{bash}
+if [ ! -e asm1/At4.bp.p_ctg.gfa ]; then
+   ~/bin/hifiasm/hifiasm -o asm1/At4 -t 2 -f 0 ../../data/At4.10.fa.gz 2> asm1/hifiasm.log
+fi
+```
+-d indica que existe la carpeta mientras que la orden -e es para si existe archivo.
+
+Ejercicio 2
+
+Consulta la ayuda de hifiasm (hifiasm -h) y contesta las preguntas siguientes:
+
+    ¿Los parámetros corresponden al ensamblaje de un genoma haploide o diploide?
+Por defecto, hifiasm está diseñado para ensamblar genomas diploides. Lo sabemos porque genera dos ensamblajes, primary assembly (p_ctg) y alternate/haplotype assembly (a_ctg) que implementa resolución de haplotipos basada en heterocigosidad. Los parámetros por defecto corresponden a un ensamblaje diploide (haplotype-aware).
+
+    ¿Qué nivel de eliminación de duplicaciones hemos aplicado? (El paso de eliminar duplicaciones sirve para que las zonas de alta heterocigosidad no sean ensambladas como contigs diferentes). 
+  
+Hifiasm incluye un proceso interno de purga de duplicaciones (relacionado con evitar ensamblar haplotipos como contigs separados).
+Este comportamiento está controlado por parámetros como:
+
+-l → longitud mínima para purga
+-s → sensibilidad en separación de haplotipos
+
+Sin modificar parámetros, hifiasm aplica un nivel de purga por defecto que está diseñado para separar haplotipos reales y evitar duplicaciones artefactuales por heterocigosidad. No es una purga agresiva porque no colapsa a todo haploide pero tampoco es mínima porque sí elimina redundancias evidentes. Se aplica una eliminación de duplicaciones, ooptimizada para genomas diploides con heterocigosidad moderada.
+    
+    Si tuvieramos lecturas ultra-largas, ¿con qué opción o argumento añadiríamos esa información?
+Si se dispone de lecturas ultra-largas (por ejemplo, Nanopore), hifiasm permite integrarlas como soporte adicional. La opción relevante es: --ul <ultralong_reads.fq>
+
+Estas lecturas se usan para resolver regiones repetitivas largas y mejorar la continuidad del ensamblaje (scaffolding implícito) En conclusión, se añadirían con el argumento --ul.
+
+Evaluación del resultado
+
+Ejercicio 3
+
+Consulta la descripción de los archivos de salida que encontrarás en este enlace y contesta las preguntas siguientes:
+
+    ¿Dónde están las secuencias que componen el ensamblaje?
+Las secuencias del ensamblaje están en los archivos:
+
+*.p_ctg.gfa → contigs primarios
+*.a_ctg.gfa → contigs alternativos (haplotipos)
+
+Dentro de estos archivos, las secuencias aparecen en las líneas tipo:
+
+S (segment lines) → contienen directamente la secuencia del contig/unitig
+
+Las secuencias están en las líneas S de los archivos .gfa
+    
+    En los archivos .gfa, ¿qué son las líneas que empiezan por ‘A’?
+Las líneas A contienen información de las lecturas individuales (reads) usadas para construir cada contig
+Incluyen:
+
+nombre del contig
+posición dentro del contig
+orientación (+/-)
+coordenadas dentro de la lectura
+ID de la lectura
+estado de haplotipo (hap1, hap2 o no asignado)
+
+Son el mapa de cómo las lecturas contribuyen al ensamblaje (alineamiento interno read → contig)
+   
+    ¿Qué información tiene los archivos .bed?
+Los archivos .bed (por ejemplo *lowQ.bed) contienen: Coordenadas genómicas de regiones específicas. En este caso concreto, contienen regiones de baja calidad del ensamblaje. Son archivos de anotación de regiones problemáticas (posiciones en contigs)
+
+    ¿Cuál es la cobertura media estimada de las secuencias homocigotas?
+La documentación explica que en el gráfico de k-mers aparecen dos picos, uno para heterocigosis y otro para homocigosis
+El valor de cobertura homocigota es aproximadamente el doble del heterocigoto. Ejemplo (teniendo en cuanta que los resultados antes nos había dado entorno a 13x la cobertura):
+
+heterocigota ≈ 6×
+homocigota ≈ 12×
+
+Por lo tanto concluimos que la cobertura homocigota ≈ 2 × cobertura heterocigota
+
+Lo que pasa cuando consultamos nuestro caso es que vemos el pico en 12 pero no observamos el pico en 6, lo que podría ser porque es una planta homocigota.
+
+    ¿Y la de las heterocigotas?
+
+Siguiendo el mismo razonamiento determinamos que la cobertura heterocigota ≈ la mitad de la homocigota.
+
+Los ensamblajes primario y por haplotipos se presentan en formato GFA. Para extraer las secuencias en formato FASTA podemos usar el pequeño script siguiente, en lenguaje AWK, desde el terminal de Bash:
+```{bash}
+awk '(/^S/){print ">" $2 "\n" $3}' asm1/At4.bp.p_ctg.gfa > asm1/At4.fa
+```
+
+
+
