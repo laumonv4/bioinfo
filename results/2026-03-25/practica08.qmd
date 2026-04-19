@@ -5,10 +5,8 @@ format: html
 editor: visual
 ---
 
-## Ejercicio 1
-
-## Enmascarar e indexar los proteomas
-
+## Ejercicio 1. Identificación aproximada de ortólogos
+# Enmascarar e indexar los proteomas
 ```{bash}
 if [ ! -e ../../data/buchnera.paa ]; then
    # Creamos un archivo para enmascarar zonas de baja complejidad:
@@ -28,6 +26,10 @@ if [ ! -e ../../data/buchnera.paa ]; then
                 -out ../../data/buchnera \
                 -title "Proteoma de Buchnera"
 fi
+# Hay que repetir todo esto para Blochmannia.
+```
+
+
 # Hay que repetir todo esto para Blochmannia.
 ```
 
@@ -117,8 +119,12 @@ unmapped <- readDNAStringSet('../../data/contaminacion.fa.gz')
 n <- length(unmapped)
 muestra <- unmapped[sample(1:n, 20)]
 writeXStringSet(muestra, 'muestra.fa')
-
 ```
+Para evitar sobrecargar los servidores del NCBI, se seleccionó una muestra aleatoria de 20 lecturas a partir del conjunto completo de secuencias no mapeadas. La selección se realizó utilizando la función sample() del lenguaje R sobre el objeto DNAStringSet, fijando una semilla para garantizar la reproducibilidad del análisis. Las secuencias seleccionadas se guardaron en un archivo FASTA (muestra.fa) que se utilizará como entrada para el análisis BLASTN.
+
+La selección aleatoria permite obtener una muestra representativa del conjunto total de lecturas no mapeadas, lo que facilita la inferencia del origen de la contaminación sin necesidad de analizar la totalidad de las secuencias.
+
+# BLASTN remoto
 ```{bash}
 if [ ! -e resultado.txt ]; then
    blastn -query muestra.fa \
@@ -130,4 +136,129 @@ if [ ! -e resultado.txt ]; then
           -remote
 fi
 ```
+hace lo siguiente:
+
+usa muestra.fa como archivo de entrada
+busca cada secuencia contra la base de datos remota nr
+guarda los resultados en resultado.txt
+devuelve una tabla tabulada (outfmt 6) con:
+qaccver: identificador de la query
+saccver: identificador de la secuencia encontrada
+length: longitud del alineamiento
+qlen: longitud de la query
+qstart, qend: posiciones alineadas en la query
+evalue: significación estadística
+bitscore: calidad del alineamiento
+staxid: identificador taxonómico de la mejor secuencia encontrada
+-max_target_seqs 1 limita la salida a la secuencia más parecida
+-evalue 0.001 filtra resultados poco fiables
+-remote hace la búsqueda en los servidores del NCBI
+# Identificación taxonómica
+```{bash}
+# Extraemos los identificadores taxonómicos (columna 9) de "resultado.txt":
+cut -f 9 resultado.txt | sort | uniq | paste -sd ',' > taxids.txt
+
+# Generamos una tabla con información taxonómica de esos identificadores:
+datasets summary taxonomy taxon $(cat taxids.txt) --as-json-lines | \
+dataformat tsv taxonomy --template tax-summary > taxreport.txt
+```
+extrae la columna 9 (staxid) de resultado.txt
+elimina taxids repetidos
+genera una lista separada por comas en taxids.txt
+consulta esos taxids en NCBI
+genera un informe tabulado con la clasificación taxonómica en taxreport.txt
+
+
+#  Nota
+
+Puedes importar tanto los resultados del BLAST como el informe taxonómico a una sesión de R y determinar que fracción de las lecturas seleccionadas parecen proceder de un hemímptero y qué fracción proceden de otros organismos. Tienen sentido los resultados? Encuentras alguna secuencia de origen vegetal?
+
+```{r}
+blast <- read.table("resultado.txt", sep = "\t", header = FALSE,
+                    col.names = c("qaccver", "saccver", "length", "qlen",
+                                  "qstart", "qend", "evalue", "bitscore", "staxid"))
+
+tax <- read.delim("taxreport.txt", sep = "\t", header = TRUE)
+```
+
+
+```{r}
+names(tax)
+head(tax)
+```
+
+```{r}
+datos <- merge(blast, tax, by.x = "staxid", by.y = "Taxonomy ID")
+```
+
+```{r}
+hemipteros <- grepl("Hemiptera", datos$Lineage, ignore.case = TRUE)
+mean(hemipteros)
+```
+
+```{r}
+mean(!hemipteros)
+```
+
+```{r}
+1 - mean(hemipteros)
+```
+
+
+```{r}
+vegetales <- grepl("Viridiplantae|Streptophyta|Plantae", datos$Lineage, ignore.case = TRUE)
+datos[vegetales, ]
+mean(vegetales)
+```
+
+Como las lecturas proceden de fragmentos que no mapearon al genoma de referencia de Aphis aurantii, es esperable que una parte importante siga siendo de hemípteros, porque el genoma de referencia puede estar incompleto o diferir del individuo secuenciado
+pero otra parte pertenezca a contaminación real, es decir, ADN de: simbiontes bacterianos, parásitos, hongos, otros artrópodos, plantas, si el insecto ha ingerido savia o material vegetal. En un pulgón como Aphis aurantii, sí tendría sentido encontrar secuencias de origen vegetal, porque se alimenta de plantas y pueden aparecer restos de ADN vegetal en la muestra.
+
+Se realizó un BLASTN remoto de 20 lecturas seleccionadas aleatoriamente entre las secuencias no mapeadas al genoma de referencia de Aphis aurantii. Para cada lectura se conservó únicamente la mejor coincidencia, registrando además el identificador taxonómico del hit más parecido. Posteriormente, los taxids obtenidos se consultaron remotamente con datasets y dataformat para recuperar su asignación taxonómica completa.
+
+A partir de la tabla resultante puede calcularse la fracción de lecturas cuya mejor coincidencia pertenece al orden Hemiptera y la fracción correspondiente a otros organismos. Biológicamente, es esperable que una parte de las secuencias no mapeadas siga siendo de hemípteros, ya que el genoma de referencia puede ser incompleto o no representar exactamente toda la variación del individuo secuenciado. Sin embargo, también es razonable encontrar secuencias de otros taxones, lo que indicaría contaminación biológica procedente de simbiontes, microorganismos asociados o material ingerido.
+
+La presencia de secuencias de origen vegetal tendría sentido en este contexto, ya que Aphis aurantii es un insecto fitófago y puede arrastrar ADN vegetal en la muestra.
+
+# Bloque compacto
+
+```{r}
+blast <- read.table("resultado.txt", sep = "\t", header = FALSE,
+                    col.names = c("qaccver", "saccver", "length", "qlen",
+                                  "qstart", "qend", "evalue", "bitscore", "staxid"))
+
+tax <- read.delim("taxreport.txt", sep = "\t", header = TRUE)
+
+names(tax)
+head(tax)
+
+# Ajustar el nombre real de la columna taxonómica si hace falta
+datos <- merge(blast, tax, by.x = "staxid", by.y = "Taxonomy ID")
+
+hemipteros <- grepl("Hemiptera", datos$Lineage, ignore.case = TRUE)
+vegetales <- grepl("Viridiplantae|Streptophyta|Plantae", datos$Lineage, ignore.case = TRUE)
+
+mean(hemipteros)
+mean(!hemipteros)
+mean(vegetales)
+
+datos[vegetales, ]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
