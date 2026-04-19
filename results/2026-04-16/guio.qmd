@@ -4,10 +4,10 @@ author: "Laura Monleón"
 format: html
 editor: visual
 ---
-Revisión de los datos
+##Revisión de los datos
 
 Los datos están en formato FASTA porque contienen sólo lecturas de alta calidad, y `hifiasm` no utiliza la información de las calidades de cada base. El archivo está comprimido. Antes de empezar el ensamblaje deberíamos tener una idea de la cantidad de datos que tenemos. Si lo necesitas, utiliza una inteligencia artificial para responder las preguntas siguientes y anota en un bloque de código las órdenes utilizadas. Puedes hacerlo con instrucciones de Bash o de R, pero R necesitará cargar en memoria el archivo entero, lo que no sería muy práctico si se tratara de un archivo 10 o 50 veces mayor.
-Ejercicio 1
+#Ejercicio 1
 
     ¿Cuántas secuencias contiene el archivo? tiene un total de 13812 secuencias que ha podido calcular gracias a que cada una de ellas empieza por el símbolo >. Como es un archivo fasta lo que hacemos es contar las cabeceras
 ```{bash}
@@ -62,7 +62,7 @@ TOTAL_BASES=$(zcat ../../data/At4.10.fa.gz | grep -v "^>" | tr -d '\n' | wc -c)
 echo "$TOTAL_BASES / 19000000" | bc -l
 ```
     
-Ensamblaje
+##Ensamblaje
 
 El programa hifiasm produce varios archivos de salida. Para tener la carpeta de trabajo ordenada, es recomendable crear un subcarpeta donde poder guardarlos. Si fuéramos a probar más de una estrategia de ensamblado, guardaríamos los resultados de cada intento en una carpeta diferente, que podríamos nombrar asm1, asm2, etc. Aunque sólo realicemos un ensamblaje, crearemos la carpeta asm1 para guardar los resultados en ella.
 ```{bash}
@@ -76,7 +76,7 @@ fi
 ```
 -d indica que existe la carpeta mientras que la orden -e es para si existe archivo.
 
-Ejercicio 2
+#Ejercicio 2
 
 Consulta la ayuda de hifiasm (hifiasm -h) y contesta las preguntas siguientes:
 
@@ -98,9 +98,9 @@ Si se dispone de lecturas ultra-largas (por ejemplo, Nanopore), hifiasm permite 
 
 Estas lecturas se usan para resolver regiones repetitivas largas y mejorar la continuidad del ensamblaje (scaffolding implícito) En conclusión, se añadirían con el argumento --ul.
 
-Evaluación del resultado
+##Evaluación del resultado
 
-Ejercicio 3
+#Ejercicio 3
 
 Consulta la descripción de los archivos de salida que encontrarás en este enlace y contesta las preguntas siguientes:
 
@@ -152,5 +152,31 @@ Los ensamblajes primario y por haplotipos se presentan en formato GFA. Para extr
 awk '(/^S/){print ">" $2 "\n" $3}' asm1/At4.bp.p_ctg.gfa > asm1/At4.fa
 ```
 
+##Calidad del ensamblaje
+#Ejercicio 4
+
+Consulta la ayuda de compleasm.py y averigua qué significan los argumentos utilizados.
+```{bash}
+python3 ~/bin/compleasm_kit/compleasm.py run \
+   -t 2 -l brassicales -a asm1/At4.fa -o asm1_eval
+```
+
+- run
+Indica que se va a usar el módulo de compleasm para evaluar la completitud de un ensamblaje genómico a partir del archivo FASTA del ensamblaje. Este modo hace tanto la alineación previa como la evaluación final.
+- -t 2 o --threads 2
+Especifica el número de hilos que usará el programa. En este caso, compleasm trabajará con 2 threads.
+- -l brassicales o --lineage brassicales
+Indica el linaje BUSCO que se utilizará como referencia para evaluar la completitud. Aquí se usa brassicales, que es el linaje apropiado para Arabidopsis thaliana, ya que pertenece al orden Brassicales. Si ese linaje no está descargado todavía, compleasm lo descarga automáticamente.
+- -a asm1/At4.fa o --assembly_path asm1/At4.fa
+Es la ruta al archivo FASTA del ensamblaje que se quiere evaluar. Es decir, el genoma ensamblado que produce hifiasm y sobre el que compleasm calculará la presencia de genes conservados.
+- -o asm1_eval o --output_dir asm1_eval
+Define el directorio de salida donde compleasm guardará los resultados del análisis. En ese directorio se generará, entre otros archivos, summary.txt, que resume la completitud del ensamblaje.
 
 
+## Visualización del grafo
+
+```{bash}
+~/bin/Bandage image asm1/At4.bp.p_ctg.gfa graph.png
+```
+
+Se instaló Bandage y se cargó el archivo GFA correspondiente al ensamblaje primario generado por hifiasm. A partir de ese grafo se exportó una imagen en formato PNG para su inclusión en el informe, lo que permite visualizar de forma directa la conectividad entre contigs y la complejidad estructural del ensamblaje.
