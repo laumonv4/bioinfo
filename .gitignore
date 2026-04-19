@@ -80,3 +80,7 @@ logs/
 *.sqlite3
 *.bai
 *.stats.txt
+# Ensamblaje hifiasm (archivos intermedios)
+*.gfa
+*.bed
+*.bin
