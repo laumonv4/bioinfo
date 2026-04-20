@@ -1,6 +1,13 @@
 names---
 title: "Practica 9"
 author: "Laura Monleón Vicente"
+lang: es
+date: today
+execute: 
+  eval: true
+  error: true
+engine: knitr
+bibliography: ../../doc/references.bib
 format: 
     html:
         embed-resources: true

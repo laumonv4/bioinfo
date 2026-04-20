@@ -1,6 +1,13 @@
 ---
 title: "Pràctica8.BLAST"
 author: "Laura Monleón"
+lang: es
+date: today
+execute: 
+  eval: true
+  error: true
+engine: knitr
+bibliography: ../../doc/references.bib
 format: html
 editor: visual
 ---
