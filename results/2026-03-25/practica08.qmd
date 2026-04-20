@@ -1,5 +1,5 @@
 ---
-title: "Pràctica8.BLAST"
+title: "BLAST"
 author: "Laura Monleón"
 lang: es
 date: today
