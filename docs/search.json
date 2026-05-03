@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "practica02.html",
+    "href": "practica02.html",
+    "title": "Control de versiones con Git",
+    "section": "",
+    "text": "Para esta práctica necesitamos tener Git instalado. Podéis comprobar si ya está instalado desde el terminal de Bash, tecleando git --version. En WSL2, podéis instalar Git desde el terminal con la orden apt install git. En MacOS, hay varias opciones, pero la más sencilla parece ser instalar las command line tools, también desde un terminal, mediante la orden xcode-select --install."
+  },
+  {
+    "objectID": "practica02.html#footnotes",
+    "href": "practica02.html#footnotes",
+    "title": "Control de versiones con Git",
+    "section": "Notas",
+    "text": "Notas\n\n\n“staging area” parece ser un término militar sin traducción al castellano.↩︎"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "bioinformática",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  }
+]

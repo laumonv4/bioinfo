@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Anotación</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="practica11_files/libs/clipboard/clipboard.min.js"></script>
+<script src="practica11_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="practica11_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="practica11_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="practica11_files/libs/quarto-html/popper.min.js"></script>
+<script src="practica11_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="practica11_files/libs/quarto-html/anchor.min.js"></script>
+<link href="practica11_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="practica11_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="practica11_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="practica11_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="practica11_files/libs/bootstrap/bootstrap-969dbbb7539504ffdd507e0f9f09f389.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Anotación</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>title: “Anotación” format: html bibliography: ../../doc/references.bib editor: visual</p>
+<section id="introducción" class="level2">
+<h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>En esta práctica vamos a trabajar con los resultados de la anotación estructural realizada sobre el ensamblaje de la práctica anterior. Desafortunadamente, los ordenadores virtuales no están preparados para realizar la anotación. Pero a continuación se muestran las órdenes que en un terminal de Bash producirían los resultados. Estas órdenes se supone que son ejecutadas desde una carpeta results/2026-04-21.</p>
+</section>
+<section id="datos" class="level2">
+<h2 class="anchored" data-anchor-id="datos">Datos</h2>
+<p>Las secuencias que vamos a anotar son el ensamblaje obtenido en la práctica anterior, que voy a suponer que se encuentran en una carpeta results/2026-04-16.</p>
+<p>Las evidencias que usaremos para encontrar los genes són secuencias de proteínas que esperamos encontrar codificadas en los cóntigos. Normalmente usaríamos las proteínas conocidas de alguna especie próxima. Usaremos las 6023 proteínas que sabemos que codifica el cromosoma 4 de Arabidopsis thalina. Las podéis descargar de Uniprot</p>
+</section>
+<section id="resultados" class="level2">
+<h2 class="anchored" data-anchor-id="resultados">Resultados</h2>
+</section>
+<section id="modificación-de-los-nombres-de-las-proteínas" class="level1">
+<h1>Modificación de los nombres de las proteínas</h1>
+</section>
+<section id="ejercicio-1" class="level1">
+<h1>Ejercicio 1</h1>
+<p>Sabiendo que una forma de hacerlo es la siguiente, incluye la orden en un bloque de Bash de tu documento de Quarto de tal manera que el archivo de entrada esté en tu carpeta data y el de salida en la misma carpeta de trabajo de la práctica actual, y además, que sólo se ejecute si el archivo de salida proteinas.fasta no existe.</p>
+<pre class="{bash}"><code>if [ ! -e proteinas.fasta ]; then
+   awk '(/^&gt;/){split($1, A, /\|/); print "&gt;" A[2]}(/^[^&gt;]/){print $0}' ../../data/uniprotkb.fasta &gt; proteinas.fasta
+fi</code></pre>
+<section id="análisis-de-los-resultados-de-repeatmodeler" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-los-resultados-de-repeatmodeler">Análisis de los resultados de RepeatModeler</h2>
+<p>RepeatModeler fue ejecutado de la manera siguiente:</p>
+<pre class="{bash}"><code># Paso previo para convertir el ensamblaje en una base de datos de BLAST:
+BuildDatabase -name At4 ../2026-04-16/asm1/At4.fa
+
+RepeatModeler -database At4 -threads 6 &gt;&amp; run.log</code></pre>
+<p>. ├── At4-families.fa<br>
+├── At4-families.stk<br>
+├── At4.nhr<br>
+├── At4.nin<br>
+├── At4.njs<br>
+├── At4.nnd<br>
+├── At4.nni<br>
+├── At4.nog<br>
+├── At4.nsq<br>
+├── At4-rmod.log ├── At4.translation ├── RM_358880.MonApr202033152026 │ ├── consensi.fa │ ├── families.stk │ ├── genome.2bit │ ├── rmod.log │ ├── round-1 │ ├── round-2 │ └── round-3 └── run.log</p>
+<p>Nota: los resultados un nivel por debajo de “RM_358880.MonApr202033152026” no han salido ya que ha habido un error desde el archivo que nos ha proporcionado el profesor.</p>
+</section>
+</section>
+<section id="ejercicio-2" class="level1">
+<h1>Ejercicio 2</h1>
+<p>Explora los resultados de RepeatModeler y trata de contestar las preguntas siguientes.</p>
+<pre><code>¿Cuántas familias de elementos transponibles se han encontrado?</code></pre>
+<pre class="{bash}"><code>grep -c "^&gt;" RepeatModelerResults/At4-families.fa</code></pre>
+<p>Cada familia corresponde a una secuencia en formato FASTA, por lo tanto, basta contar cuántas cabeceras (&gt;) hay. El número obtenid, 24, se corresponde con el número de familias de elementos transponibles.</p>
+<pre><code>¿Cuánto duró la ejecución del programa?</code></pre>
+<pre class="{bash}"><code>grep -i "start" RepeatModelerResults/run.log
+grep -i "end" RepeatModelerResults/run.log</code></pre>
+<pre class="{bash}"><code>less RepeatModelerResults/run.log</code></pre>
+<p>La ejecución del programa duró 1 hora, 2 minutos y 16 segundos.</p>
+<pre><code>¿Cuál dirías que es el archivo de salida más importante?</code></pre>
+<p>At4-families.fa</p>
+<p>El archivo de salida más importante es At4-families.fa, ya que contiene las secuencias consenso de las familias de elementos repetitivos identificadas. Este archivo constituye la base para análisis posteriores, como la anotación de repeticiones en el genoma mediante herramientas como RepeatMasker.</p>
+<p>En el archuivo llamado stk que es el alineamiento de estocolmo tendrá unas cuantas secuencias de familias alineadas para generar el consenso. Si representamos en diagramas de cajas los tipos de familias vemos que existen diferentes tipos de elementos disponibles que se recogen en RepeatModeler como por ejemplo loselementos LINEs o Los Gypsy.</p>
+<section id="suavizar-la-máscara" class="level2">
+<h2 class="anchored" data-anchor-id="suavizar-la-máscara">Suavizar la máscara</h2>
+<p>RepeatMasker fue ejecutado así:</p>
+<pre class="{bash}"><code>RepeatMasker -lib At4-families.fa -dir RM01 -gtf ../../data/At4.fa</code></pre>
+<p>Podríamos haber aplicado el RepeatMasker directamente con todos los elementos transponibles de Arabidopsis Thaliana porque estos ya se conocen pero los hemos generado nosotros para saber cómo hacerlo.</p>
+<p>En repeatMasker, no ha conseguido hacer un enmascaramiento suave, al ser duro, veremos que los elementos tranonibles aparecen indicados con “N” en vez de indicar el nucleótido en letras minúsculas. El archivo generado .gff nos dice las coorddenadas en las que se encuentra cada instancia de elemento transponible. Esto se lo hemos tenido que pedir, una vez tenemos este ensamblaje enmascarado de forma suave ya podemos ejecutar GALBA.</p>
+</section>
+</section>
+<section id="ejercicio-3" class="level1">
+<h1>Ejercicio 3</h1>
+<p>Instala el programa bedtools siguiendo las instrucciones oportunas para tu sistema en la página oficial. Utiliza el ensamblaje original como archivo FASTA de entrada y el archivo GFF que ha producido RepetaMasker como coordenadas de las regiones a enmascarar. Lee el manual de bedtools maskfasta en este enlace y genera el ensamblaje con máscara suave llamado At4.soft.fa.</p>
+<pre class="{bash}"><code>export PATH=$PATH:~/bin/bedtools2/bin
+bedtools maskfasta -fi ../2026-04-16/asm1/At4.fa \
+-fo At4.soft.fa \
+-bed RepeatMaskerResults/RM01/At4.fa.out.gff \
+-soft</code></pre>
+<section id="galba" class="level2">
+<h2 class="anchored" data-anchor-id="galba">GALBA</h2>
+<p>Para ejecutar GALBA ha sido necesario crear algunas variables de entorno que indican donde puede GALBA encontrar un par de ejecutables más. Para facilitar la reproducibilidad, este tipo de definiciones deben aparecer al principio del bloque, donde son más visibles, para que sean fácilmente modificadas cuando las órdenes vayan a ejecutarse en otro ordenador.</p>
+<p>GALBA es un script de PEARL que está olvidad por la mayoría de personas pero todavía se puede utilizar. Ellos no se dan mucha importancia a si mismos porque piensan que hay programas mejor que ellos como BREAKER, antes que instalar GALBA2 instalaríamos SINGULARITI Para esto es muy posible que exista un programa de inteligencia Artificial como ALphaPhold parapredecir la estructura de proteinas.</p>
+<pre class="{bash}"><code>export TSEBRA_PATH=/home/joiglu/bin/TSEBRA/bin/
+export MINIPROTHINT_PATH=/home/joiglu/bin/miniprothint/
+
+galba.pl --species="Arabidopsis thaliana" \
+         --genome=At4.soft.fa \
+         --prot_seq=proteinas.fasta</code></pre>
+</section>
+</section>
+<section id="ejercicio-4" class="level1">
+<h1>Ejercicio 4</h1>
+<p>Incluye en tu documento de Quarto un bloque de código (pero no ejecutable, con la opción eval: false) como el anterior, donde los caminos TSERBA y a MINIPROTHINT se correspondan con tu propia carpeta bin, aunque no los tengas instalados.</p>
+<pre class="{bash}"><code>```{bash eval=false}
+export TSEBRA_PATH=$HOME/bin/TSEBRA/bin/
+export MINIPROTHINT_PATH=$HOME/bin/miniprothint/
+
+galba.pl --species="Arabidopsis thaliana" \
+         --genome=At4.soft.fa \
+         --prot_seq=proteinas.fasta</code></pre>
+<p>Para garantizar la reproducibilidad del análisis, se definen al inicio del bloque las variables de entorno necesarias para que GALBA localice las herramientas auxiliares requeridas (TSEBRA y miniprothint). Se emplean rutas relativas al directorio HOME del usuario para facilitar la portabilidad del código entre distintos sistemas.</p>
+<p>Encontrarás los resultados de GALBA en la carpeta comprimida galba.zip, en el aula virtual.</p>
+</section>
+<section id="ejercicio-5" class="level1">
+<h1>Ejercicio 5</h1>
+<p>Échales un vistazo a los archivos de salida de GALBA y trata de sacar algo en claro.</p>
+<p>El archivo más importante es GALBA.gtf que es el cóntigo. me dice donde empieza, donde termina, una puntuación, la cadena directa o inversa y donde lo ha encontrado y al final un poco de información sobre si es un exón, intron, a qué gen pertenece. Nos ofrece mucha información, una predicción exacta de la secuencia codificante. Es fundamental esta información.</p>
+<p>Además, se han generado archivos intermedios importantes como hintsfile.gff, que recoge las pistas derivadas de alineamientos proteína-genoma utilizadas para guiar la predicción, y miniprot_trainingGenes.gtf, que contiene los genes empleados para entrenar el modelo. El archivo prot_seq_all.fa recoge las proteínas predichas a partir de la anotación.</p>
+<p>La estructura de carpetas, incluyendo archive y errors, refleja el funcionamiento interno del pipeline, almacenando tanto los resultados intermedios como los registros de ejecución. En conjunto, estos resultados indican que GALBA ha producido una anotación genómica completa que puede utilizarse para estudios funcionales y comparativos.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
