@@ -10,6 +10,7 @@ Repositorio con las prácticas realizadas en la asignatura de Bioinformática.
 
 ## Prácticas
 
+- 2026-01-28 → Práctica 01. Nociones de Bash y alineamientos básicos
 - 2026-01-29 → Práctica 02. Control de versiones con Git
 - 2026-02-02 → Práctica 03. Mapeo de secuencias cortas
 - 2026-02-10 → Práctica 04. Control de calidad
