@@ -127,14 +127,16 @@ grep -i "end" RepeatModelerResults/run.log</code></pre>
 <pre class="{bash}"><code>RepeatMasker -lib At4-families.fa -dir RM01 -gtf ../../data/At4.fa</code></pre>
 <p>Podríamos haber aplicado el RepeatMasker directamente con todos los elementos transponibles de Arabidopsis Thaliana porque estos ya se conocen pero los hemos generado nosotros para saber cómo hacerlo.</p>
 <p>En repeatMasker, no ha conseguido hacer un enmascaramiento suave, al ser duro, veremos que los elementos tranonibles aparecen indicados con “N” en vez de indicar el nucleótido en letras minúsculas. El archivo generado .gff nos dice las coorddenadas en las que se encuentra cada instancia de elemento transponible. Esto se lo hemos tenido que pedir, una vez tenemos este ensamblaje enmascarado de forma suave ya podemos ejecutar GALBA.</p>
-<p>#Ejercicio 3</p>
+</section>
+</section>
+<section id="ejercicio-3" class="level1">
+<h1>Ejercicio 3</h1>
 <p>Instala el programa bedtools siguiendo las instrucciones oportunas para tu sistema en la página oficial. Utiliza el ensamblaje original como archivo FASTA de entrada y el archivo GFF que ha producido RepetaMasker como coordenadas de las regiones a enmascarar. Lee el manual de bedtools maskfasta en este enlace y genera el ensamblaje con máscara suave llamado At4.soft.fa.</p>
 <pre class="{bash}"><code>export PATH=$PATH:~/bin/bedtools2/bin
 bedtools maskfasta -fi ../2026-04-16/asm1/At4.fa \
 -fo At4.soft.fa \
 -bed RepeatMaskerResults/RM01/At4.fa.out.gff \
 -soft</code></pre>
-</section>
 <section id="galba" class="level2">
 <h2 class="anchored" data-anchor-id="galba">GALBA</h2>
 <p>Para ejecutar GALBA ha sido necesario crear algunas variables de entorno que indican donde puede GALBA encontrar un par de ejecutables más. Para facilitar la reproducibilidad, este tipo de definiciones deben aparecer al principio del bloque, donde son más visibles, para que sean fácilmente modificadas cuando las órdenes vayan a ejecutarse en otro ordenador.</p>

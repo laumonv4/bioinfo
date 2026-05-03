@@ -112,7 +112,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>##Revisión de los datos</p>
+<section id="revisión-de-los-datos" class="level2">
+<h2 class="anchored" data-anchor-id="revisión-de-los-datos">Revisión de los datos</h2>
 <p>Los datos están en formato FASTA porque contienen sólo lecturas de alta calidad, y <code>hifiasm</code> no utiliza la información de las calidades de cada base. El archivo está comprimido. Antes de empezar el ensamblaje deberíamos tener una idea de la cantidad de datos que tenemos. Si lo necesitas, utiliza una inteligencia artificial para responder las preguntas siguientes y anota en un bloque de código las órdenes utilizadas. Puedes hacerlo con instrucciones de Bash o de R, pero R necesitará cargar en memoria el archivo entero, lo que no sería muy práctico si se tratara de un archivo 10 o 50 veces mayor. #Ejercicio 1</p>
 <pre><code>¿Cuántas secuencias contiene el archivo? tiene un total de 13812 secuencias que ha podido calcular gracias a que cada una de ellas empieza por el símbolo &gt;. Como es un archivo fasta lo que hacemos es contar las cabeceras</code></pre>
 <div class="cell">
@@ -177,7 +178,9 @@ max: 59075</code></pre>
 <pre><code>13.18944652631578947368</code></pre>
 </div>
 </div>
-<p>##Ensamblaje</p>
+</section>
+<section id="ensamblaje" class="level2">
+<h2 class="anchored" data-anchor-id="ensamblaje">Ensamblaje</h2>
 <p>El programa hifiasm produce varios archivos de salida. Para tener la carpeta de trabajo ordenada, es recomendable crear un subcarpeta donde poder guardarlos. Si fuéramos a probar más de una estrategia de ensamblado, guardaríamos los resultados de cada intento en una carpeta diferente, que podríamos nombrar asm1, asm2, etc. Aunque sólo realicemos un ensamblaje, crearemos la carpeta asm1 para guardar los resultados en ella.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Con la ejecución condicional nos ahorramos algún mensaje de error:</span></span>
@@ -189,7 +192,9 @@ max: 59075</code></pre>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>-d indica que existe la carpeta mientras que la orden -e es para si existe archivo.</p>
-<p>#Ejercicio 2</p>
+</section>
+<section id="ejercicio-2" class="level1">
+<h1>Ejercicio 2</h1>
 <p>Consulta la ayuda de hifiasm (hifiasm -h) y contesta las preguntas siguientes:</p>
 <pre><code>¿Los parámetros corresponden al ensamblaje de un genoma haploide o diploide?</code></pre>
 <p>Por defecto, hifiasm está diseñado para ensamblar genomas diploides. Lo sabemos porque genera dos ensamblajes, primary assembly (p_ctg) y alternate/haplotype assembly (a_ctg) que implementa resolución de haplotipos basada en heterocigosidad. Los parámetros por defecto corresponden a un ensamblaje diploide (haplotype-aware).</p>
@@ -200,8 +205,12 @@ max: 59075</code></pre>
 <pre><code>Si tuvieramos lecturas ultra-largas, ¿con qué opción o argumento añadiríamos esa información?</code></pre>
 <p>Si se dispone de lecturas ultra-largas (por ejemplo, Nanopore), hifiasm permite integrarlas como soporte adicional. La opción relevante es: –ul &lt;ultralong_reads.fq&gt;</p>
 <p>Estas lecturas se usan para resolver regiones repetitivas largas y mejorar la continuidad del ensamblaje (scaffolding implícito) En conclusión, se añadirían con el argumento –ul.</p>
-<p>##Evaluación del resultado</p>
-<p>#Ejercicio 3</p>
+<section id="evaluación-del-resultado" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación-del-resultado">Evaluación del resultado</h2>
+</section>
+</section>
+<section id="ejercicio-3" class="level1">
+<h1>Ejercicio 3</h1>
 <p>Consulta la descripción de los archivos de salida que encontrarás en este enlace y contesta las preguntas siguientes:</p>
 <pre><code>¿Dónde están las secuencias que componen el ensamblaje?</code></pre>
 <p>Las secuencias del ensamblaje están en los archivos:</p>
@@ -226,7 +235,8 @@ max: 59075</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'(/^S/){print "&gt;" $2 "\n" $3}'</span> asm1/At4.bp.p_ctg.gfa <span class="op">&gt;</span> asm1/At4.fa</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>##Calidad del ensamblaje #Ejercicio 4</p>
+<section id="calidad-del-ensamblaje-ejercicio-4" class="level2">
+<h2 class="anchored" data-anchor-id="calidad-del-ensamblaje-ejercicio-4">Calidad del ensamblaje #Ejercicio 4</h2>
 <p>Consulta la ayuda de compleasm.py y averigua qué significan los argumentos utilizados.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/bin/compleasm_kit/compleasm.py run <span class="dt">\</span></span>
@@ -245,6 +255,7 @@ ModuleNotFoundError: No module named 'pandas'</code></pre>
 <li>-a asm1/At4.fa o –assembly_path asm1/At4.fa Es la ruta al archivo FASTA del ensamblaje que se quiere evaluar. Es decir, el genoma ensamblado que produce hifiasm y sobre el que compleasm calculará la presencia de genes conservados.</li>
 <li>-o asm1_eval o –output_dir asm1_eval Define el directorio de salida donde compleasm guardará los resultados del análisis. En ese directorio se generará, entre otros archivos, summary.txt, que resume la completitud del ensamblaje.</li>
 </ul>
+</section>
 <section id="visualización-del-grafo" class="level2">
 <h2 class="anchored" data-anchor-id="visualización-del-grafo">Visualización del grafo</h2>
 <div class="cell">
@@ -254,6 +265,7 @@ ModuleNotFoundError: No module named 'pandas'</code></pre>
 </div>
 </div>
 <p>Se instaló Bandage y se cargó el archivo GFA correspondiente al ensamblaje primario generado por hifiasm. A partir de ese grafo se exportó una imagen en formato PNG para su inclusión en el informe, lo que permite visualizar de forma directa la conectividad entre contigs y la complejidad estructural del ensamblaje.</p>
+</section>
 </section>
 
 </main>

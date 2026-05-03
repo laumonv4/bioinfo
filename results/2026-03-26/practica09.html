@@ -93,7 +93,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mtdna <span class="ot">&lt;-</span> <span class="fu">read.phyDat</span>(<span class="st">'../../data/mtDNA.fasta'</span>, <span class="at">format =</span> <span class="st">'fasta'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(mtdna)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Nota: Sería sensato reducir el conjunto de datos. ¿Qué secuencias eliminarías? Si quieres, puedes intentarlo con la función subset(). #EJERCICIO 1. Puedes confirmar el número de secuencias? ¿Qué longitud tiene el alineamiento? ¿Qué función usarías para extraer los nombres de las secuencias? El número de secuencias aparece indicado como nseq y es igual a 42. La longitud del alineamiento la vemos comp nchar= 16603. También podemos verlo de forma aproximada representando en forma de imagen el alineamiento con la función image(mtdna). Para saber los nombres que conforman el alineamiento utilizamos la función “names(mtdna)”.</p>
+<p>Nota: Sería sensato reducir el conjunto de datos. ¿Qué secuencias eliminarías? Si quieres, puedes intentarlo con la función subset(). # EJERCICIO 1. Puedes confirmar el número de secuencias? ¿Qué longitud tiene el alineamiento? ¿Qué función usarías para extraer los nombres de las secuencias? El número de secuencias aparece indicado como nseq y es igual a 42. La longitud del alineamiento la vemos comp nchar= 16603. También podemos verlo de forma aproximada representando en forma de imagen el alineamiento con la función image(mtdna). Para saber los nombres que conforman el alineamiento utilizamos la función “names(mtdna)”.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(mtdna)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -110,10 +110,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_upgma)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">add.scale.bar</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>#Ejercicio 2.</p>
+</section>
+</section>
+<section id="ejercicio-2." class="level1">
+<h1>Ejercicio 2.</h1>
 <p>¿De qué clase son los objetos mt_nj y mt_upgma? Consulta la estructura de estos objetos (str(mt_nj)). Si consultamos la clase a través de la función str(mt_nj) vemos que la clase es “phylo”. Mientras que si consultamos str(mt_upgma) la clase que nos aparece también es phylo.</p>
 <p>Represéntalos gráficamente (plot(mt_nj)) y consulta la ayuda de la función plot.phylo() para saber qué opciones de representación gráfica tienes. Para qué sirven las funciones add.scale.bar() y axisPhylo()? La función AxisPhylo() sirve para añadir una línea inferior que hace referencia a una escala temporal para saber a cuánto tiempo se refiere la longitud de las ramas. Indicado en millones de años. Add.scale.bar() sirve para poner dentro de la última rama inferior una indicación numérica que hace referencia a una escala temporal en sustituciones por sitio.</p>
-</section>
 <section id="escoger-el-modelo-de-evolución" class="level2">
 <h2 class="anchored" data-anchor-id="escoger-el-modelo-de-evolución">Escoger el modelo de evolución</h2>
 <div class="cell">
@@ -244,10 +246,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mt_nj_rtt <span class="ot">&lt;-</span> <span class="fu">rtt</span>(mt_nj, <span class="at">tip.dates =</span> fechas, <span class="at">objective =</span> <span class="st">'rms'</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_nj_rtt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>#Ejercicio</p>
+</section>
+</section>
+<section id="ejercicio" class="level1">
+<h1>Ejercicio</h1>
 <p>¿Se corresponden bien las distancias evolutivas estimadas con las dataciones? ¿Qué secuencias crees que se ajustan menos a su supuesta edad? ¿Qué razones puede haber para que la edad de una secuencia no se corresponda con la cantidad de cambios que ha acumulado?</p>
 <p>Llama la atención quelos denisovanos son los que menos se corresponden con su edad real. Puede ser por datación de fósiles muy imprecisa, si utilizo la media del margen de edad de los fósiles puedo equivocarme muhco. Puedo contener cambios que sean producto de la degradación de DNA desde que se encontró el fósil o se creo hasta que ha sido secuenciado. Por ejemplo, puede haber sucedido degradación de timinas, algunas de estas mutaciones pueden ser por lo tanto, errores de secuenciación o producto de degradación del DNA tal y como hemos mencionado. Lo único de lo que estamos seguros es de que aquí se han producido más cambios.</p>
-</section>
 <section id="distancias" class="level2">
 <h2 class="anchored" data-anchor-id="distancias">Distancias</h2>
 <div class="cell">
@@ -265,7 +269,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(distMat[modernos, neandertales])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>#Ejercicio</p>
+</section>
+</section>
+<section id="ejercicio-2" class="level1">
+<h1>Ejercicio</h1>
 <p>Calcula las distancias medias entre todos los grupos. ¿Cuántas veces mayor es la distancia entre humanos y chimpancés que entre humanos y neandertales? calculando el cociente entre las medias obtenidas de las distancias entre humanos-chimpancés y humanos-neandertales obtenemos que la distancia es 7,5 veces mayor. ¿Cómo calcularías la distancia media entre dos secuencias de humanos modernos?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># La submatriz siguiente contiene ceros en la diagonal. Si queremos excluir</span></span>
@@ -306,14 +313,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>distCofen <span class="ot">&lt;-</span> <span class="fu">cophenetic</span>(mt_nj_rooted)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(distCofen)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>#Ejercicio</p>
+</section>
+<section id="ejercicio-3" class="level1">
+<h1>Ejercicio</h1>
 <p>¿Cuánto se parecen las distancias estimadas a las distancias cofenéticas? Las distancias estimadas y las distancias cofenéticas son muy similares, mostrando una relación lineal cercana a la identidad, lo que indica que el árbol filogenético reconstruido conserva adecuadamente las relaciones de distancia entre las secuencias.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aquí usamos las matricees como vectores:</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(distMat, distCofen, <span class="at">xlab =</span> <span class="st">'Distancias F81'</span>, <span class="at">ylab =</span> <span class="st">'Dist. cofenéticas'</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">'red'</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
 <section id="limpieza-o-filtrado-del-alineamiento" class="level2">
 <h2 class="anchored" data-anchor-id="limpieza-o-filtrado-del-alineamiento">Limpieza o filtrado del alineamiento</h2>
 <div class="cell">
@@ -335,7 +343,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">names</span>(mtdna)), ]</span>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>mtdna37</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>#Ejercicio</p>
+</section>
+</section>
+<section id="ejercicio-4" class="level1">
+<h1>Ejercicio</h1>
 <p>¿Serías capaz de crear otro conjunto de datos, mtdna28, que sólo contenga secuencias del género Homo?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mtdna28 <span class="ot">&lt;-</span> mtdna37[<span class="fu">grepl</span>(<span class="st">'^H.'</span>, <span class="fu">names</span>(mtdna37)), ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -343,7 +354,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>mtdna36 <span class="ot">&lt;-</span> mtdna37[<span class="sc">!</span> <span class="fu">startsWith</span>(<span class="fu">names</span>(mtdna37), <span class="st">'G.gorilla'</span>),]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
 <section id="escoger-el-modelo-de-evolución-molecular" class="level2">
 <h2 class="anchored" data-anchor-id="escoger-el-modelo-de-evolución-molecular">Escoger el modelo de evolución molecular</h2>
 <div class="cell">
@@ -370,9 +380,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">as.pml</span>(modelos, <span class="st">'BIC'</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>#Ejercicio</p>
-<p>¿Cuál es el mejor modelo para secuencias sólo del género Homo? El mejor modelo para las secuencias pertenecientes únicamente al género Homo es TIM2+G(4)+I, ya que es el modelo seleccionado por el criterio BIC. Aunque GTR+G(4)+I presenta una verosimilitud ligeramente mayor, BIC penaliza los modelos con más parámetros y selecciona el modelo que ofrece el mejor equilibrio entre ajuste y complejidad, evitando así el sobreajuste.</p>
 </section>
+</section>
+<section id="ejercicio-5" class="level1">
+<h1>Ejercicio</h1>
+<p>¿Cuál es el mejor modelo para secuencias sólo del género Homo? El mejor modelo para las secuencias pertenecientes únicamente al género Homo es TIM2+G(4)+I, ya que es el modelo seleccionado por el criterio BIC. Aunque GTR+G(4)+I presenta una verosimilitud ligeramente mayor, BIC penaliza los modelos con más parámetros y selecciona el modelo que ofrece el mejor equilibrio entre ajuste y complejidad, evitando así el sobreajuste.</p>
 <section id="máxima-verosimilitud-1" class="level2">
 <h2 class="anchored" data-anchor-id="máxima-verosimilitud-1">Máxima verosimilitud</h2>
 <div class="cell">
@@ -387,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="ejercicio" class="level1">
+<section id="ejercicio-6" class="level1">
 <h1>Ejercicio</h1>
 <pre><code>El árbol no está enraizado. Como las secuencias no son todas de la misma época, utiliza rtt() para situar la raíz en el punto más compatible con la hipótesis de reloj molecular.</code></pre>
 <div class="cell">
@@ -460,7 +472,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="ejercicio-2" class="level1">
+<section id="ejercicio-7" class="level1">
 <h1>Ejercicio</h1>
 <pre><code>¿Cuál es la tasa de mutación global estimada?</code></pre>
 <p>La salida de mt_ml_clock indica explícitamente: Rate: 1.15857e-08 Por tanto, la tasa de mutación global estimada es: 1.15857×10-8</p>
