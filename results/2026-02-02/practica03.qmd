@@ -25,6 +25,7 @@ Usaremos los programas siguientes:
   `PATH`. Puedes consultar el `PATH` mediante `echo $PATH`.
   
 ```{bash}
+#| eval: false
 # download the latest build
 wget http://opengene.org/fastp/fastp
 chmod a+x ./fastp
@@ -64,6 +65,7 @@ de la [Universidad de Tohoku](https://www.tohoku.ac.jp/en/) y forman parte de un
 secuenciaron 16 cepas más de *Bradyrhizobium*.
 
 ```{bash}
+#| eval: false
 if [ ! -e DRR025089_1.fastq.gz ]; then
    # Con la opción "-o /dev/null" nos deshacemos de los mensajes.
    wget -o /dev/null \
@@ -90,6 +92,7 @@ Necesitaremos también el genoma de referencia de `Bradyrhizobium japonicum`.
 Usaremos el de la cepa ACCC 15027 (hay otros).
 
 ```{bash}
+#| eval: false
 # Con la opción "-o /dev/null" nos deshacemos de los mensajes,
 # y con "-O referencia.fa" escogemos un nombre adecuado para el archivo.
 if [ ! -e referencia.fa ]; then
@@ -123,6 +126,7 @@ con la función grep ">" referencia.fa | wc -l, le preguntamos al terminal y nos
 # Control de calidad
 
 ```{bash}
+#| eval: false
 if [ ! -e fastp.html ]; then
    # Si "fastp" está en la carpeta actual y  no en el PATH, escribe "./fastp"
    # en lugar de "fastp".
@@ -172,7 +176,7 @@ El contenido GC se mantiene muy estable entre ambos datasets (~63%), lo que es c
 
 Por último, la estimación del tamaño de inserto en DRR025091 muestra una distribución coherente con un pico alrededor de ~228 pb, consistente con datos de secuenciación paired-end. En conjunto, ambos datasets presentan una calidad adecuada tras el filtrado y son comparables entre sí, siendo aptos para su uso en análisis posteriores como el alineamiento al genoma de referencia y la detección de variantes.
 ```{bash}
-
+#| eval: false
 ./fastp \
 -i DRR025091_1.fastq.gz \
 -o DRR025091_1.clean.fastq \
@@ -197,6 +201,7 @@ que generarlos de nuevo cada vez que compilemos este documento si el archivo fin
 ya está presente en la carpeta de trabajo.
 
 ```{bash}
+#| eval: false
 if [ ! -e DRR025089.bam ]; then
     if [ ! -e DRR025089_unsorted.bam ]; then
         if [ ! -e DRR025089.sam ]; then
@@ -226,6 +231,7 @@ fi
 
 La idea es que el genoma de referencia se descargue solo si no existe todavía y que pueda eliminarse más adelante si ya no se necesita, una vez generado el alineamiento final. Lo correcto sería guardarlo como archivo auxiliar dentro del flujo de mapeo y condicionar su descarga a la ausencia del fichero referencia.fa.De este modo, el archivo solo se descarga una vez. Una vez generado el archivo BAM final e indexado el genoma, podría borrarse si se quisiera ahorrar espacio, aunque en la práctica suele conservarse por reproducibilidad.
 ```{bash}
+#| eval: false
 if [ ! -e referencia.fa ]; then
     wget URL_DEL_GENOMA -O referencia.fa
 fi
@@ -235,6 +241,7 @@ fi
    que `fastp` había combinado (`DR025089_m_clean.fastq`).
 Sí, además de alinear las lecturas paired-end limpias (DRR025089_1.clean.fastq y DRR025089_2.clean.fastq), se puede alinear también el archivo de lecturas fusionadas generado por fastp (DRR025089_m_clean.fastq). Para ello habría que crear un bloque adicional usando bwa mem con una sola entrada, ya que en este caso ya no son pares de lecturas sino secuencias fusionadas:
 ```{bash}
+#| eval: false
 bwa mem referencia.fa DRR025089_m_clean.fastq > DRR025089_merged.sam
 
 ```
@@ -245,6 +252,7 @@ Después, ese archivo SAM se convertiría igualmente en BAM, se ordenaría y, si
    
 La función adecuada es samtools merge. Se usaría cuando se quisiera combinar, por ejemplo, el BAM procedente de las lecturas paired-end con el BAM procedente de las lecturas fusionadas:
 ```{bash}
+#| eval: false
 samtools merge BAM_combinado.bam archivo1.bam archivo2.bam
 
 ```
@@ -254,12 +262,14 @@ samtools merge BAM_combinado.bam archivo1.bam archivo2.bam
    su índice y el archivo SAM?
    
 ```{bash}
+#| eval: false
 du -h DRR025089_1.fastq.gz DRR025089_2.fastq.gz referencia.fa referencia.fa.* DRR025089.sam
 
 ```
 
 
 ```{bash}
+#| eval: false
 ls -lh DRR025089_1.fastq.gz DRR025089_2.fastq.gz referencia.fa referencia.fa.* DRR025089.sam
 
 ```
@@ -268,11 +278,13 @@ En general, los archivos FASTQ comprimidos ocupan bastante espacio, pero el arch
 4. Podíamos haber ahorrado algún paso aprovechando las *tuberías* de BASH:
 
 ```{bash}
+#| eval: false
 bwa mem -M -R '@RG\tID:DRR025089\tSM:SAMD00022947' referencia.fa DRR025089_1.clean.fastq DRR025089_2.clean.fastq \
 | samtools view -b \
 | samtools sort -o DRR025089.bam
 ```
 ```{bash}
+#| eval: false
 samtools index DRR025089.bam
 ```
 
@@ -298,6 +310,7 @@ Antes de proseguir, es importante comprobar el resultado del paso anterior.
 Podemos extraer algunas estadísticas del archivo BAM así:
 
 ```{bash}
+#| eval: false
 if [ ! -e DRR025089.stats.txt ]; then
    samtools stats DRR025089.bam > DRR025089.stats.txt
 fi
@@ -312,6 +325,7 @@ Ahora podemos importar los datos de cobertura a una sesión de R y representarlo
 gráficamente:
 
 ```{r}
+#| eval: false
 COV <- read.table('COV.txt',
                   col.names = c('intervalo', 'cobertura', 'bases'))
 plot(COV$cobertura, COV$bases, type = 'l')
@@ -335,6 +349,7 @@ La presencia de regiones con coberturas significativamente más altas que el res
 4. Visualiza los alineamientos en el terminal con la orden siguiente:
 
 ```{bash}
+#| eval: false
 samtools tview DRR025089.bam referencia.fa
 ```
 
@@ -343,6 +358,7 @@ samtools tview DRR025089.bam referencia.fa
 # Identificación de variantes
 
 ```{bash}
+#| eval: false
 if [ ! -e DRR025089.vcf ]; then
    freebayes -p 1 -f referencia.fa DRR025089.bam > DRR025089.vcf
 fi

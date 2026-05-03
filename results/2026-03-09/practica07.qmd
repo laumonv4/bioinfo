@@ -1,5 +1,6 @@
 ---
 title: "Visualización y exploración de datos"
+format: html
 lang: es
 date: today
 execute: 
@@ -7,12 +8,7 @@ execute:
   error: true
 engine: knitr
 bibliography: ../../doc/references.bib
-language:
-   title-block-published: "Última actualización:"
-   section-title-references: "Bibliografía"
-format:
-   html:
-      embed-resources: true
+editor: visual
 ---
 
 # Preparación
@@ -167,7 +163,6 @@ ggplot(data = gwas,
 ```{r}
 #| fig.width: 10
 #| fig.height: 10
-#| warning: false
 #| warning: false
 
 

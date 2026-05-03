@@ -316,7 +316,7 @@ Además, el bloque incluye la opción `eval: false`, para que no se ejecute. Cam
 la opción cuando 
 
 ```{r}
-#| eval: true
+#| eval: false
 
 # Si ya existe la tabla, la cargamos:
 if (file.exists('equinodermata.Rds')) {
@@ -344,7 +344,7 @@ de cordados que de equinodermos, no es sorprendente que haya más dominios prote
 conocidos de cordados. Por cierto, los cordados somos el taxon 7711.
 
 ```{r}
-#| eval: true
+#| eval: false
 
 if (file.exists('chordata.Rds')) {
    chordata <- readRDS(file = 'chordata.Rds')
@@ -371,6 +371,7 @@ equinodermos que no aparecen en cordados. Vamos a comprobarlo con la función
 segundo:
 
 ```{r}
+#| eval: false
 SoloEquinodermos <- setdiff(equinodermata$accession, chordata$accession)
 # Del marco de datos "equinodermata" selecciono las filas que corresponden a los
 # dominios exclusivos de equinodermos, y las filas "accession" y "name":
@@ -383,6 +384,7 @@ kable(equinodermata[equinodermata$accession %in% SoloEquinodermos,
 # Información sobre la sesión
 
 ```{r}
+#| eval: false
 sessionInfo()
 ```
 

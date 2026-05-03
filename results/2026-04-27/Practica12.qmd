@@ -10,10 +10,10 @@ engine: knitr
 bibliography: ../../doc/references.bib
 editor: visual
 ---
+
 ```{r}
 BiocManager::install(lib = './R', version = '3.22')
 ```
-
 
 ## Datos
 
@@ -157,7 +157,6 @@ res_region <- results(dds1, contrast = c("region", "Panama", "Maine"))
 res_region
 ```
 
-
 Usa summary() sobre los resultados para ver el número de genes diferencialmente expresados entre cada par de condiciones.
 
 ```{r}
@@ -168,8 +167,8 @@ summary(res)
 summary(res_region)
 ```
 
-
 ¿Cuál es la tasa de falsos positivos (FDR)?
+
 ```{r}
 res$padj
 ```
@@ -177,8 +176,6 @@ res$padj
 ```{r}
 sum(res$padj < 0.1, na.rm = TRUE) / nrow(res)
 ```
-
-
 
 ## Gráficas
 
@@ -191,6 +188,7 @@ resShrink <- lfcShrink(dds1, coef = 'temp_high_vs_low',
                        type = 'normal')
 plotMA(resShrink)
 ```
+
 # Ejercicio 4
 
 ¿Sabrías hacer una gráfica volcán?
@@ -201,7 +199,9 @@ ggplot(data = resShrink,
    geom_point() 
    
 ```
+
 ## Extraer datos transformados
+
 ```{r}
 dds2 <- vst(dds1)
 NormCounts <- assay(dds2)
@@ -228,7 +228,6 @@ A partir de esta ordenación, se seleccionan los 100 genes más reprimidos (con 
 # Ejercicio 6
 
 En este enlace analizan exactamente los mismos datos con otro paquete de R: limma. Una de sus conclusiones es se sobreexpresan más genes en temperatura baja que en temperatura alta. ¿Confirma tu análisis esta conclusión?¿Cómo se comparan estos resultados con los tuyos?
-
 
 El análisis realizado con DESeq2 es consistente con los resultados obtenidos mediante el paquete limma. En primer lugar, al examinar el resumen de resultados (summary(res)), se observa que el número de genes con log2FoldChange negativo es mayor que el de genes con log2FoldChange positivo. Dado que el contraste se ha definido como alta frente a baja temperatura, los valores negativos indican una mayor expresión en condiciones de baja temperatura, lo que confirma la conclusión de que se sobreexpresan más genes en temperatura baja que en temperatura alta.
 
