@@ -35,9 +35,9 @@ del género *Trypanosoma*, así como su anotación funcional, en formato
 Veamos primero de qué opciones disponemos:
 
 ```{bash}
-if [ ! -e  trypanosoma_annotated.txt ]; then
-   datasets summary genome taxon Trypanosoma --annotated --as-json-lines | \
-   dataformat tsv genome --fields \
+if [ ! -e trypanosoma_annotated.txt ]; then
+   ~/.local/bin/datasets summary genome taxon Trypanosoma --annotated --as-json-lines | \
+   ~/.local/bin/dataformat tsv genome --fields \
       accession,organism-name,assminfo-release-date,assminfo-level,assmstats-atgc-count,annotinfo-featcount-gene-total,assminfo-type,assminfo-status > trypanosoma_annotated.txt
 fi
 ```
