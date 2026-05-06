@@ -2238,7 +2238,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Última actualización:</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">3 de mayo de 2026</p>
+      <p class="date">6 de mayo de 2026</p>
     </div>
   </div>
   
@@ -2274,18 +2274,15 @@ vertical-align: -.125em;
 </div>
 <p>La línea larga que sigue a <code>--fields</code> especifica qué información sobre los genomas queremos ver en la tabla. Para saber qué campos se pueden seleccionar, puedes ejecutar la orden <code>dataformat tsv genome --help</code>. Veamos esa tabla en el informe HTML en un formato adecuado.</p>
 <div class="cell" data-messages="false">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;kableExtra&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in library(&quot;kableExtra&quot;): no hay paquete llamado &#39;kableExtra&#39;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>genomas <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;trypanosoma_annotated.txt&#39;</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;knitr&#39;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>genomas <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;trypanosoma_annotated.txt&#39;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in read.table(&quot;trypanosoma_annotated.txt&quot;, header = TRUE, sep = &quot;\t&quot;): no lines available in input</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(genomas) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(genomas) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in kable(genomas) %&gt;% kable_styling(): no se pudo encontrar la función &quot;%&gt;%&quot;</code></pre>
+<pre><code>Error: objeto &#39;genomas&#39; no encontrado</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -2309,35 +2306,35 @@ vertical-align: -.125em;
 <h1>Ordenar una tabla</h1>
 <p>La función <code>order()</code> produce los índices ordenados de los elementos de un vector. Consulta su ayuda y experimenta con ella. Vamos a usar esta función para ordenar las filas del marco de datos <code>genomas</code> por fecha, que es la tercera columna, llamada <code>Assembly.Release.Date</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observa que asignamos el resultado del ordenamiento al mismo objeto que</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># estamos ordenando, para guardar el resultado sin tener que generar otro objeto.</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>genomas <span class="ot">&lt;-</span> genomas[<span class="fu">order</span>(genomas<span class="sc">$</span>Assembly.Release.Date), ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observa que asignamos el resultado del ordenamiento al mismo objeto que</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># estamos ordenando, para guardar el resultado sin tener que generar otro objeto.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>genomas <span class="ot">&lt;-</span> genomas[<span class="fu">order</span>(genomas<span class="sc">$</span>Assembly.Release.Date), ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;genomas&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(genomas) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(genomas) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in kable(genomas) %&gt;% kable_styling(): no se pudo encontrar la función &quot;%&gt;%&quot;</code></pre>
+<pre><code>Error: objeto &#39;genomas&#39; no encontrado</code></pre>
 </div>
 </div>
 <p>Casualmente, la fecha estaba en formato “%Y-%m-%d”, en el que el orden alfabético coincide con el orden temporal. Al crear <code>genomas</code>, <code>read.table()</code> había interpretado la tercera columna como texto. Para que las fechas sean entendidas como tales, podemos usar la función <code>as.Date()</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>Assembly.Release.Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(genomas<span class="sc">$</span>Assembly.Release.Date,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&#39;%Y-%m-%d&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>Assembly.Release.Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(genomas<span class="sc">$</span>Assembly.Release.Date,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&#39;%Y-%m-%d&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;genomas&#39; no encontrado</code></pre>
 </div>
 </div>
 <p>Una vez convertida en “fecha”, la columna “Assembly.Release.Date” puede usarse correctamente, por ejemplo, como eje de abscisas en una gráfica:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aquí usamos &quot;cumsum()&quot; para obtener la suma acumulada del número de bases</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># secuenciadas.</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> genomas<span class="sc">$</span>Assembly.Release.Date,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> <span class="fu">cumsum</span>(genomas<span class="sc">$</span>Assembly.Stats.ATGC.Count),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&#39;b&#39;</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&#39;Fecha de publicación&#39;</span>,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&#39;Longitud total secuenciada (bp)&#39;</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&#39;Genomas anotados de Trypanosoma&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aquí usamos &quot;cumsum()&quot; para obtener la suma acumulada del número de bases</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># secuenciadas.</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> genomas<span class="sc">$</span>Assembly.Release.Date,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> <span class="fu">cumsum</span>(genomas<span class="sc">$</span>Assembly.Stats.ATGC.Count),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&#39;b&#39;</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&#39;Fecha de publicación&#39;</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&#39;Longitud total secuenciada (bp)&#39;</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&#39;Genomas anotados de Trypanosoma&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;genomas&#39; no encontrado</code></pre>
 </div>
@@ -2347,12 +2344,12 @@ vertical-align: -.125em;
 <h1>Archivos JSON y GFF</h1>
 <p>Habiendo visto las opciones, decidimos descargar el genoma y la anotación funcional de una de ellas, por ejemplo GCA_022059095.1.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ncbi_data/data/GCA_022059095.1/genomic.gff <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ncbi_dataset.zip <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>      <span class="ex">datasets</span> download genome accession GCA_022059095.1 <span class="at">--include</span> genome,gff3</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">fi</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">unzip</span> ncbi_dataset.zip</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ncbi_data/data/GCA_022059095.1/genomic.gff <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ncbi_dataset.zip <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>      <span class="ex">datasets</span> download genome accession GCA_022059095.1 <span class="at">--include</span> genome,gff3</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">fi</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">unzip</span> ncbi_dataset.zip</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>bash: línea 3: datasets: orden no encontrada
 unzip:  cannot find or open ncbi_dataset.zip, ncbi_dataset.zip.zip or ncbi_dataset.zip.ZIP.</code></pre>
@@ -2360,8 +2357,8 @@ unzip:  cannot find or open ncbi_dataset.zip, ncbi_dataset.zip.zip or ncbi_datas
 </div>
 <p>En la carpeta <code>ncbi_dataset/data</code> encontrarás un archivo en formato JSON con información sobre los datos descargados, y un archivo en formato “jsonlines”. El formato “jsonlines” es una versión de JSON en la que cada registro ocupa una sola línea. Esto dificulta la visualización, pero agiliza el análisis de los datos en la línea de órdenes. Para ver mejor el contenido del archivo con la extensión <code>jsonl</code>, podríamos utilizar el programa <a href="https://jqlang.org/"><code>jq</code></a>, o bien utilizar la función <code>prettify()</code> del paquete <code>jsonlite</code> de R:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;jsonlite&#39;</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify</span>(<span class="fu">readLines</span>(<span class="st">&#39;ncbi_dataset/data/assembly_data_report.jsonl&#39;</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;jsonlite&#39;</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify</span>(<span class="fu">readLines</span>(<span class="st">&#39;ncbi_dataset/data/assembly_data_report.jsonl&#39;</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in file(con, &quot;r&quot;): no fue posible abrir el archivo
 &#39;ncbi_dataset/data/assembly_data_report.jsonl&#39;: No existe el archivo o el
@@ -2373,11 +2370,11 @@ directorio</code></pre>
 </div>
 <p>Volviendo a lo que nos interesa, vamos a cargar en un marco de datos de una sesión de R la anotación funcional del genoma escogido. Aunque existen funciones específicas para leer archivos GFF, usaremos la función básica <code>read.table()</code>, con alguna precaución.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Como no tiene cabecera, le damos los nombres de las columnas:</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>gff <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;ncbi_dataset/data/GCA_022059095.1/genomic.gff&#39;</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;seqid&#39;</span>, <span class="st">&#39;source&#39;</span>, <span class="st">&#39;type&#39;</span>, <span class="st">&#39;start&#39;</span>, <span class="st">&#39;end&#39;</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&#39;score&#39;</span>, <span class="st">&#39;strand&#39;</span>, <span class="st">&#39;phase&#39;</span>, <span class="st">&#39;attributes&#39;</span>),</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">quote =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Como no tiene cabecera, le damos los nombres de las columnas:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>gff <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;ncbi_dataset/data/GCA_022059095.1/genomic.gff&#39;</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;seqid&#39;</span>, <span class="st">&#39;source&#39;</span>, <span class="st">&#39;type&#39;</span>, <span class="st">&#39;start&#39;</span>, <span class="st">&#39;end&#39;</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&#39;score&#39;</span>, <span class="st">&#39;strand&#39;</span>, <span class="st">&#39;phase&#39;</span>, <span class="st">&#39;attributes&#39;</span>),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">quote =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in file(file, &quot;rt&quot;): no fue posible abrir el archivo
 &#39;ncbi_dataset/data/GCA_022059095.1/genomic.gff&#39;: No existe el archivo o el
@@ -2393,31 +2390,31 @@ directorio</code></pre>
 <h2 class="anchored" data-anchor-id="seleccionar-filas-y-columnas">Seleccionar filas y columnas</h2>
 <p>En el objeto <code>gff</code> hay 5 valores diferentes de la variable <code>type</code>: “CDS”, “exon”, “gene”, “mRNA” y “region”. Puedes comprobarlo con <code>unique(gff$type)</code>, o con <code>table(gff$type)</code>. Podemos separar la tabla en cinco marcos de datos, que correspondan a esos cinco tipos de anotación funcional.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos un vector booleano como índice de las filas.</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># En las tablas nuevas, no necesitamos la tercera columna</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># y la eliminamos con el &quot;-3&quot;.</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>gene   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;gene&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos un vector booleano como índice de las filas.</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># En las tablas nuevas, no necesitamos la tercera columna</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># y la eliminamos con el &quot;-3&quot;.</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>gene   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;gene&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mrna   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;mRNA&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mrna   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;mRNA&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>exon   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;exon&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>exon   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;exon&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cds    <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;CDS&#39;</span>,    <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cds    <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;CDS&#39;</span>,    <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>region <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;region&#39;</span>, <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>region <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;region&#39;</span>, <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alinear las órdenes nos ayuda a detectar posibles errores</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alinear las órdenes nos ayuda a detectar posibles errores</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2437,16 +2434,16 @@ directorio</code></pre>
 <h2 class="anchored" data-anchor-id="agrupar-operar-y-resumir">Agrupar, operar y resumir</h2>
 <p>Habiendo separado los diferentes tipos de anotaciones, ahora resulta fácil obtener estadísticas de cada uno. Podemos querer una tabla que nos diga para cada tipo de anotación, cuántos elementos de ese tipo hay en el genoma, qué longitud media tienen y qué desviación estándar. Hay diferentes maneras de conseguirlo. La más rudimentaria implicaría obtener cada estadística individualmente y después juntarlas en una nueva tabla. Por ejemplo, para regiones codificantes (“CDS”):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cds<span class="sc">$</span>longitud <span class="ot">&lt;-</span> cds<span class="sc">$</span>end <span class="sc">-</span> cds<span class="sc">$</span>start <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cds<span class="sc">$</span>longitud <span class="ot">&lt;-</span> cds<span class="sc">$</span>end <span class="sc">-</span> cds<span class="sc">$</span>start <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;cds&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">tipo       =</span> <span class="st">&#39;CDS&#39;</span>,</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>   número     <span class="ot">=</span> <span class="fu">nrow</span>(cds),</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.Media =</span> <span class="fu">mean</span>(cds<span class="sc">$</span>longitud),</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.SD    =</span> <span class="fu">sd</span>(cds<span class="sc">$</span>longitud),</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">tipo       =</span> <span class="st">&#39;CDS&#39;</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>   número     <span class="ot">=</span> <span class="fu">nrow</span>(cds),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.Media =</span> <span class="fu">mean</span>(cds<span class="sc">$</span>longitud),</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.SD    =</span> <span class="fu">sd</span>(cds<span class="sc">$</span>longitud),</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;cds&#39; no encontrado</code></pre>
 </div>
@@ -2466,68 +2463,67 @@ directorio</code></pre>
 </div>
 <p>Este tipo de operación es bastante habitual, y se puede hacer sin necesidad de crear marcos de datos parciales. La función <code>split()</code> divide las líneas de un marco de datos en tantos marcos de datos como valores diferentes (<em>niveles</em>) haya en el <em>factor</em> que usemos para definir los grupos. El resultado es un solo objeto: una <em>lista</em> de marcos de datos:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Esto es una lista de marcos de datos:</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>porTipo <span class="ot">&lt;-</span> <span class="fu">split</span>(gff, gff<span class="sc">$</span>type)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Esto es una lista de marcos de datos:</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>porTipo <span class="ot">&lt;-</span> <span class="fu">split</span>(gff, gff<span class="sc">$</span>type)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estas funciones nos permiten inspeccionar algunas características</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># del nuevo objeto:</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estas funciones nos permiten inspeccionar algunas características</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># del nuevo objeto:</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(porTipo, class)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(porTipo, class)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(porTipo, nrow)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(porTipo, nrow)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
 </div>
 </div>
 <p>La función <code>sapply()</code>, toma al menos dos argumentos: una lista (o vector) y una función. Devuelve un vector (si es posible) con los resultados de aplicar la función a cada elemento de la lista. Con esto, el resumen que queríamos se puede obtener así:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Primero calculamos las longitudes de todas las anotaciones en gff:</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>gff<span class="sc">$</span>longitud <span class="ot">&lt;-</span> gff<span class="sc">$</span>end <span class="sc">-</span> gff<span class="sc">$</span>start <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Primero calculamos las longitudes de todas las anotaciones en gff:</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>gff<span class="sc">$</span>longitud <span class="ot">&lt;-</span> gff<span class="sc">$</span>end <span class="sc">-</span> gff<span class="sc">$</span>start <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Volvemos a separar las filas por tipo, ahora que tenemos las longitudes:</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>porTipo <span class="ot">&lt;-</span> <span class="fu">split</span>(gff, gff<span class="sc">$</span>type)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Volvemos a separar las filas por tipo, ahora que tenemos las longitudes:</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>porTipo <span class="ot">&lt;-</span> <span class="fu">split</span>(gff, gff<span class="sc">$</span>type)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">tipo =</span> <span class="fu">names</span>(porTipo),</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>   número <span class="ot">=</span> <span class="fu">sapply</span>(porTipo, nrow),</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.Media =</span> <span class="fu">sapply</span>(porTipo, <span class="cf">function</span>(x) <span class="fu">mean</span>(x<span class="sc">$</span>longitud)),</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.SD    =</span> <span class="fu">sapply</span>(porTipo, <span class="cf">function</span>(x)   <span class="fu">sd</span>(x<span class="sc">$</span>longitud))</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">tipo =</span> <span class="fu">names</span>(porTipo),</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>   número <span class="ot">=</span> <span class="fu">sapply</span>(porTipo, nrow),</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.Media =</span> <span class="fu">sapply</span>(porTipo, <span class="cf">function</span>(x) <span class="fu">mean</span>(x<span class="sc">$</span>longitud)),</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.SD    =</span> <span class="fu">sapply</span>(porTipo, <span class="cf">function</span>(x)   <span class="fu">sd</span>(x<span class="sc">$</span>longitud))</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aprovechamos para mostrar nombres de columnas más legibles:</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resumen,</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;Tipo&#39;</span>, <span class="st">&#39;Número&#39;</span>, <span class="st">&#39;Longitud Media&#39;</span>,</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Desviación estándar&#39;</span>),</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aprovechamos para mostrar nombres de columnas más legibles:</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resumen,</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;Tipo&#39;</span>, <span class="st">&#39;Número&#39;</span>, <span class="st">&#39;Longitud Media&#39;</span>,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Desviación estándar&#39;</span>),</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in kable(resumen, col.names = c(&quot;Tipo&quot;, &quot;Número&quot;, &quot;Longitud Media&quot;, : no se pudo encontrar la función &quot;%&gt;%&quot;</code></pre>
+<pre><code>Error: objeto &#39;resumen&#39; no encontrado</code></pre>
 </div>
 </div>
 <p>Las operaciones de agrupar y resumir se pueden hacer también con funciones del paquete <code>dplyr</code>, que forma parte de un conjunto de paquetes diseñados para funcionar armoniosamente entre ellos. Son los paquetes del <a href="https://tidyverse.org/"><code>tidyverse</code></a>, muy populares en ciencia de datos. Casi se pueden considerar un dialecto de R. Las funciones (o <em>verbos</em>) más interesantes de <code>dplyr</code> son <code>group_by()</code> y <code>summarise()</code>.</p>
 <div class="cell" data-meassage="false">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;dplyr&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;dplyr&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
@@ -2542,20 +2538,20 @@ Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observa el uso de &quot;tuberías&quot; (&quot;%&gt;%&quot;):</span></span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> gff <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(type) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>   número     <span class="ot">=</span> <span class="fu">n</span>(),</span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">Long.Media =</span> <span class="fu">mean</span>(longitud),</span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">Long.SD    =</span> <span class="fu">sd</span>(longitud)</span>
-<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observa el uso de &quot;tuberías&quot; (&quot;%&gt;%&quot;):</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> gff <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(type) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>   número     <span class="ot">=</span> <span class="fu">n</span>(),</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">Long.Media =</span> <span class="fu">mean</span>(longitud),</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">Long.SD    =</span> <span class="fu">sd</span>(longitud)</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resumen,</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;Tipo&#39;</span>, <span class="st">&#39;Número&#39;</span>, <span class="st">&#39;Longitud Media&#39;</span>,</span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Desviación estándar&#39;</span>),</span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resumen,</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;Tipo&#39;</span>, <span class="st">&#39;Número&#39;</span>, <span class="st">&#39;Longitud Media&#39;</span>,</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Desviación estándar&#39;</span>),</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in kable_styling(., full_width = FALSE): no se pudo encontrar la función &quot;kable_styling&quot;</code></pre>
 </div>
@@ -2587,16 +2583,16 @@ Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
 </ul>
 <p>Antes hemos usado el operador lógico <code>==</code> para crear un vector booleano con el que seleccionar algunas líneas. En este caso usaremos el operador <code>%in%</code>, que compara conjuntos o vectores de caracteres:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>candidatos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;JAJSEB010000048.1&quot;</span>,</span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000012.1&quot;</span>,</span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000020.1&quot;</span>,</span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000016.1&quot;</span>,</span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000033.1&quot;</span>)</span>
-<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>interesantes <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>seqid <span class="sc">%in%</span> candidatos, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>candidatos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;JAJSEB010000048.1&quot;</span>,</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000012.1&quot;</span>,</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000020.1&quot;</span>,</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000016.1&quot;</span>,</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000033.1&quot;</span>)</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>interesantes <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>seqid <span class="sc">%in%</span> candidatos, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(interesantes)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(interesantes)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;interesantes&#39; no encontrado</code></pre>
 </div>
@@ -2624,31 +2620,31 @@ Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
 </ul>
 <p>Aunque existen programas específicos para comparar segmentos cromosómicos (<a href="https://github.com/arq5x/bedtools2">bedtools</a>), continuaremos practicando con marcos de datos de R. Ahora ya no podemos usar <code>%in%</code>, porque de cada cromosoma queremos unos segmentos diferentes. Una estrategia es crear cinco filtros booleanos, y después combinarlos con la operación lógica “o”, es decir <code>|</code>. En cada filtro seleccionaremos las anotaciones que estén completamente contenidas en el intervalo indicado.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000048.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">184638</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">253478</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000048.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">184638</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">253478</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000012.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">133444</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">348860</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000012.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">133444</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">348860</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>f3 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000020.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">73393</span>  <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">149614</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>f3 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000020.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">73393</span>  <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">149614</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>f4 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000016.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">161247</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">272009</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>f4 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000016.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">161247</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">272009</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>f5 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000033.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">123135</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">170687</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>f5 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000033.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">123135</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">170687</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> f1 <span class="sc">|</span> f2 <span class="sc">|</span> f3 <span class="sc">|</span> f4 <span class="sc">|</span> f5</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> f1 <span class="sc">|</span> f2 <span class="sc">|</span> f3 <span class="sc">|</span> f4 <span class="sc">|</span> f5</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;f1&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>interesantes <span class="ot">&lt;-</span> gff[f, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>interesantes <span class="ot">&lt;-</span> gff[f, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
 </div>
@@ -2685,28 +2681,28 @@ Nota
 </div>
 <p>El código siguiente descarga la tabla de genomas de <em>Trypanosoma</em> ensamblados a nivel de cromosoma, de la <a href="https://www.ebi.ac.uk/ena/">European Nucleotide Archive</a></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aprenderemos esta sintaxis en el próximo tema:</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>portal <span class="ot">&lt;-</span> <span class="st">&#39;https://www.ebi.ac.uk/ena/portal/api/search?&#39;</span></span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="st">&#39;result=assembly&amp;&#39;</span></span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>query  <span class="ot">&lt;-</span> <span class="st">&#39;query=tax_tree(5690)&amp;&#39;</span></span>
-<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>fields <span class="ot">&lt;-</span> <span class="st">&#39;fields=accession%2Cversion%2Cscientific_name%2Cbase_count%2Clast_updated%2Cassembly_level&#39;</span></span>
-<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>URL <span class="ot">&lt;-</span> <span class="fu">paste0</span>(portal, result, query, fields)</span>
-<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>genomas.ena <span class="ot">&lt;-</span> <span class="fu">read.table</span>(URL, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>, <span class="at">quote =</span> <span class="st">&#39;&#39;</span>, <span class="at">na.strings =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aprenderemos esta sintaxis en el próximo tema:</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>portal <span class="ot">&lt;-</span> <span class="st">&#39;https://www.ebi.ac.uk/ena/portal/api/search?&#39;</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="st">&#39;result=assembly&amp;&#39;</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>query  <span class="ot">&lt;-</span> <span class="st">&#39;query=tax_tree(5690)&amp;&#39;</span></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>fields <span class="ot">&lt;-</span> <span class="st">&#39;fields=accession%2Cversion%2Cscientific_name%2Cbase_count%2Clast_updated%2Cassembly_level&#39;</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>URL <span class="ot">&lt;-</span> <span class="fu">paste0</span>(portal, result, query, fields)</span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>genomas.ena <span class="ot">&lt;-</span> <span class="fu">read.table</span>(URL, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>, <span class="at">quote =</span> <span class="st">&#39;&#39;</span>, <span class="at">na.strings =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Tanto el nuevo marco de datos <code>genomas.ena</code>, como el que habíamos creado antes con datos de NCBI, <code>genomas</code>, tienen una columna de valores únicos: “accession” o “Assembly.Accession”. Para los registros comunes entre las dos tablas, podemos transferir información de una a otra. Por ejemplo, vamos a añadir a la tabla <code>genomas</code> la fecha de última modificación del ensamblaje, que encontramos en <code>genomas.ena</code>. Para asegurarnos de que a cada ensamblaje le asignamos el valor correcto, usaremos la función <code>match()</code>.</p>
 <p>En <code>genomas</code>, “Assembly.Accession” incluye un sufijo que indica el número de versión del ensamblaje. Este sufijo no está presente en <code>genomas.ena$accession</code>. Para hacer comparables ambas tablas, quitaremos el sufijo de la primera tabla.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Este es un uso avanzado de `sapply()` y `strsplit()`:</span></span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>acc <span class="ot">&lt;-</span> <span class="fu">sapply</span>(</span>
-<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">strsplit</span>(genomas<span class="sc">$</span>Assembly.Accession, <span class="st">&#39;.&#39;</span>, <span class="at">fixed =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">&#39;[&#39;</span>, <span class="dv">1</span></span>
-<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Este es un uso avanzado de `sapply()` y `strsplit()`:</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>acc <span class="ot">&lt;-</span> <span class="fu">sapply</span>(</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">strsplit</span>(genomas<span class="sc">$</span>Assembly.Accession, <span class="st">&#39;.&#39;</span>, <span class="at">fixed =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">&#39;[&#39;</span>, <span class="dv">1</span></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;genomas&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>last_updated <span class="ot">&lt;-</span> genomas.ena[<span class="fu">match</span>(genomas<span class="sc">$</span>acc,</span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>                                          genomas.ena<span class="sc">$</span>accession),</span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&#39;last_updated&#39;</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>last_updated <span class="ot">&lt;-</span> genomas.ena[<span class="fu">match</span>(genomas<span class="sc">$</span>acc,</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>                                          genomas.ena<span class="sc">$</span>accession),</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&#39;last_updated&#39;</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;genomas&#39; no encontrado</code></pre>
 </div>
@@ -2732,89 +2728,89 @@ Nota
 <p>En los archivos GFF, la columna <code>attributes</code> es una lista de parejas de valores “clave = valor”, separadas por punto y coma (“;”). Habiendo creado antes un marco de datos para cada tipo de anotación (genes, CDS, etc.), es de suponer que todas las líneas de un marco de datos tendrán el mismo conjunto de parejas “clave = valor”. Aquí se muestra una manera de extraer esta información y convertirla en columnas adicionales de un marco de datos.</p>
 <p>Veamos el primer valor de <code>attributes</code> en el marco de datos <code>gene</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>gene[<span class="dv">1</span>, <span class="st">&#39;attributes&#39;</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>gene[<span class="dv">1</span>, <span class="st">&#39;attributes&#39;</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
 </div>
 </div>
 <p>La función <code>strsplit()</code> en R divide una cadena de caracteres en partes delimitadas por algún carácter o expresión regular. En este caso, queremos dividir esa cadena por los puntos y coma:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(gene[<span class="dv">1</span>, <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(gene[<span class="dv">1</span>, <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
 </div>
 </div>
 <p><code>strsplit()</code> ha dividido la cadena de caracteres original en una <em>lista</em> que contiene un único vector de cinco cadenas de caracteres. El motivo de generar una lista en lugar de un simple vector es que <code>strsplit()</code> puede actuar simultáneamente sobre todas las cadenas de caracteres de un vector, y necesita repartir el resultado en diferentes vectores:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(gene[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(gene[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
 </div>
 </div>
 <p>Podemos guardar la lista de los vectores de los atributos de cada gen en un nuevo objeto, para continuar operando sobre el después:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>atributos <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(gene[ , <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>atributos <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(gene[ , <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Veamos los 6 primeros elementos:</span></span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atributos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Veamos los 6 primeros elementos:</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atributos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;atributos&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y la longitud total de la lista:</span></span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(atributos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y la longitud total de la lista:</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(atributos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;atributos&#39; no encontrado</code></pre>
 </div>
 </div>
 <p>Una vez tenemos una lista de los atributos de cada gen, podemos usar funciones de la familia <code>lapply()</code> para operar en paralelo sobre todos sus elementos. Examina la ayuda de <code>lapply()</code> para familiarizarte con estas funciones. A continuación, la usaremos para separar la clave del valor en todos los atributos de todos los genes. Además asignaremos la clave como nombre del valor correspondiente (en R, los elementos de un vector pueden tener nombre).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>atributos2 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>   atributos,</span>
-<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Definimos una función para aplicarla a cada elemento de &quot;atributos&quot;.</span></span>
-<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">function</span>(x) {</span>
-<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># &quot;x&quot; es un vector de atributos de un solo gen</span></span>
-<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>      lista <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(x, <span class="st">&#39;=&#39;</span>)</span>
-<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>      <span class="co"># &quot;lista&quot; es una lista de vectores de 2 componentes, clave y valor</span></span>
-<span id="cb102-8"><a href="#cb102-8" aria-hidden="true" tabindex="-1"></a>      valores <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lista, <span class="st">&#39;[&#39;</span>, <span class="dv">2</span>)</span>
-<span id="cb102-9"><a href="#cb102-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">names</span>(valores) <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lista, <span class="st">&#39;[&#39;</span>, <span class="dv">1</span>)</span>
-<span id="cb102-10"><a href="#cb102-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(valores)</span>
-<span id="cb102-11"><a href="#cb102-11" aria-hidden="true" tabindex="-1"></a>   }</span>
-<span id="cb102-12"><a href="#cb102-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>atributos2 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>   atributos,</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Definimos una función para aplicarla a cada elemento de &quot;atributos&quot;.</span></span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">function</span>(x) {</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># &quot;x&quot; es un vector de atributos de un solo gen</span></span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>      lista <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(x, <span class="st">&#39;=&#39;</span>)</span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>      <span class="co"># &quot;lista&quot; es una lista de vectores de 2 componentes, clave y valor</span></span>
+<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a>      valores <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lista, <span class="st">&#39;[&#39;</span>, <span class="dv">2</span>)</span>
+<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">names</span>(valores) <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lista, <span class="st">&#39;[&#39;</span>, <span class="dv">1</span>)</span>
+<span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(valores)</span>
+<span id="cb100-11"><a href="#cb100-11" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb100-12"><a href="#cb100-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;atributos&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atributos2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atributos2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
 </div>
 </div>
 <p>El orden de los atributos se ha mantenido idéntico al orden de sus correspondientes genes. Por eso podemos ahora añadir las columnas de atributos que queramos al marco de datos <code>gene</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>ID           <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;ID&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>ID           <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;ID&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>Name         <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;Name&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>Name         <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;Name&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>gene_biotype <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;gene_biotype&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>gene_biotype <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;gene_biotype&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>locus_tag    <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;locus_tag&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>locus_tag    <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;locus_tag&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">names</span>(gene) <span class="sc">!=</span> <span class="st">&#39;attributes&#39;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">names</span>(gene) <span class="sc">!=</span> <span class="st">&#39;attributes&#39;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(gene[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, f]) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(gene[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, f]) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in kable_styling(.): no se pudo encontrar la función &quot;kable_styling&quot;</code></pre>
+<pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
 </div>
 </div>
 

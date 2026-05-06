@@ -50,10 +50,10 @@ HTML en un formato adecuado.
 ```{r}
 #| messages: false
 
-library('kableExtra')
+library('knitr')
 genomas <- read.table('trypanosoma_annotated.txt',
                       header = TRUE, sep = '\t')
-kable(genomas) %>% kable_styling()
+kable(genomas) 
 ```
 
 :::{.callout-note icon=false}
@@ -73,7 +73,7 @@ llamada `Assembly.Release.Date`.
 # Observa que asignamos el resultado del ordenamiento al mismo objeto que
 # estamos ordenando, para guardar el resultado sin tener que generar otro objeto.
 genomas <- genomas[order(genomas$Assembly.Release.Date), ]
-kable(genomas) %>% kable_styling()
+kable(genomas) 
 ```
 
 Casualmente, la fecha estaba en formato "%Y-%m-%d", en el que el orden alfabético
@@ -246,8 +246,7 @@ resumen <- data.frame(
 kable(resumen,
       col.names = c('Tipo', 'Número', 'Longitud Media',
                     'Desviación estándar'),
-      row.names = FALSE) %>% 
-   kable_styling(full_width = FALSE)
+      row.names = FALSE) 
 ```
 
 Las operaciones de agrupar y resumir se pueden hacer también con funciones
@@ -275,6 +274,7 @@ kable(resumen,
 ```
 
 :::{.callout-note icon=false}
+
 ## Desafío
 Crea una tabla con el número total de genes en cada cromosoma. ¿Puedes contar
 cuántos hay codificados en cada sentido ("strand") y en cada cromosoma?
@@ -482,7 +482,7 @@ gene$gene_biotype <- sapply(atributos2, '[', 'gene_biotype')
 gene$locus_tag    <- sapply(atributos2, '[', 'locus_tag')
 
 f <- names(gene) != 'attributes'
-kable(gene[1:15, f]) %>% kable_styling()
+kable(gene[1:15, f]) 
 ```
 
 
