@@ -144,6 +144,7 @@ portal <- 'https://www.ebi.ac.uk/ena/portal/api/search?'
 result <- 'result=sequence&'
 query  <- 'query=tax_tree(7215) AND description="alcohol dehydrogenase"&'
 fields <- 'fields=tax_id,scientific_name,last_updated,base_count, first_public, description&'
+limit  <- 'limit=0'
 URL <- paste0(portal, result, query, fields, limit)
 curl_download(URLencode(URL), destfile = 'z3.txt')
 ```
@@ -167,6 +168,7 @@ curl_download: me guarda esos datos en un archivo de texto
 :::
 
 :::{.callout-note icon=false}
+
 ## Ejercicio 2
 Confecciona una URL para descargar una tabla de las secuencias codificantes de
 alcohol deshidrogenasas del género *Drosophila*, que te permita contestar las
