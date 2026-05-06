@@ -1,7 +1,6 @@
 ---
 title: "Ensamblaje de genomas"
 author: "Laura Monleón"
-format: html
 lang: es
 date: today
 execute: 
@@ -9,6 +8,9 @@ execute:
   error: true
 engine: knitr
 bibliography: ../../doc/references.bib
+format: 
+  html:
+    embed-resources: true
 editor: visual
 ---
 
