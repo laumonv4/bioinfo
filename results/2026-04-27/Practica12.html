@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -66,10 +66,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="Practica12_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="Practica12_files/libs/quarto-html/anchor.min.js"></script>
 <link href="Practica12_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Practica12_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Practica12_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Practica12_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Practica12_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Practica12_files/libs/bootstrap/bootstrap-969dbbb7539504ffdd507e0f9f09f389.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Practica12_files/libs/bootstrap/bootstrap-076290f8fc06749218426a735285dd47.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -93,7 +93,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">3 de mayo de 2026</p>
+      <p class="date">4 de mayo de 2026</p>
     </div>
   </div>
   
@@ -105,351 +105,292 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="at">lib =</span> <span class="st">'./R'</span>, <span class="at">version =</span> <span class="st">'3.22'</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>'getOption("repos")' replaces Bioconductor standard repositories, see
-'help("repositories", package = "BiocManager")' for details.
-Replacement repositories:
-    CRAN: https://cloud.r-project.org</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: Bioconductor version not changed by 'install()'; in non-interactive sessions
-  use 'ask = FALSE'</code></pre>
-</div>
-</div>
 <section id="datos" class="level2">
 <h2 class="anchored" data-anchor-id="datos">Datos</h2>
 <p>Utilizaremos las medidas de expresión génica del archivo salmon.merged.gene_counts.tsv. Los datos proceden de 12 genotecas de RNA-seq de lecturas emparejadas, de muestras de Drosophila melanogaster de dos orígenes geográficos (Panamá y Maine) y dos tratamientos de temperatura (low y high) (Zhao 2015). Hay 3 réplicas biológicas para cada combinación de región y temperatura. Si tenéis curiosidad sobre cómo se han obtenido los recuentos de lecturas por gen a partir de los archivos FASTQ, podéis consultarlo en este enlace.</p>
 <p>Además, necesitáis el archivo dme_elev_samples.tsv, una tabla que indica a qué región y tratamiento pertenece cada muestra.</p>
-</section>
-<section id="exploración-de-los-datos" class="level2">
-<h2 class="anchored" data-anchor-id="exploración-de-los-datos">Exploración de los datos</h2>
+<p>##Exploración de los datos</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">'../../data/dme_elev_samples.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in file(file, "rt"): no fue posible abrir el archivo
-'../../data/dme_elev_samples.tsv': No existe el archivo o el directorio</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">'../../data/dme_elev_samples.tsv'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>genex <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">'../../data/salmon.merged.gene_counts.tsv'</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in file(file, "rt"): no se puede abrir la conexión</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>genex <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">'../../data/salmon.merged.gene_counts.tsv'</span>,</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in file(file, "rt"): no fue posible abrir el archivo
-'../../data/salmon.merged.gene_counts.tsv': No existe el archivo o el
-directorio</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in file(file, "rt"): no se puede abrir la conexión</code></pre>
-</div>
-</div>
-</section>
-<section id="ejercicio-1" class="level1">
-<h1>Ejercicio 1</h1>
+<p>#Ejercicio 1</p>
 <p>Recuerda dejar constancia en un bloque de código de cómo obtienes las respuestas.</p>
 <pre><code>Usa la función paste() para añadir una columna a muestras que contenga la población y la temperatura unidas por _.</code></pre>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(muestras)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'muestras' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(muestras)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sample"     "population" "temp"      </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>grupo <span class="ot">&lt;-</span> <span class="fu">paste</span>(muestras<span class="sc">$</span>population, muestras<span class="sc">$</span>temp, <span class="at">sep =</span> <span class="st">"_"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'muestras' no encontrado</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>grupo <span class="ot">&lt;-</span> <span class="fu">paste</span>(muestras<span class="sc">$</span>population, muestras<span class="sc">$</span>temp, <span class="at">sep =</span> <span class="st">"_"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(muestras)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'muestras' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(muestras)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      sample population temp      grupo
+1 SRR1576457      maine  low  maine_low
+2 SRR1576458      maine  low  maine_low
+3 SRR1576459      maine  low  maine_low
+4 SRR1576460      maine high maine_high
+5 SRR1576461      maine high maine_high
+6 SRR1576462      maine high maine_high</code></pre>
 </div>
 </div>
 <pre><code>¿Cuál es el número total de lecturas por muestra?</code></pre>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>genex <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">'../../data/salmon.merged.gene_counts.tsv'</span>,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">row.names =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in file(file, "rt"): no fue posible abrir el archivo
-'../../data/salmon.merged.gene_counts.tsv': No existe el archivo o el
-directorio</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>genex <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">'../../data/salmon.merged.gene_counts.tsv'</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>total_reads <span class="ot">&lt;-</span> <span class="fu">colSums</span>(genex)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in file(file, "rt"): no se puede abrir la conexión</code></pre>
+<pre><code>Error in colSums(genex): 'x' must be numeric or complex</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>total_reads <span class="ot">&lt;-</span> <span class="fu">colSums</span>(genex)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>total_reads</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>total_reads</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'total_reads' no encontrado</code></pre>
+<pre><code>Error: object 'total_reads' not found</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(genex)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(genex)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 gene_name SRR1576457 SRR1576458 SRR1576459 SRR1576460
+FBgn0000003 7SLRNA:CR32864    478.000      0.000    244.815    429.737
+FBgn0000008              a    653.000    483.000    691.000    575.999
+FBgn0000014          abd-A    536.000    414.001    563.000    587.000
+FBgn0000015          Abd-B    615.000    562.000    703.001    681.001
+FBgn0000017            Abl   1854.533   1381.783   1941.276   1815.993
+FBgn0000018            abo    242.000    205.000    272.000    235.000
+            SRR1576461 SRR1576462 SRR1576463 SRR1576464 SRR1576465 SRR1576514
+FBgn0000003    333.000    956.000    638.000      0.000    348.000    532.000
+FBgn0000008    497.000    577.000    671.000    606.000    579.001    507.000
+FBgn0000014    496.000    565.000    578.000    645.000    522.000    571.000
+FBgn0000015    611.000    703.000    725.999    712.001    660.999    654.000
+FBgn0000017   1646.271   1857.078   2012.120   1666.408   1623.621   1558.945
+FBgn0000018    208.000    276.000    275.000    252.000    236.000    260.000
+            SRR1576515 SRR1576516
+FBgn0000003     55.615    333.000
+FBgn0000008    429.000    472.000
+FBgn0000014    475.000    502.000
+FBgn0000015    494.999    572.001
+FBgn0000017   1274.236   1455.402
+FBgn0000018    238.000    211.000</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>genex_numeric <span class="ot">&lt;-</span> genex[, <span class="fu">sapply</span>(genex, is.numeric)]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>total_reads <span class="ot">&lt;-</span> <span class="fu">colSums</span>(genex_numeric)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex_numeric' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>total_reads</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'total_reads' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>genex_numeric <span class="ot">&lt;-</span> genex[, <span class="fu">sapply</span>(genex, is.numeric)]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>total_reads <span class="ot">&lt;-</span> <span class="fu">colSums</span>(genex_numeric)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>total_reads</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>SRR1576457 SRR1576458 SRR1576459 SRR1576460 SRR1576461 SRR1576462 SRR1576463 
+  28252778   21565448   29471559   27692134   26953900   29368135   29706071 
+SRR1576464 SRR1576465 SRR1576514 SRR1576515 SRR1576516 
+  26757043   26596118   30950499   25563787   24401671 </code></pre>
 </div>
 </div>
 <p>El número total de lecturas por muestra se obtuvo mediante la suma de los recuentos de cada columna de la matriz de expresión génica (colSums). Los valores obtenidos muestran que los tamaños de biblioteca son comparables entre muestras, oscilando entre aproximadamente 21,6 y 31,0 millones de lecturas. En concreto, las muestras presentan los siguientes totales: SRR1576457 (28.252.778), SRR1576458 (21.565.448), SRR1576459 (29.471.559), SRR1576460 (27.692.134), SRR1576461 (26.953.900), SRR1576462 (29.368.135), SRR1576463 (29.706.071), SRR1576464 (26.757.043), SRR1576465 (26.596.118), SRR1576514 (30.950.499), SRR1576515 (25.563.787) y SRR1576516 (24.401.671). Esta variabilidad es esperable en datos de RNA-seq y será tenida en cuenta mediante métodos de normalización en análisis posteriores.</p>
 <pre><code>¿Los recuentos tienen distribuciones parecidas entre muestras?</code></pre>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">log2</span>(genex_numeric <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">las =</span> <span class="dv">2</span>,</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Distribución de recuentos por muestra"</span>,</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"log2(recuentos + 1)"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex_numeric' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">log2</span>(genex_numeric <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">las =</span> <span class="dv">2</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Distribución de recuentos por muestra"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"log2(recuentos + 1)"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practica12_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Las distribuciones de los recuentos génicos entre muestras se evaluaron mediante la representación de boxplots en escala logarítmica (log₂ de los recuentos + 1). Se observa que las distribuciones son en general similares entre todas las muestras, tanto en forma como en dispersión, lo que indica que no existen sesgos técnicos importantes ni desviaciones marcadas entre genotecas. Aunque se aprecian ligeras diferencias en la posición de las medianas, estas son coherentes con las variaciones en el tamaño de biblioteca observadas previamente y pueden corregirse mediante normalización en etapas posteriores del análisis. ¿Cuántos genes no se expresan en absoluto en ninguna de las muestras?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>genes_no_exp <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">rowSums</span>(genex_numeric) <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex_numeric' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>genes_no_exp</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genes_no_exp' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>genes_no_exp <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">rowSums</span>(genex_numeric) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>genes_no_exp</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4722</code></pre>
 </div>
 </div>
 <p>El número de genes que no se expresan en ninguna de las muestras se determinó calculando la suma de recuentos por gen y seleccionando aquellos con valor cero en todas las muestras (rowSums == 0). Se identificaron un total de 4722 genes sin expresión detectable en el conjunto de datos. Estos genes no aportan información para el análisis de expresión diferencial y, por tanto, podrían ser excluidos en etapas posteriores de filtrado.</p>
+</section>
 <section id="crear-el-objeto-de-clase-deseqdataset" class="level2">
 <h2 class="anchored" data-anchor-id="crear-el-objeto-de-clase-deseqdataset">Crear el objeto de clase DESeqDataSet</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(<span class="st">'DESeq2'</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in library("DESeq2"): no hay paquete llamado 'DESeq2'</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">names</span>(genex)[<span class="dv">3</span><span class="sc">:</span><span class="dv">14</span>] <span class="sc">==</span> muestras<span class="sc">$</span>sample)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(<span class="st">'DESeq2'</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">names</span>(genex)[<span class="dv">3</span><span class="sc">:</span><span class="dv">14</span>] <span class="sc">==</span> muestras<span class="sc">$</span>sample)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pasamos la columna "sample" a nombres de fila:</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(muestras) <span class="ot">&lt;-</span> muestras<span class="sc">$</span>sample</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'muestras' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminamos la columna "sample":</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>sample <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'muestras' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y convertimos "population" y "temp" en factores:</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>population <span class="ot">&lt;-</span> <span class="fu">factor</span>(muestras<span class="sc">$</span>population,</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'maine'</span>, <span class="st">'panama'</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'muestras' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>temp       <span class="ot">&lt;-</span> <span class="fu">factor</span>(muestras<span class="sc">$</span>temp,</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'low'</span>, <span class="st">'high'</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'muestras' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>muestras</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'muestras' no encontrado</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(genex) <span class="ot">&lt;-</span> genex<span class="sc">$</span>gene_name</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>genex<span class="sc">$</span>gene_name <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>genex<span class="sc">$</span>gene_id   <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex' no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>genex <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.matrix</span>(genex))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'genex' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pasamos la columna "sample" a nombres de fila:</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(muestras) <span class="ot">&lt;-</span> muestras<span class="sc">$</span>sample</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminamos la columna "sample":</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>sample <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y convertimos "population" y "temp" en factores:</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>population <span class="ot">&lt;-</span> <span class="fu">factor</span>(muestras<span class="sc">$</span>population,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'maine'</span>, <span class="st">'panama'</span>))</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>muestras<span class="sc">$</span>temp       <span class="ot">&lt;-</span> <span class="fu">factor</span>(muestras<span class="sc">$</span>temp,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'low'</span>, <span class="st">'high'</span>))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>muestras</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           population temp       grupo
+SRR1576457      maine  low   maine_low
+SRR1576458      maine  low   maine_low
+SRR1576459      maine  low   maine_low
+SRR1576460      maine high  maine_high
+SRR1576461      maine high  maine_high
+SRR1576462      maine high  maine_high
+SRR1576463     panama  low  panama_low
+SRR1576464     panama  low  panama_low
+SRR1576465     panama  low  panama_low
+SRR1576514     panama high panama_high
+SRR1576515     panama high panama_high
+SRR1576516     panama high panama_high</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>dds1 <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">countData =</span> genex,</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">colData =</span> muestras,</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">design =</span> <span class="sc">~</span> population <span class="sc">+</span> temp</span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in DESeqDataSetFromMatrix(countData = genex, colData = muestras, : no se pudo encontrar la función "DESeqDataSetFromMatrix"</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(genex) <span class="ot">&lt;-</span> genex<span class="sc">$</span>gene_name</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>genex<span class="sc">$</span>gene_name <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>genex<span class="sc">$</span>gene_id   <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>genex <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.matrix</span>(genex))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>dds1</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'dds1' no encontrado</code></pre>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>dds1 <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">countData =</span> genex,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">colData =</span> muestras,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">design =</span> <span class="sc">~</span> population <span class="sc">+</span> temp</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>converting counts to integer mode</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dds1</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class: DESeqDataSet 
+dim: 24254 12 
+metadata(1): version
+assays(1): counts
+rownames(24254): 7SLRNA:CR32864 a ... RR51477 Bari1{}RR51478
+rowData names(0):
+colnames(12): SRR1576457 SRR1576458 ... SRR1576515 SRR1576516
+colData names(3): population temp grupo</code></pre>
 </div>
 </div>
 </section>
 <section id="pre-filtrado" class="level2">
 <h2 class="anchored" data-anchor-id="pre-filtrado">Pre-filtrado</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">counts</span>(dds1)) <span class="sc">&gt;</span> <span class="dv">0</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in counts(dds1): no se pudo encontrar la función "counts"</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>dds1 <span class="ot">&lt;-</span> dds1[keep, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'dds1' no encontrado</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">counts</span>(dds1)) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>dds1 <span class="ot">&lt;-</span> dds1[keep, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="expresión-diferencial" class="level2">
 <h2 class="anchored" data-anchor-id="expresión-diferencial">Expresión diferencial</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>dds1 <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds1)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in DESeq(dds1): no se pudo encontrar la función "DESeq"</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dds1 <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds1)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>estimating size factors</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>estimating dispersions</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>gene-wise dispersion estimates</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>mean-dispersion relationship</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>final dispersion estimates</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>fitting model and testing</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds1)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in results(dds1): no se pudo encontrar la función "results"</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds1)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>log2 fold change (MLE): temp high vs low 
+Wald test p-value: temp high vs low 
+DataFrame with 19508 rows and 6 columns
+                baseMean log2FoldChange     lfcSE       stat      pvalue
+               &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt;   &lt;numeric&gt;
+7SLRNA:CR32864   346.333      0.5918974 1.3301901   0.444972 0.656339979
+a                555.596     -0.2730041 0.0718487  -3.799710 0.000144866
+abd-A            531.996     -0.0286785 0.0789218  -0.363379 0.716321732
+Abd-B            634.760     -0.1083918 0.0771241  -1.405421 0.159896272
+Abl             1654.842     -0.1328055 0.0746580  -1.778851 0.075264257
+...                  ...            ...       ...        ...         ...
+RR51007          4.90906      3.8596869  2.972471  1.2984773 1.94123e-01
+RR51048         16.60710     -0.8973071  0.341603 -2.6267541 8.62036e-03
+RR51093         36.93279      0.0660523  1.685323  0.0391927 9.68737e-01
+RR51475        159.62678     -2.6058194  1.875172 -1.3896429 1.64637e-01
+RR51477         70.83394      1.6927986  0.192437  8.7966393 1.40975e-18
+                      padj
+                 &lt;numeric&gt;
+7SLRNA:CR32864  0.81170166
+a               0.00154573
+abd-A           0.85146289
+Abd-B           0.33849217
+Abl             0.20046220
+...                    ...
+RR51007        3.82417e-01
+RR51048        4.01745e-02
+RR51093        9.84464e-01
+RR51475        3.44815e-01
+RR51477        2.06427e-16</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'res' no encontrado</code></pre>
 </div>
-</div>
-</section>
 </section>
 <section id="ejercicio-3" class="level1">
 <h1>Ejercicio 3</h1>
-<p>Mira la ayuda de results() y genera también la tabla de resultados para el contraste entre las dos regiones de procedencia de las moscas.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>res_region <span class="ot">&lt;-</span> <span class="fu">results</span>(dds1, <span class="at">contrast =</span> <span class="fu">c</span>(<span class="st">"region"</span>, <span class="st">"Panama"</span>, <span class="st">"Maine"</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in results(dds1, contrast = c("region", "Panama", "Maine")): no se pudo encontrar la función "results"</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>res_region</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'res_region' no encontrado</code></pre>
-</div>
-</div>
-<p>Usa summary() sobre los resultados para ver el número de genes diferencialmente expresados entre cada par de condiciones.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'res' no encontrado</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res_region)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'res_region' no encontrado</code></pre>
-</div>
-</div>
-<p>¿Cuál es la tasa de falsos positivos (FDR)?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>padj</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'res' no encontrado</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(res<span class="sc">$</span>padj <span class="sc">&lt;</span> <span class="fl">0.1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">nrow</span>(res)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'res' no encontrado</code></pre>
-</div>
-</div>
+<pre><code>Mira la ayuda de results() y genera también la tabla de resultados para el contraste entre las dos regiones de procedencia de las moscas.
+Usa summary() sobre los resultados para ver el número de genes diferencialmente expresados entre cada par de condiciones.
+¿Cuál es la tasa de falsos positivos (FDR)?</code></pre>
 <section id="gráficas" class="level2">
 <h2 class="anchored" data-anchor-id="gráficas">Gráficas</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMA</span>(res)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in plotMA(res): no se pudo encontrar la función "plotMA"</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMA</span>(res)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practica12_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>resShrink <span class="ot">&lt;-</span> <span class="fu">lfcShrink</span>(dds1, <span class="at">coef =</span> <span class="st">'temp_high_vs_low'</span>,</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">type =</span> <span class="st">'normal'</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in lfcShrink(dds1, coef = "temp_high_vs_low", type = "normal"): no se pudo encontrar la función "lfcShrink"</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMA</span>(resShrink)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in plotMA(resShrink): no se pudo encontrar la función "plotMA"</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="ejercicio-4" class="level1">
-<h1>Ejercicio 4</h1>
-<p>¿Sabrías hacer una gráfica volcán?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> resShrink,</span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> log2FoldChange, <span class="at">y =</span> <span class="sc">-</span><span class="fu">log</span>(pvalue), <span class="at">color =</span> padj)) <span class="sc">+</span></span>
-<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in ggplot(data = resShrink, mapping = aes(x = log2FoldChange, y = -log(pvalue), : no se pudo encontrar la función "ggplot"</code></pre>
-</div>
-</div>
-<section id="extraer-datos-transformados" class="level2">
-<h2 class="anchored" data-anchor-id="extraer-datos-transformados">Extraer datos transformados</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>dds2 <span class="ot">&lt;-</span> <span class="fu">vst</span>(dds1)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in vst(dds1): no se pudo encontrar la función "vst"</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>NormCounts <span class="ot">&lt;-</span> <span class="fu">assay</span>(dds2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in assay(dds2): no se pudo encontrar la función "assay"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> res[<span class="sc">!</span> <span class="fu">is.na</span>(res<span class="sc">$</span>pvalue), ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'res' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>resShrink <span class="ot">&lt;-</span> <span class="fu">lfcShrink</span>(dds1, <span class="at">coef =</span> <span class="st">'temp_high_vs_low'</span>,</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">type =</span> <span class="st">'normal'</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>using 'normal' for LFC shrinkage, the Normal prior from Love et al (2014).
+
+Note that type='apeglm' and type='ashr' have shown to have less bias than type='normal'.
+See ?lfcShrink for more details on shrinkage type, and the DESeq2 vignette.
+Reference: https://doi.org/10.1093/bioinformatics/bty895</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> res[<span class="fu">order</span>(res<span class="sc">$</span>log2FoldChange),]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'res' no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMA</span>(resShrink)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practica12_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(NormCounts[<span class="fu">c</span>(<span class="fu">head</span>(<span class="fu">row.names</span>(res), <span class="dv">100</span>),</span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">tail</span>(<span class="fu">row.names</span>(res), <span class="dv">100</span>)), ],</span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">Rowv =</span> <span class="cn">NA</span>, <span class="at">Colv =</span> <span class="cn">NA</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> resShrink,</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> log2FoldChange, <span class="at">y =</span> <span class="sc">-</span><span class="fu">log</span>(pvalue), <span class="at">color =</span> padj)) <span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: objeto 'NormCounts' no encontrado</code></pre>
+<pre><code>Error in ggplot(data = resShrink, mapping = aes(x = log2FoldChange, y = -log(pvalue), : could not find function "ggplot"</code></pre>
 </div>
 </div>
 </section>
-</section>
-<section id="ejercicio-5" class="level1">
-<h1>Ejercicio 5</h1>
-<p>¿Podrías explicar qué hace el bloque de código anterior?</p>
-<p>El bloque de código tiene como objetivo preparar los datos de expresión génica para su visualización y representar gráficamente los genes más diferencialmente expresados entre condiciones. En primer lugar, se aplica la transformación VST (Variance Stabilizing Transformation) mediante la función vst(dds1), lo que permite estabilizar la varianza de los datos de RNA-seq y hacerlos más adecuados para análisis exploratorios y representaciones gráficas. A continuación, con assay(dds2) se extrae la matriz de expresión transformada, que contiene los niveles de expresión normalizados para cada gen en cada muestra.</p>
-<p>Posteriormente, se filtran los resultados de expresión diferencial eliminando aquellos genes con valores de p-valor no disponibles (NA), ya que estos no son estadísticamente informativos. Después, los genes se ordenan según su valor de log2FoldChange, lo que permite identificar aquellos que presentan mayor disminución o aumento en su expresión entre las condiciones comparadas.</p>
-<p>A partir de esta ordenación, se seleccionan los 100 genes más reprimidos (con menor log2FoldChange) y los 100 más inducidos (con mayor log2FoldChange), obteniendo así un subconjunto de 200 genes altamente diferencialmente expresados. Finalmente, se construye un heatmap utilizando los valores de expresión transformados de estos genes en todas las muestras. En este gráfico no se realiza agrupamiento ni de genes ni de muestras (Rowv = NA, Colv = NA), lo que permite visualizar directamente los patrones de expresión y evaluar si estos genes discriminan claramente entre las condiciones experimentales y mantienen coherencia entre réplicas biológicas.</p>
-</section>
-<section id="ejercicio-6" class="level1">
-<h1>Ejercicio 6</h1>
-<p>En este enlace analizan exactamente los mismos datos con otro paquete de R: limma. Una de sus conclusiones es se sobreexpresan más genes en temperatura baja que en temperatura alta. ¿Confirma tu análisis esta conclusión?¿Cómo se comparan estos resultados con los tuyos?</p>
-<p>El análisis realizado con DESeq2 es consistente con los resultados obtenidos mediante el paquete limma. En primer lugar, al examinar el resumen de resultados (summary(res)), se observa que el número de genes con log2FoldChange negativo es mayor que el de genes con log2FoldChange positivo. Dado que el contraste se ha definido como alta frente a baja temperatura, los valores negativos indican una mayor expresión en condiciones de baja temperatura, lo que confirma la conclusión de que se sobreexpresan más genes en temperatura baja que en temperatura alta.</p>
-<p>En cuanto a la comparación de genes concretos, varios de los genes identificados por limma como altamente diferencialmente expresados también aparecen como significativos en el análisis con DESeq2. Aunque los valores exactos de log2FoldChange y significación estadística pueden diferir debido a las diferencias metodológicas entre ambos enfoques, la dirección del cambio de expresión (signo del log2FoldChange) es en general concordante. Por tanto, ambos métodos producen resultados coherentes en términos biológicos, reforzando la validez de las conclusiones obtenidas sobre la respuesta transcriptómica a las condiciones de temperatura.</p>
 </section>
 
 </main>

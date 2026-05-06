@@ -11,17 +11,13 @@ bibliography: ../../doc/references.bib
 editor: visual
 ---
 
-```{r}
-BiocManager::install(lib = './R', version = '3.22')
-```
-
 ## Datos
 
 Utilizaremos las medidas de expresión génica del archivo salmon.merged.gene_counts.tsv. Los datos proceden de 12 genotecas de RNA-seq de lecturas emparejadas, de muestras de Drosophila melanogaster de dos orígenes geográficos (Panamá y Maine) y dos tratamientos de temperatura (low y high) (Zhao 2015). Hay 3 réplicas biológicas para cada combinación de región y temperatura. Si tenéis curiosidad sobre cómo se han obtenido los recuentos de lecturas por gen a partir de los archivos FASTQ, podéis consultarlo en este enlace.
 
 Además, necesitáis el archivo dme_elev_samples.tsv, una tabla que indica a qué región y tratamiento pertenece cada muestra.
 
-## Exploración de los datos
+##Exploración de los datos
 
 ```{r}
 muestras <- read.table('../../data/dme_elev_samples.tsv', header = TRUE)
@@ -29,7 +25,7 @@ genex <- read.table('../../data/salmon.merged.gene_counts.tsv',
                     header = TRUE)
 ```
 
-# Ejercicio 1
+#Ejercicio 1
 
 Recuerda dejar constancia en un bloque de código de cómo obtienes las respuestas.
 
@@ -150,31 +146,10 @@ res
 
 # Ejercicio 3
 
+```         
 Mira la ayuda de results() y genera también la tabla de resultados para el contraste entre las dos regiones de procedencia de las moscas.
-
-```{r}
-res_region <- results(dds1, contrast = c("region", "Panama", "Maine"))
-res_region
-```
-
 Usa summary() sobre los resultados para ver el número de genes diferencialmente expresados entre cada par de condiciones.
-
-```{r}
-summary(res)
-```
-
-```{r}
-summary(res_region)
-```
-
 ¿Cuál es la tasa de falsos positivos (FDR)?
-
-```{r}
-res$padj
-```
-
-```{r}
-sum(res$padj < 0.1, na.rm = TRUE) / nrow(res)
 ```
 
 ## Gráficas
@@ -189,46 +164,9 @@ resShrink <- lfcShrink(dds1, coef = 'temp_high_vs_low',
 plotMA(resShrink)
 ```
 
-# Ejercicio 4
-
-¿Sabrías hacer una gráfica volcán?
-
 ```{r}
 ggplot(data = resShrink,
        mapping = aes(x = log2FoldChange, y = -log(pvalue), color = padj)) +
    geom_point() 
    
 ```
-
-## Extraer datos transformados
-
-```{r}
-dds2 <- vst(dds1)
-NormCounts <- assay(dds2)
-```
-
-```{r}
-res <- res[! is.na(res$pvalue), ]
-res <- res[order(res$log2FoldChange),]
-heatmap(NormCounts[c(head(row.names(res), 100),
-                     tail(row.names(res), 100)), ],
-        Rowv = NA, Colv = NA)
-```
-
-# Ejercicio 5
-
-¿Podrías explicar qué hace el bloque de código anterior?
-
-El bloque de código tiene como objetivo preparar los datos de expresión génica para su visualización y representar gráficamente los genes más diferencialmente expresados entre condiciones. En primer lugar, se aplica la transformación VST (Variance Stabilizing Transformation) mediante la función vst(dds1), lo que permite estabilizar la varianza de los datos de RNA-seq y hacerlos más adecuados para análisis exploratorios y representaciones gráficas. A continuación, con assay(dds2) se extrae la matriz de expresión transformada, que contiene los niveles de expresión normalizados para cada gen en cada muestra.
-
-Posteriormente, se filtran los resultados de expresión diferencial eliminando aquellos genes con valores de p-valor no disponibles (NA), ya que estos no son estadísticamente informativos. Después, los genes se ordenan según su valor de log2FoldChange, lo que permite identificar aquellos que presentan mayor disminución o aumento en su expresión entre las condiciones comparadas.
-
-A partir de esta ordenación, se seleccionan los 100 genes más reprimidos (con menor log2FoldChange) y los 100 más inducidos (con mayor log2FoldChange), obteniendo así un subconjunto de 200 genes altamente diferencialmente expresados. Finalmente, se construye un heatmap utilizando los valores de expresión transformados de estos genes en todas las muestras. En este gráfico no se realiza agrupamiento ni de genes ni de muestras (Rowv = NA, Colv = NA), lo que permite visualizar directamente los patrones de expresión y evaluar si estos genes discriminan claramente entre las condiciones experimentales y mantienen coherencia entre réplicas biológicas.
-
-# Ejercicio 6
-
-En este enlace analizan exactamente los mismos datos con otro paquete de R: limma. Una de sus conclusiones es se sobreexpresan más genes en temperatura baja que en temperatura alta. ¿Confirma tu análisis esta conclusión?¿Cómo se comparan estos resultados con los tuyos?
-
-El análisis realizado con DESeq2 es consistente con los resultados obtenidos mediante el paquete limma. En primer lugar, al examinar el resumen de resultados (summary(res)), se observa que el número de genes con log2FoldChange negativo es mayor que el de genes con log2FoldChange positivo. Dado que el contraste se ha definido como alta frente a baja temperatura, los valores negativos indican una mayor expresión en condiciones de baja temperatura, lo que confirma la conclusión de que se sobreexpresan más genes en temperatura baja que en temperatura alta.
-
-En cuanto a la comparación de genes concretos, varios de los genes identificados por limma como altamente diferencialmente expresados también aparecen como significativos en el análisis con DESeq2. Aunque los valores exactos de log2FoldChange y significación estadística pueden diferir debido a las diferencias metodológicas entre ambos enfoques, la dirección del cambio de expresión (signo del log2FoldChange) es en general concordante. Por tanto, ambos métodos producen resultados coherentes en términos biológicos, reforzando la validez de las conclusiones obtenidas sobre la respuesta transcriptómica a las condiciones de temperatura.
