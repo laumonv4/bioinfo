@@ -12,7 +12,7 @@ bibliography: ../../doc/references.bib
 editor: visual
 ---
 
-##Revisión de los datos
+## Revisión de los datos
 
 Los datos están en formato FASTA porque contienen sólo lecturas de alta calidad, y `hifiasm` no utiliza la información de las calidades de cada base. El archivo está comprimido. Antes de empezar el ensamblaje deberíamos tener una idea de la cantidad de datos que tenemos. Si lo necesitas, utiliza una inteligencia artificial para responder las preguntas siguientes y anota en un bloque de código las órdenes utilizadas. Puedes hacerlo con instrucciones de Bash o de R, pero R necesitará cargar en memoria el archivo entero, lo que no sería muy práctico si se tratara de un archivo 10 o 50 veces mayor. #Ejercicio 1
 
@@ -82,7 +82,7 @@ TOTAL_BASES=$(zcat ../../data/At4.10.fa.gz | grep -v "^>" | tr -d '\n' | wc -c)
 echo "$TOTAL_BASES / 19000000" | bc -l
 ```
 
-##Ensamblaje
+## Ensamblaje
 
 El programa hifiasm produce varios archivos de salida. Para tener la carpeta de trabajo ordenada, es recomendable crear un subcarpeta donde poder guardarlos. Si fuéramos a probar más de una estrategia de ensamblado, guardaríamos los resultados de cada intento en una carpeta diferente, que podríamos nombrar asm1, asm2, etc. Aunque sólo realicemos un ensamblaje, crearemos la carpeta asm1 para guardar los resultados en ella.
 
@@ -99,7 +99,7 @@ fi
 
 -d indica que existe la carpeta mientras que la orden -e es para si existe archivo.
 
-#Ejercicio 2
+# Ejercicio 2
 
 Consulta la ayuda de hifiasm (hifiasm -h) y contesta las preguntas siguientes:
 
@@ -127,9 +127,9 @@ Si se dispone de lecturas ultra-largas (por ejemplo, Nanopore), hifiasm permite 
 
 Estas lecturas se usan para resolver regiones repetitivas largas y mejorar la continuidad del ensamblaje (scaffolding implícito) En conclusión, se añadirían con el argumento --ul.
 
-##Evaluación del resultado
+## Evaluación del resultado
 
-#Ejercicio 3
+# Ejercicio 3
 
 Consulta la descripción de los archivos de salida que encontrarás en este enlace y contesta las preguntas siguientes:
 
@@ -187,7 +187,7 @@ Los ensamblajes primario y por haplotipos se presentan en formato GFA. Para extr
 awk '(/^S/){print ">" $2 "\n" $3}' asm1/At4.bp.p_ctg.gfa > asm1/At4.fa
 ```
 
-##Calidad del ensamblaje #Ejercicio 4
+## Calidad del ensamblaje #Ejercicio 4
 
 Consulta la ayuda de compleasm.py y averigua qué significan los argumentos utilizados.
 

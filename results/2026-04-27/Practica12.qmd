@@ -21,7 +21,7 @@ Utilizaremos las medidas de expresión génica del archivo salmon.merged.gene_co
 
 Además, necesitáis el archivo dme_elev_samples.tsv, una tabla que indica a qué región y tratamiento pertenece cada muestra.
 
-##Exploración de los datos
+## Exploración de los datos
 
 ```{r}
 muestras <- read.table('../../data/dme_elev_samples.tsv', header = TRUE)
@@ -29,7 +29,7 @@ genex <- read.table('../../data/salmon.merged.gene_counts.tsv',
                     header = TRUE)
 ```
 
-#Ejercicio 1
+# Ejercicio 1
 
 Recuerda dejar constancia en un bloque de código de cómo obtienes las respuestas.
 

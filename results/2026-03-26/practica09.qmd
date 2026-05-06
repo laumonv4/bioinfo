@@ -26,7 +26,7 @@ glance(mtdna)
 ```
 
 Nota: Sería sensato reducir el conjunto de datos. ¿Qué secuencias eliminarías? Si quieres, puedes intentarlo con la función subset(). 
-#EJERCICIO 1. Puedes confirmar el número de secuencias? ¿Qué longitud tiene el alineamiento? ¿Qué función usarías para extraer los nombres de las secuencias? El número de secuencias aparece indicado como nseq y es igual a 42. La longitud del alineamiento la vemos comp nchar= 16603. También podemos verlo de forma aproximada representando en forma de imagen el alineamiento con la función image(mtdna). Para saber los nombres que conforman el alineamiento utilizamos la función "names(mtdna)".
+# EJERCICIO 1. Puedes confirmar el número de secuencias? ¿Qué longitud tiene el alineamiento? ¿Qué función usarías para extraer los nombres de las secuencias? El número de secuencias aparece indicado como nseq y es igual a 42. La longitud del alineamiento la vemos comp nchar= 16603. También podemos verlo de forma aproximada representando en forma de imagen el alineamiento con la función image(mtdna). Para saber los nombres que conforman el alineamiento utilizamos la función "names(mtdna)".
 
 ```{r}
 #| eval: false
@@ -46,7 +46,7 @@ add.scale.bar()
 plot(mt_upgma)
 add.scale.bar()
 ```
-#Ejercicio 2.
+# Ejercicio 2.
 
 ¿De qué clase son los objetos mt_nj y mt_upgma? Consulta la estructura de estos objetos (str(mt_nj)). Si consultamos la clase a través de la función str(mt_nj) vemos que la clase es "phylo". Mientras que si consultamos str(mt_upgma) la clase que nos aparece también es phylo.
 
@@ -227,7 +227,7 @@ fechas
 mt_nj_rtt <- rtt(mt_nj, tip.dates = fechas, objective = 'rms')
 plot(mt_nj_rtt)
 ```
-#Ejercicio
+# Ejercicio
 
 ¿Se corresponden bien las distancias evolutivas estimadas con las dataciones?
 ¿Qué secuencias crees que se ajustan menos a su supuesta edad?
@@ -254,7 +254,7 @@ bonobos      <- startsWith(colnames(distMat), 'P.paniscus')
 #| eval: false
 mean(distMat[modernos, neandertales])
 ```
-#Ejercicio
+# Ejercicio
 
 Calcula las distancias medias entre todos los grupos.
 ¿Cuántas veces mayor es la distancia entre humanos y chimpancés que entre humanos y neandertales? calculando el cociente entre las medias obtenidas de las distancias entre humanos-chimpancés y humanos-neandertales obtenemos que la distancia es 7,5 veces mayor.
@@ -304,7 +304,7 @@ mean(z, na.rm = TRUE)
 distCofen <- cophenetic(mt_nj_rooted)
 plot(distCofen)
 ```
-#Ejercicio
+# Ejercicio
 
 ¿Cuánto se parecen las distancias estimadas a las distancias cofenéticas? Las distancias estimadas y las distancias cofenéticas son muy similares, mostrando una relación lineal cercana a la identidad, lo que indica que el árbol filogenético reconstruido conserva adecuadamente las relaciones de distancia entre las secuencias.
 ```{r}
@@ -337,7 +337,7 @@ mtdna37 <- mtdna[! grepl('(KX198085|KX198086|KX198082|KX198088|KX198083)',
 mtdna37
 ```
 
-#Ejercicio
+# Ejercicio
 
 ¿Serías capaz de crear otro conjunto de datos, mtdna28, que sólo contenga secuencias del género Homo?
 ```{r}
@@ -386,7 +386,7 @@ fit
 fit <- as.pml(modelos, 'BIC')
 fit
 ```
-#Ejercicio
+# Ejercicio
 
 ¿Cuál es el mejor modelo para secuencias sólo del género Homo?
 El mejor modelo para las secuencias pertenecientes únicamente al género Homo es TIM2+G(4)+I, ya que es el modelo seleccionado por el criterio BIC. Aunque GTR+G(4)+I presenta una verosimilitud ligeramente mayor, BIC penaliza los modelos con más parámetros y selecciona el modelo que ofrece el mejor equilibrio entre ajuste y complejidad, evitando así el sobreajuste.

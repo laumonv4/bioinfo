@@ -99,7 +99,7 @@ Podríamos haber aplicado el RepeatMasker directamente con todos los elementos t
 
 En repeatMasker, no ha conseguido hacer un enmascaramiento suave, al ser duro, veremos que los elementos tranonibles aparecen indicados con "N" en vez de indicar el nucleótido en letras minúsculas. El archivo generado .gff nos dice las coorddenadas en las que se encuentra cada instancia de elemento transponible. Esto se lo hemos tenido que pedir, una vez tenemos este ensamblaje enmascarado de forma suave ya podemos ejecutar GALBA. 
 
-#Ejercicio 3
+# Ejercicio 3
 
  Instala el programa bedtools siguiendo las instrucciones oportunas para tu sistema en la página oficial. Utiliza el ensamblaje original como archivo FASTA de entrada y el archivo GFF que ha producido RepetaMasker como coordenadas de las regiones a enmascarar. Lee el manual de bedtools maskfasta en este enlace y genera el ensamblaje con máscara suave llamado At4.soft.fa.
 

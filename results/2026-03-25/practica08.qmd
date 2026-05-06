@@ -118,8 +118,8 @@ Poder incorporar los resultados a R tiene su utilidad.
 
 Consulta la ayuda de psiblast y asegúrate de entender para qué sirven los argumentos que hemos usado. Por ejemplo, ¿cuál es la diferencia entre -evalue y -inclusion_ethresh?¿Cómo harías que la búsqueda fuera más sensible todavía?
 
-##Ejercicio 3
-#Origen de la contaminación en un archivo FASTQ
+## Ejercicio 3
+# Origen de la contaminación en un archivo FASTQ
 ```{r}
 library('Biostrings')
 unmapped <- readDNAStringSet('../../data/contaminacion.fa.gz')
