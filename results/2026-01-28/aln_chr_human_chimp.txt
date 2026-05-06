@@ -1,0 +1,1267 @@
+########################################
+# Program: needle
+# Rundate: Wed  6 May 2026 10:40:48
+# Commandline: needle
+#    -asequence HumanChr17.fa
+#    -bsequence ChimpChr17.fa
+#    -gapopen 15.0
+#    -gapextend 0.5
+#    -auto
+#    -outfile aln_chr_human_chimp.txt
+# Align_format: srspair
+# Report_file: aln_chr_human_chimp.txt
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: 1
+# 2: 1
+# Matrix: EDNAFULL
+# Gap_penalty: 15.0
+# Extend_penalty: 0.5
+#
+# Length: 15354
+# Identity:    5535/15354 (36.0%)
+# Similarity:  5535/15354 (36.0%)
+# Gaps:        7706/15354 (50.2%)
+# Score: 5473.0
+# 
+#
+#=======================================
+
+1                  0 --------------------------------------------------      0
+                                                                       
+1                  1 CTTGGGTGGGGACACAGTCAAGCCATATCAGATGGATAGATATAGAAATA     50
+
+1                  0 --------------------------------------------------      0
+                                                                       
+1                 51 TTTTATACATCTTTTAAATGTGATGCTTCCTGTACACTTTTGGCACAGGC    100
+
+1                  0 --------------------------------------------------      0
+                                                                       
+1                101 TGTAGGTCTCAAAATAATGCAAAAAGTACCCCTATTATAGTTACTGAACC    150
+
+1                  0 --------------------------------------------------      0
+                                                                       
+1                151 TTCACAGGGCAATCATTCTAGTTTTCTCAGGATAGTACTAGTTTATGCTC    200
+
+1                  0 --------------------------------------------------      0
+                                                                       
+1                201 ATGGAGTAGAAGATAGAATATTGCCGAAGTATCAGTTGTCTCCATTGGAG    250
+
+1                  1 -----------AAAGCTCTG---------------------TGGGCCAAG     18
+                                .|||||.||                     |||||..||
+1                251 CCAAACTTGAAGAAGCTGTGTGATAAGACTTAATGGGGAGCTGGGCGCAG    300
+
+1                 19 TCCTCTAGGACTCCAGTCTGTTA------------------ATGAGGG--     48
+                     |       |.|||..|.||||.|                  .||||||  
+1                301 T-------GGCTCACGCCTGTAATCCCAGCACTTTTGGAGGCTGAGGGGG    343
+
+1                 49 ---------CTGTGCT-----GTTCAAGGACCAG---GTCCA-------G     74
+                              |||.|.|     |||..| ||||||   |.|||       |
+1                344 GCGGACCACCTGAGGTCAGGAGTTTGA-GACCAGCCTGGCCAACATGGTG    392
+
+1                 75 GCACCACC---------AATAGACAAAAGGATTTATTTGGAAATTTCCAA    115
+                     |.|||..|         ||.|.|||||             ||.|.||||.
+1                393 GAACCCTCTCTCTATTAAAAATACAAA-------------AATTATCCAG    429
+
+1                116 ACCTGCCAGATGTGGCACTCGCCAAGCCCTAGGCC-----------CACC    154
+                     .|.||      |||||||.|          |||.|           .|||
+1                430 GCATG------GTGGCACGC----------AGGGCAATTATCTATAAACC    463
+
+1                155 CTCCTCACCAAGCTCCAAAGGGCAACACCAGTCCTCCCAGCCTCCCCATT    204
+                     ||                ..|.|||.||..||      |||||  |.|||
+1                464 CT----------------GTGACAAGACTGGT------AGCCT--CAATT    489
+
+1                205 CACCTTACCCTGGCCTC------CACATGCACATACCCCATA--------    240
+                     |.|||         |||      .||||..|||||.|.||||        
+1                490 CTCCT---------CTCATAAGTAACATAAACATAACTCATAATTTGCTG    530
+
+1                241 -----CCT-CAGGCCATGCTAGAGAACTGGAGTGTCCCCTCCCCGGCCCA    284
+                          ||| |.|.|||.|||    .|||||        |..||.||   |
+1                531 TGGTTCCTACTGACCAAGCT----CACTGG--------CAGCCAGG---A    565
+
+1                285 AGCC---GCTGGAGAGGCAG------------CCCTCT-GGCATCCC---    315
+                     ||||   ||||||...||||            ||.||| ..|||.||   
+1                566 AGCCTTGGCTGGAAGAGCAGTATTATTAGTAACCTTCTCTTCATACCAAC    615
+
+1                316 -------AGGAG--ATGA---------TGGCGGC---------CAGAG--    336
+                            |||||  ||.|         ||||.||         ||.||  
+1                616 TGAAATAAGGAGGAATTAGCTAGTTTTTGGCTGCTTGGGTCTTCAAAGTC    665
+
+1                337 ---------CCGCTTGCATAGATTGA-------------------GGAAA    358
+                              .|.||.|.||| |||||                   |||||
+1                666 CTACAAGCTGCCCTCGAATA-ATTGATACGATACAATTTGCATCTGGAAA    714
+
+1                359 G------AAAAGAAGGAGGCA---CCTAACAGGCTCCCTGAAAACCCCCA    399
+                     |      ||||||  ||||.|   ..|.||.||.|.|.|.|      |||
+1                715 GCATTGAAAAAGA--GAGGTAGGTTATCACTGGTTACATTA------CCA    756
+
+1                400 ACTTA--CCCCTG-TACAAAAAAAGTGGCTCC------------------    428
+                     ..|||  |.|.|| ||.||||.||.|..||.|                  
+1                757 TATTATCCTCATGTTAAAAAATAATTTTCTGCTTATGTATATGTCTATAG    806
+
+1                429 --CACA----TAGAAAACTTGCTCCCAAAAT-----------AGTG----    457
+                       ||||    |||||||..||.|..||.|||           ||||    
+1                807 TTCACACTCCTAGAAAAGATGATGGCAGAATTTAAAGCACCAAGTGGTGA    856
+
+1                458 -----CAAATACCCA--------------AAGGAAA--------------    474
+                          |||  |||||              ||.|.||              
+1                857 TTTATCAA--ACCCATCCCTATTTATTTTAACGCAACTATAAATAACAAT    904
+
+1                475 ----GG---AAAAAACCAGCAGCAAGGCTGGGCT-TGTAGGAATGGCAAA    516
+                         ||   |||||.||||.|..||   |||..| |.||.|.||....|.
+1                905 ACTTGGTTAAAAAATCCAGGACAAA---TGGTATATATATGTATATATAT    951
+
+1                517 GAACTTTGGTTTA-----------------------------GAAAGGCT    537
+                     |.|.|||  ||||                             ||||...|
+1                952 GTATTTT--TTTATCTGAAAATTGTTCATCACATTCACAAATGAAACTAT    999
+
+1                538 AGGAAG-AGTCTGGGCTGCACCTCCTCTTCCTAGCCCAGCTCCCCAGAGC    586
+                     ..|||| |.|.| .||||||..|                 |||...||..
+1               1000 TTGAAGTAATGT-TGCTGCAGTT-----------------TCCATGGAAA   1031
+
+1                587 CAGCT------CTGACCCTCGCC-------CCAGGGGGAGT-----CTGT    618
+                     |||.|      .||||..|.|||       .|.|.|..|.|     ||.|
+1               1032 CAGATATGTGGTTGACATTGGCCAATTATTTCTGAGCAATTCATTCCTAT   1081
+
+1                619 AAACATGCAAACCCAGCAGCCTTTGGTTCGGAAATGT---CTTACA----    661
+                     ||..|||.||                     |||.||   .|||||    
+1               1082 AACAATGAAA---------------------AAAGGTTTATTTACATTGC   1110
+
+1                662 ATGTCAA-AGCACAGCCTCCAGCAGTCCTACTTGGGCCTGCCTGCAGGGG    710
+                     ||||||| |..|.|..|..|||...|||                      
+1               1111 ATGTCAATATTATAATCATCAGTTTTCC----------------------   1138
+
+1                711 GGCAGAGGAGGCATCTGCTGAACCCAAT-------TAAAGCCAATG-CAA    752
+                                           |.||||       ||||   |||| |||
+1               1139 ----------------------CTCAATTCTTTAATAAA---AATGTCAA   1163
+
+1                753 A-------AAGTATAAGGCTTTGGGGACCAAGCAACAAGGAATCC-----    790
+                     |       ||.|.|||   |||          ||...|.|||.||     
+1               1164 ATTCTGACAAATGTAA---TTT----------CAGTTATGAAACCATGTT   1200
+
+1                791 -TATCA--CTACATTT--------ATAAGACTAAAGCTGGAGAGTAGAGG    829
+                      |||.|  ||.|||||        ||||.|.|.||..|.||.|.|     
+1               1201 ATATGATGCTGCATTTAAATTGAAATAAAAATTAATTTTGATACT-----   1245
+
+1                830 GTGACAGCAG-----ACACTCCTCACCCCAGCCTACGTGTCTGCGGCCCC    874
+                      |.|||..||     .|.||.||.|||||||.|||               
+1               1246 -TTACATAAGTTTTTCCTCTTCTGACCCCAGACTA---------------   1279
+
+1                875 AGCAAGGACCCAGAGGGTGGTCTCCCTCCAGGCTCCAGGGCTGGGAA---    921
+                        .|..|.|||.|      |.|...|.|.||||...||..|..|||   
+1               1280 ---TAATATCCAAA------TATTTTTTCTGGCTAGTGGTATTTGAACTT   1320
+
+1                922 ---------------------GAAAGATCCCTGAGCAGTTAGGTCAGGCG    950
+                                          .|||..|   |.|...|||...|||.|..
+1               1321 TATTTAATTTACATAATATTTTAAAATT---TTAATTGTTTTTTCATGGT   1367
+
+1                951 A------ATTCCCAGCACCT----GTTCCAG--TTCCTGCCTTCGCTGCT    988
+                     |      |||   ||.||.|    ||.||||  ||.|..|.|.|.|||.|
+1               1368 AGATAATATT---AGTACATGTAAGTACCAGTTTTTCAACTTACACTGAT   1414
+
+1                989 GCACCTGGAG------------AAGGGAGA-AACCAA---------GTGG   1016
+                     .....||.||            |||.||.| |..|||         |||.
+1               1415 AATATTGCAGTGGTAATTTACAAAGTGACACATTCAAATGTGTATTGTGT   1464
+
+1               1017 CTCAGGCCTTTG--CTACTCACGG--------CCAAAGGAGGGAAAACAG   1056
+                     ||||..|.|.||  |||..||.||        |.|||.|||   ||||||
+1               1465 CTCACCCTTATGCCCTAGCCAAGGGAACAATTCAAAATGAG---AAACAG   1511
+
+1               1057 GGCAGAGCCTCACCTTGGCAAAGATGTGC-----CTGCCTACT-----GC   1096
+                         ..||||....||....||.||||||     ||..|.|.|     .|
+1               1512 ----CTGCCTGGATTTTCAGAATATGTGCACAAACTTGCAAATTCAACAC   1557
+
+1               1097 TTCCTGGGCCCAGGGCTGG---------TGGTAGAAAGCAGCTCGTCTCT   1137
+                     |||.|.|  ||...|||||         |..|..|||        ||||.
+1               1558 TTCTTTG--CCCTTGCTGGCCTATCAAATTTTCCAAA--------TCTCA   1597
+
+1               1138 CCTCCTC--AGGATT----TCCAATCACATCAGTGATGATCTGCAAAGAG   1181
+                     |.|.|.|  |..|||    |||.|..|.||||||.|        |.|.||
+1               1598 CTTACACATACTATTGTGGTCCCACTATATCAGTTA--------ACACAG   1639
+
+1               1182 CCAGGAGGAAAGCCATAGCATAATCCCCACCCCTGGGCTAATCCACCCTG   1231
+                     ||        ..|||||.||||         |.||..|||          
+1               1640 CC--------TTCCATAACATA---------CTTGTACTA----------   1662
+
+1               1232 GGAACTGCTGTGGGTAAA---AATCACCCAGAGCTTTACATAGG---AGT   1275
+                          |||       |.|   ||||      |.|||...|||.|   |||
+1               1663 -----TGC-------ATATTTAATC------ATCTTATAATACGCTTAGT   1694
+
+1               1276 CCCCTCGGGAAAGAGGACTACACCTT-GAGGTCTCGGCGCTGGGAACGGA   1324
+                                ||||||.|...|||| ||..||||.|.||...|.|.|  
+1               1695 -----------AGAGGAATGTGCCTTGGAAATCTCAGGGCATAGCAAG--   1731
+
+1               1325 GCCATTCCTGGATGAAGTCCTGGGGGTCGGTGCT--------AAAACTGA   1366
+                             ||||..||              ||||        |.||||  
+1               1732 --------TGGACAAA--------------TGCTGTTACAAAACAACT--   1757
+
+1               1367 GCATGAAATCT-----------------CTCTG---------GGTCTT--   1388
+                     |||||.|||.|                 |||.|         |.||||  
+1               1758 GCATGTAATTTGGCAATATGCTTTTTTCCTCAGTTTAATTAAGCTCTTAA   1807
+
+1               1389 --------CAGCTGGT-----------TGATG------------------   1401
+                             |||||..|           |||||                  
+1               1808 TTTATAAGCAGCTTTTGCCATTATCACTGATGTCTTTCCAATTCCTTATA   1857
+
+1               1402 -------------GACTCAAT------GGTCTCATGGATCTGGAGAGGGT   1432
+                                  |.||||.|      |..|||.|...|||..|   ..|
+1               1858 TACTGACATCCCTGCCTCACTAATGCGGAACTCTTCTTTCTTCA---TTT   1904
+
+1               1433 ACC-----------------------------------------------   1435
+                     |||                                               
+1               1905 ACCTCCAAGCAATCCTAAACATAATGAAAATATAAATAATGAAATTATAA   1954
+
+1               1436 -------------TGTGTCAGACTGTGCCCCCAAAGCTTACATGCAAGC-   1471
+                                  |||.|||.|.|||...||.|      ||||..||.| 
+1               1955 ATAAAAATCATTATGTTTCAAAATGTTTTCCAA------ACATAAAAACT   1998
+
+1               1472 -----AAC-------TGAGCCAGAGTTCCCATCCCGT-----CCT-----   1499
+                          |||       ||..|.|.|||  ||||.||.|     |||     
+1               1999 AAATTAACAGTAGAATGCTCAATAGT--CCATGCCCTAATTACCTAATTA   2046
+
+1               1500 ---CCAGGTGCTACATGTATGGAAATGCTGGACAGAGCCAGCCCACCCC-   1545
+                        |..||||  |..|.||||    .|||..|..|.|||..|||||||| 
+1               2047 AACCTTGGTG--AGTTTTATG----AGCTAAATTGTGCCCACCCACCCCC   2090
+
+1               1546 ------------------AATCCTGGGCCCC--------AGAGGA---AG   1566
+                                       |.||||...||.|        ||||.|   |.
+1               2091 ACCAAATTCACATGTTGAAGTCCTAACCCTCAGTATCTTAGAGTATCCAT   2140
+
+1               1567 CTGTGGAGCCA------------GAGGGCCCACCT----TGACATCAAGG   1600
+                     .|.|||||.||            .||..|.||..|    |.|.||.|.|.
+1               2141 ATTTGGAGACAACGTCTTTAGAGAAGTACACAATTAAGGTTAAATAAGGT   2190
+
+1               1601 GAG------GCGATCTCCTGC----TGATTGG--TGGT----AGAGGCCA   1634
+                     |||      |||..||..|.|    |||.|||  ||.|    |||||  |
+1               2191 GAGTAGGGTGCGTCCTAATCCAATGTGACTGGTATGCTTCTAAGAGG--A   2238
+
+1               1635 GAAAATT--------GCT-----CATTTGGGCCTTC------AGTGGGTC   1665
+                     |||.|||        |.|     ||||   ||.|||      .||.|||.
+1               2239 GAACATTTACACACAGATACATACATT---GCTTTCGCACCAGGTAGGTG   2285
+
+1               1666 GTCCACCTCCACATCGATGTCGTAACAGGCT--GTCTTCTTCTGGTCGTT   1713
+                     |.|.||                 |||||.||  ||.|...|.|||  .|.
+1               2286 GACTAC-----------------AACAGTCTAAGTATGAATGTGG--ATG   2316
+
+1               1714 AGGGTCGACACTGCAGG------------------------CAGCACATG   1739
+                     ||||.||.|||| ||||                        ||.||    
+1               2317 AGGGACGTCACT-CAGGTATTCTTGCTACGCTAACTTTTGCCAACA----   2361
+
+1               1740 GGGAGGGAAGGC-----------ACATAGCTGA----------------C   1762
+                      |.|.|||.|.|           ||||| .|||                |
+1               2362 -GTATGGATGACTTTAAGTGTATACATA-ATGACAAGTTATTTATGTCTC   2409
+
+1               1763 TTCATCCTGCCCACCT---GGGCCAAATCTGGGGCCCATTCTCTGCACAC   1809
+                     ||| |||.||.||..|   ||     |||||    .|.|.||...|.|.|
+1               2410 TTC-TCCAGCTCATTTTTAGG-----ATCTG----TCCTCCTTAACCCCC   2449
+
+1               1810 ACTCAGGGAA---AAAGAAACCTGATGCTTTCTTTGGCTT--TAGTTCAA   1854
+                     |||..|||||   |.|..|.|.|.||..|...||||..||  |||.|   
+1               2450 ACTTTGGGAATTCAGACCACCTTAATAATAGGTTTGAATTCCTAGCT---   2496
+
+1               1855 GCCAAGGGTGAATCTGC-------------TCTT-AGAAGAGCCTTCC--   1888
+                          |||...||.|||             |||| |.|...||.||||  
+1               2497 -----GGGCACATATGCAGTGGTAGGGCTTTCTTGACACATGCATTCCAG   2541
+
+1               1889 ---------------------TGTCCCCC-------TCCTTGCATTTACC   1910
+                                          |||.|.||       ||||..|.|||..|
+1               2542 AATAATCTAGTAATTTGCAGTTGTTCACCTGTTATGTCCTCTCCTTTTTC   2591
+
+1               1911 TAATG----ACATGGTTGATGACAATG-GGGTCTGGATGCTG--------   1947
+                     .||.|    ||||        .||||| ||.|.|.|||..||        
+1               2592 AAAAGAGCTACAT--------TCAATGTGGATTTAGATTATGCTAATAAA   2633
+
+1               1948 --CAGCAACCCTGCCAGCTTCATGGGAATCTCGGAGAAACGGAGTCGGCC   1995
+                       |||||..|.|.||.|..|...|...||||                  |
+1               2634 GACAGCATTCTTACCTGTGTGCAGATCATCT------------------C   2665
+
+1               1996 ACAACTGAAGATCTGGAGGAAATACGAAAGGCTCAGCGTTGGCTTGTGGG   2045
+                     |.|||..||..|.||          |..||||.|||   |||||..||  
+1               2666 AAAACAAAATTTTTG----------GCCAGGCACAG---TGGCTCATG--   2700
+
+1               2046 CACAGTGGAGTGGACCATTCCAGGACCAGTGAGGGCAGCAGTCTGCAGGC   2095
+                                              ||.||.|.|.||||..|.||     
+1               2701 -------------------------CCTGTAATGCCAGCCCTTTG-----   2720
+
+1               2096 TGTGGCCAAGGAGTAGCCCAGCAGGCAAGGCAAAGCAAGGGCTGAGAAAA   2145
+                     .|.||||.|||.|               ||||.|.||   .|||||...|
+1               2721 GGAGGCCGAGGTG---------------GGCAGATCA---CCTGAGGTCA   2752
+
+1               2146 CGGGGGCTGG----CA-TCTGGCTAACCTGGCGGAAGTAACGGTTGCAGT   2190
+                     |  |.|.|||    || .|||||.|||.|||.|.||              
+1               2753 C--GAGTTGGAGAACAGCCTGGCCAACATGGTGAAA--------------   2786
+
+1               2191 TGATGTACTCCCGCTCGTGCCCATCCT-------------GCAGCTGGTT   2227
+                              |||     ||.|..|.||             .||||    |
+1               2787 ---------CCC-----TGTCTCTACTTGAAACACAAAAAACAGC----T   2818
+
+1               2228 GTGCTTGATGTAAAGCCACAGGGCCTGCATGATGGCGGCCCTCGTCTGCG   2277
+                     |||||||.|     |.||||                            ||
+1               2819 GTGCTTGGT-----GGCACA----------------------------CG   2835
+
+1               2278 TGTGCACTCCCAGCAGCCTTGCCAATCGGGGGTCCAATTTGTACTGGGGA   2327
+                     ..||.|.|||||||                           ||||.||.|
+1               2836 CTTGTAATCCCAGC---------------------------TACTTGGTA   2858
+
+1               2328 GGCTGGAGTTGGATGGAGGGGAGTCAGAACGGGTTCTTATAGTAGAACAG   2377
+                     |||||                                             
+1               2859 GGCTG---------------------------------------------   2863
+
+1               2378 TGGGAAAATAGGGCAGGGACAGGAAGGGTTTCTAGGAACCAGCTCCCCTC   2427
+                               .||||||       ||..||.||.|.||||||        
+1               2864 ----------AGGCAGG-------AGAATTGCTTGAAACCAG--------   2888
+
+1               2428 CTGAGG----GGTCCCTGTGGGCCCAGAAATGACCCCAGGGTCTCTGTCA   2473
+                       ||||    |||..|.|||.|||.||  ||.||.|||      ||| ||
+1               2889 --GAGGCGGAGGTTGCAGTGAGCCAAG--ATCACACCA------CTG-CA   2927
+
+1               2474 CCTGATGATCCAGCAT--------GAGCAGGA------------------   2497
+                     |       |.||||.|        |||||.||                  
+1               2928 C-------TGCAGCCTCGGCAACAGAGCAAGACTCCATCTCAAAAAAAAA   2970
+
+1               2498 ---------------GGGTGCA--CTTGACGTTGAG--------GTCTCC   2522
+                                    |.||.||  |.|.|.|.||||        .|.|||
+1               2971 AAAAAAAAAAAGATTGAGTACATTCATAATGCTGAGTACAATAAATTTCC   3020
+
+1               2523 AGGCC----GTTTTACT------TGGAAGCCATCTGTCTCCTGGGTGGTG   2562
+                     |   |    .||.||.|      ||| |.||||.|.|||.||.|      
+1               3021 A---CAAAACTTATAATGAAATCTGG-ATCCATATTTCTTCTTG------   3060
+
+1               2563 GGCATCCGGTGCCACTGGCAGGGAGGGAAGCATGGCTTATCACCAAGGGG   2612
+                                                    |||||||            
+1               3061 -------------------------------ATGGCTT------------   3067
+
+1               2613 GTGGGCGTGAACACAGGGCCTCCCAAGGGCCCTGAGGCC-----------   2651
+                                        |||||  |.|.|.||||.||           
+1               3068 -------------------CTCCC--GCGTCTTGAGTCCATGATTGACCT   3096
+
+1               2652 --------ATTTC---------CCTGC-----CAAAC-------------   2666
+                             |||||         |||||     |||.|             
+1               3097 TATATTTTATTTCTTCTGCACTCCTGCCTATTCAAGCAATTCATGGCTCT   3146
+
+1               2667 ---------------CTGCACAT-CAGCCTGCTTTTGCCCCAGGCCCACT   2700
+                                    |||.|.|| ||||||.||.||  |...||||.|||
+1               3147 GAAGGAGCGCATTGGCTGGAGATACAGCCTCCTCTT--CGTGGGCCTACT   3194
+
+1               2701 CTCACCTCCACCAGGT---GATTGTC--------AGGCCCGTACAGCTCC   2739
+                               .|||.|   .||||||        ||..|.|..|||..||
+1               3195 ----------ACAGTTAAACATTGTCGTCTTCGGAGCACTGCTCAGACCC   3234
+
+1               2740 TTGTCCAGCTCA-ATGACGAGGCTCTTAAAGAAT-------GAAGAAAAC   2781
+                     .|...||  ||| |.|||.||..||...||.|||       .|.||||| 
+1               3235 ATCATCA--TCAGAGGACCAGCGTCACCAAAAATAGTCATCCAGGAAAA-   3281
+
+1               2782 TTCCTCTTCTGTTTGCTAGGCTGGGGATGGAAAGGGGTGTGAGATGGTGC   2831
+                      ||                         ||||||                
+1               3282 -TC-------------------------GGAAAG----------------   3289
+
+1               2832 TGCTGAGCTCTCAAATCTCAAGCTATGCT---AAATCCCAAGA-------   2871
+                                  ||.|.||...||||||   ||||...||.|       
+1               3290 -------------AAGCACAGTATATGCTTGAAAATGAGAAAACACGAAC   3326
+
+1               2872 ---AAGAGAAGCCCCATT---TCAGCCCTGGAGCT---------------   2900
+                        ||.|||  |.|||||   ||||...|.||.||               
+1               3327 CTCAATAGA--CTCCATTGACTCAGGAGTAGAACTAACTACCTCACCTAA   3374
+
+1               2901 ----------------------CCGGATACTGAAGATTCCTGGGCCCTGA   2928
+                                           ||||| ||||.||           |.||
+1               3375 AAATGTGCCTACTCACACTAACCCGGA-ACTGGAG-----------CCGA   3412
+
+1               2929 AGGATG----GAAGCAGGACTCTGG-GCAGACTGG----AGGC--AGGGA   2967
+                     |||..|    |.||||||.| |||| |.||||..|    ||||  ||.||
+1               3413 AGGCCGACATGCAGCAGGTC-CTGGTGAAGACCAGCCCCAGGCCAAGCGA   3461
+
+1               2968 AATG-GTGCC---CTCTTGCAGCCC----------ACGAG----------   2993
+                     ||.| ..|||   ||.||.||...|          |.|||          
+1               3462 AAAGAAAGCCCCGCTATTACACTTCTCCATTTTGAAAGAGAAAAGTTTTA   3511
+
+1               2994 -----------------GGACTTCCTCGAGACACTCGACTGCCATCTGCA   3026
+                                      ||.| ||||.|.||||||....|.|  |.||||
+1               3512 TTTGTTATGCATTATTTGGTC-TCCTTGCGACACTGTGATTC--TTTGCA   3558
+
+1               3027 GGAACACTGTAATAACCACACAAATCAACCTCCAAC-------------G   3063
+                     ....|..||||              ||.|.|.|..|             |
+1               3559 CCTTCCTTGTA--------------CATCATTCCTCTGGGCATTAGTCTG   3594
+
+1               3064 GGCTTGGAGCAGCGCCCCCCTCC--------------------CTATGGC   3093
+                     |||.|.||.|||..||.|.||.|                    |.||.||
+1               3595 GGCATTGACCAGGACCGCGCTGCTTTTTTATTATCTACAATGGCCATTGC   3644
+
+1               3094 AGGACTTCTC-------TGGGAGCGCCCAAGTGTCTGGCCCAGTCTTTTT   3136
+                     ||.|.||.||       |.||||           ||||         |||
+1               3645 AGAAGTTTTCAGGAGGATCGGAG-----------CTGG---------TTT   3674
+
+1               3137 TTTTCTGAGACACA---ATCTCACTC-TGTCACCCAGGCTGAAGTGCAGT   3182
+                     |.|.||.|   |||   |.|.||.|| |||.|...|...|| |||.||..
+1               3675 TGTCCTCA---ACAGGGAGCCCATTCGTGTGATTTACATTG-AGTTCATC   3720
+
+1               3183 GGTGTGATCATAACTCACTGAAGCTC----------------------GA   3210
+                     .|.||.||| |.|.|.||||...|||                      |.
+1               3721 TGCGTCATC-TTATTGACTGTGTCTCTGTTTGCCTTTACTTTTGCTAGGG   3769
+
+1               3211 CCTCCTGGGCTCAAGCCATCCTCCTGCATCA---------GCCTTATGAG   3251
+                     ..|.|||||.||.|   || .||.||.|.||         |..|||||  
+1               3770 AATTCTGGGGTCTA---AT-GTCATGTAGCATATTTTTTGGGTTTATG--   3813
+
+1               3252 TAGCTGGGACTACAGGTG-------CATGCCACCGCACCC---AGCTAAT   3291
+                       |.|||.||.|.|||.|       |||.||||.||...|   .|.|.||
+1               3814 --GTTGGAACAATAGGAGGGACCCACATTCCACTGCTTGCTGAGGATGAT   3861
+
+1               3292 TTT------------TAAATTTTTTGTAGAGATGGGGTCTGGCTCT----   3325
+                     .||            .|.||.|.||.|..||.||||||||...|||    
+1               3862 GTTGTGGGCATTGAGAAGATGTCTTCTGCAGCTGGGGTCTACATCTTCAT   3911
+
+1               3326 ----------GCTGCTCAGGCTAGTATCAAACTCCTTGGTCTCAGTCTTA   3365
+                               ||.|..|.|||| |.|.|  ||.|||||.....|.| |||
+1               3912 TCAGAGCATAGCAGGACTGGCT-GGACC--ACCCCTTGCGGGTAAT-TTA   3957
+
+1               3366 AACCCACACA------------GGCCTCCTTCCCTCCAGA--------AC   3395
+                     ||..||||.|            |.|..|.||||||...||        |.
+1               3958 AATACACAAAATACAAACGCTTGTCTACTTTCCCTTATGAATTGTGCTAG   4007
+
+1               3396 CTCCCTCCCCAACTC-----ACATCATCCAGCAGTTT--TCCTTCCA---   3435
+                     ||.|||...|||..|     |.|.|.|.|.||.||||  |..|||||   
+1               4008 CTTCCTGTTCAAGCCATAAAAAAACTTACTGCTGTTTTATATTTCCATTG   4057
+
+1               3436 ---CTCGGAGTTCCCAGG---------------AAGCCACCTTGTCCCCT   3467
+                        .|..|||.|.|||||               .|||||    |.||.||
+1               4058 AATTTTAGAGCTGCCAGGGATTAGAGATTACTTGAGCCA----GCCCTCT   4103
+
+1               3468 ------------------GCTGGGGTTCCCCCAGG---GGT-------CC   3489
+                                       .||||       |||||   |||       .|
+1               4104 TGATTTAAATATGAGGAAACTGG-------CCAGGCACGGTGGCTCACGC   4146
+
+1               3490 CTGCAGTTCCTGCACTATCG----------CCTTCCGCCTTGCTGGGACT   3529
+                     |||.|.|.||.|||||.|.|          ||.|||         .||||
+1               4147 CTGTAATCCCAGCACTTTGGGAGATCAAAACCATCC---------TGACT   4187
+
+1               3530 GA-ACGTATTGGAAATGTAGATCCGAAGCTTTCGCTTTTGCTAAAGAGAG   3578
+                     .| |||          ||..|.||       .||..|.|||||||.|.|.
+1               4188 AATACG----------GTGAAACC-------CCGTCTCTGCTAAAAATAC   4220
+
+1               3579 AAA---------GGC----------------------AATCACAACT---   3594
+                     |||         |||                      |.||.||.||   
+1               4221 AAAAAATTAGCTGGCATGTGTGGTGGCGGGCACCTGTAGTCCCAGCTACT   4270
+
+1               3595 ----------------------------------GGAGGTGGA-------   3603
+                                                       |||||||||       
+1               4271 CGGGAGGCTGAGGCAGGAGAATGGCGTGAACCCAGGAGGTGGAGCTTGCA   4320
+
+1               3604 -----CCAAGAT------------------GCTGG--GACACAGTGCTAC   3628
+                          ||.||||                  .||||  ||||.||.|..||
+1               4321 GTGAGCCGAGATCATGCCACTGCACTCCAGCCTGGGTGACAAAGCGAGAC   4370
+
+1               3629 CGCATCT-TCTC--ATATGAACCATTCAA-----CAATCAG--TACTGAG   3668
+                         ||| ||||  |.||.||..|.|.||     .|||.||  .|||||.
+1               4371 ----TCTGTCTCAAAAATAAATAAATAAATAAATAAATAAGGAAACTGAA   4416
+
+1               3669 CACCA------TGAGCCAGCCA---GGCACCTTGTCAGGTACTGG--GAA   3707
+                     ..|||      |||   |.|||   |.|||.|.||.|..||.|||  |||
+1               4417 GGCCAAAGAATTGA---AACCAAAGGACACATGGTAAATTAGTGGTTGAA   4463
+
+1               3708 TCA------GAAGTAGTA-----AGTCC---CAGTCCCAGCC--------   3735
+                     |||      ||||..|||     |||||   |.|.|||||.|        
+1               4464 TCAGGACTGGAAGCTGTATCTGCAGTCCAGACTGACCCAGGCTTTTTTTT   4513
+
+1               3736 ----TTTTTTTTTTTTAGACATG--GTCTCACTCTGTCACCCAGGCTGGA   3779
+                         ||||||||||||.||.|||  |..||.|||||||| ||||.|||||
+1               4514 TTTTTTTTTTTTTTTTTGAGATGAAGATTCGCTCTGTCA-CCAGACTGGA   4562
+
+1               3780 GTGCAGTGGCGCGATCTCAGCTCACTTGCAACCTCTGACTCCCAGGTTCA   3829
+                     ||||||||||.|||||||.|||||| |||||||||...|||||.||||||
+1               4563 GTGCAGTGGCCCGATCTCGGCTCAC-TGCAACCTCCTCCTCCCGGGTTCA   4611
+
+1               3830 AGCGATTCTCTTGCCTCAGTCTCCCATGTAGCTGGGACTACAGGTGCGCA   3879
+                     .||.||||||.||||||||.||.|||.|||||||||||||||||.||.||
+1               4612 TGCCATTCTCCTGCCTCAGCCTTCCAAGTAGCTGGGACTACAGGCGCCCA   4661
+
+1               3880 CCACCATGCCCAGCTAATTTTTTGTGTTTTT-GTAAAGATGGTATTTCAA   3928
+                     ||||||.||||.||||| .||||||.||||| |||.|||.||..|||||.
+1               4662 CCACCACGCCCGGCTAA-GTTTTGTATTTTTAGTAGAGACGGGGTTTCAC   4710
+
+1               3929 CATGTTGGCCATGCTGGTCTCAAACTCCTGACCTCAGGTGAT-CTGCCCA   3977
+                     |||||||||||.|.||||||..|..||.||||||||  |||| |.||||.
+1               4711 CATGTTGGCCAGGATGGTCTTGATTTCTTGACCTCA--TGATCCCGCCCG   4758
+
+1               3978 CTTCGGCCTCCTAAAGTGCTGAGATTACAGGTGTGAGCCACCGCACCTGG   4027
+                     |..||||.|||.|||.|.|||.|||||.|||||||||||||||..||.||
+1               4759 CCACGGCTTCCCAAAATACTGGGATTATAGGTGTGAGCCACCGTGCCCGG   4808
+
+1               4028 CCGGAACTCA-CCATTTTATG--------------------------GGG   4050
+                     .||  ||.|| .|.||||.||                          .||
+1               4809 TCG--ACCCAGGCTTTTTCTGTCACCTTGCCTTCTCTCATGCTAGACAGG   4856
+
+1               4051 AA---AGAGATGCATCACCAAC--------------------AATGCCAG   4077
+                     ||   |..|||..||||||..|                    ||||.|||
+1               4857 AACGCATGGATTTATCACCTTCAGAGCCCACCTGACTTTTGGAATGACAG   4906
+
+1               4078 CACAGTGGGACTGGTGCTACGGCATGAT----------------------   4105
+                     .|...|.|||||..|| ||.|.|||..|                      
+1               4907 AAATATCGGACTTCTG-TAAGTCATCTTCCCTTCTTAGGAAAGGTATTTG   4955
+
+1               4106 GGAGTAACACGCAGCCAGTCTCTGGCTCACATCTTACATGAAACCCAA--   4153
+                     |||.||..|.|||||   .|||||          ||.||   |||.||  
+1               4956 GGAATAGAAAGCAGC---ACTCTG----------TAAAT---ACCTAATT   4989
+
+1               4154 -------ACACCCATCACGGCTCCAAAATATCCT-----AGTCCCCTGGA   4191
+                            |             |..||.||.||||     ||...|.|.|.
+1               4990 GATTTGTA-------------TAGAATATTTCCTGTAAGAGGGACATAGG   5026
+
+1               4192 AAGGCTTCA-----------CCACTCGGGACTGTTCTACATTATTAT--T   4228
+                     .|.|.||||           |||...|||.|   |.||.|.|.||.|  |
+1               5027 TATGTTTCATAGCTTAGATCCCAAATGGGTC---TTTAAAGTGTTGTGAT   5073
+
+1               4229 AAGAAAAGCTTCTC----------------------GGCTGGGTGCAGTG   4256
+                     .|||||...|.|.|                      |||..||.||||||
+1               5074 TAGAAATCGTACCCCCTGTCAGAAGATACCTACAGTGGCCAGGCGCAGTG   5123
+
+1               4257 GCTCACGCCTGTAATCTCAGCACTTTGGGAGGCCGAGGC-----------   4295
+                     |||||.||||.|||||.||.||.|||||||||..|||||           
+1               5124 GCTCATGCCTCTAATCCCAACAGTTTGGGAGGATGAGGCGGGCAGATCAT   5173
+
+1               4296 ----AGTCAGGAGTTCGAGACCAGCCTGGGTAACATGGCGA---------   4332
+                         .|||||||||||.||||||||||||..||||||||.|         
+1               5174 TTGAGGTCAGGAGTTCCAGACCAGCCTGGCCAACATGGCAAAACCCCGTC   5223
+
+1               4333 --TACTAAAAATACAAAAATTAGCCGGGCGTGGTGACAGGCATCTGTAAT   4380
+                       |||||||||||..||||.|||||||||.|||||.|||.|..|||||||
+1               5224 TCTACTAAAAATATGAAAAGTAGCCGGGCATGGTGGCAGACGCCTGTAAT   5273
+
+1               4381 CCTAGTTACTCGGGAGGCTGAGGCAAGAAGAATTACTTGAACCTGGGATG   4430
+                     ||.||.||.||||||||||||||| .|.|||||..|||||||||||||.|
+1               5274 CCCAGCTATTCGGGAGGCTGAGGC-GGGAGAATCGCTTGAACCTGGGAGG   5322
+
+1               4431 CGAAGGTTGCAGTGAGCCGAGATCGCAACACTGCACTCCAGCTTAGGTGA   4480
+                     ||.||||||||||||.||.||||||...||..|||||||||||..||.||
+1               5323 CGGAGGTTGCAGTGACCCAAGATCGTGCCATCGCACTCCAGCTGGGGCGA   5372
+
+1               4481 -AAGAGCGAGACTCCATCTCAGAAAAAAAAAAAAAAAAAAAAAAGAAAAT   4529
+                      ||||...|.||||..|||||.||.|||.|||.|||.|||.|||.|||| 
+1               5373 CAAGAATAAAACTCAGTCTCAAAACAAACAAACAAACAAACAAACAAAA-   5421
+
+1               4530 TTCTCTATGGATGGGGAAGGGGA---AGGAGAAAGGA----ACTACCTTT   4572
+                       ..|||         |||.|.|   |.|.||||..|    |.|.||||.
+1               5422 --ACCTA---------AAGTGAACTCAAGTGAAAATAATACAGTTCCTTC   5460
+
+1               4573 ATCCCCTAGTCTAGTGGTTTTCAAACTTTTGACCACCACCCATAAGATTT   4622
+                     .|.||..||..||                                   ||
+1               5461 CTACCGAAGAATA-----------------------------------TT   5475
+
+1               4623 ACATTTTCAATTATGACCCAAG--GTCTGCATATCTATTTATCAGAAACA   4670
+                     ||.||||||          |||  ||.|||||                 .
+1               5476 ACCTTTTCA----------AAGAAGTATGCAT-----------------C   5498
+
+1               4671 AAAATGTCATGAAAGAATCCA--TTTACTACTATGGTAAGTACTACTGTG   4718
+                     .|||||||          |||  |||          ||.||.|| |||||
+1               5499 GAAATGTC----------CCAGGTTT----------TAGGTCCT-CTGTG   5527
+
+1               4719 AAG---------------------------TATTTTAAGATTTTCTACTG   4741
+                     |.|                           ||||.|..|.||.||| ||.
+1               5528 AGGACAGACTTAGCCCAAGAAGAACAAGTATATTGTGTGTTTGTCT-CTT   5576
+
+1               4742 TCATATATTCATT----TAAAACATACTGGCCCCAACACATTCAACTGAG   4787
+                     ||...|.|.||.|    ||||...|.|||.||..|||||           
+1               5577 TCTCCTCTCCAGTCTAGTAAAGATTTCTGCCCTTAACAC-----------   5615
+
+1               4788 TTCGTACTCTACTAGTGGGCTGCATCCTGCATGTGAAAAACCCGGCTCTA   4837
+                                          .|||..|.|.|..||||            
+1               5616 ---------------------CCATTTTTCTTTAGAAA------------   5632
+
+1               4838 GCCCAACTTGCTTGGCCCCTGGAAAACAAGGGGGTGGAAGGCAAGGAAAC   4887
+                      |.|||             ..||||||||      |||||||||.|||||
+1               5633 -CACAA-------------AAGAAAACAA------GGAAGGCAATGAAAC   5662
+
+1               4888 ----------------------------------------------CTGG   4891
+                                                                   ||.|
+1               5663 TGAGAGGCTTCTGAATGGGATGGTCGCCTGGGTGAGGGGCTTATGTCTAG   5712
+
+1               4892 GAAGGCTAGAGGTGGTCAGGGCCACACATACTGTC--AGAGGCTTTTTGA   4939
+                     |||||.|   |.||.|.|.||.|.| |||.||.||  ..|||.||.|||.
+1               5713 GAAGGAT---GCTGTTAACGGACGC-CATGCTCTCTTCCAGGTTTGTTGG   5758
+
+1               4940 TGGCCTCCTG---GATCTCCA-----------TCCGCTTGCG-AGC----   4970
+                     |||.|....|   |||||.||           |.|.|.|||| |||    
+1               5759 TGGACCAAAGTAAGATCTACAGCAGGGCCTTCTACTCCTGCGCAGCTGGC   5808
+
+1               4971 ---------------------------------------------AATGG   4975
+                                                                  ||.||
+1               5809 ATGGCCCTGGCTGCTGTGTGCCTCGCCCTGGTGAGACCGTGTAAGAAGGG   5858
+
+1               4976 TCTGGTCCAGCTTC--CGCTCA--------AAAGCCAAGAGATCCAT-GT   5014
+                     .|||..|||||.||  |.||||        |||| ..||.||.|||| ||
+1               5859 ACTGTGCCAGCGTCATCACTCAGGTGAAACAAAG-GTAGTGAGCCATCGT   5907
+
+1               5015 ------------------ACGCCTG-AGAC--TCTGGAACAAGCTCCCGG   5043
+                                       |..|||| ||||  |||||||       ..||
+1               5908 GGGAAGACTTTACAGGACATACCTGAAGACTTTCTGGAA-------ATGG   5950
+
+1               5044 ATC-TGAAGGAAGGTAGCAGA-AGCTCATCAGCTTGCTTCAGCCAA----   5087
+                     ||| ||.|..||...||||.| ||.|||    |.||       |||    
+1               5951 ATCTTGCAAAAAATGAGCACAGAGTTCA----CGTG-------CAAATGG   5989
+
+1               5088 AGCCTG------GCTCTTTCCTCCCTTCCTGCTGCAGCC-CAGCTTT---   5127
+                     ||||.|      .|.||||     |||.|..|..||||| |.|..||   
+1               5990 AGCCGGTATGACACACTTT-----CTTACAACAACAGCCACTGTGTTGGC   6034
+
+1               5128 --GAGAGAGAT----------------GGACAC---------------CC   5144
+                       |||||.|||                ||||||               ||
+1               6035 TGGAGAGGGATGGGGTGGGCCCAACGGGGACACAAGGAGGTAGAGGAGCC   6084
+
+1               5145 ACCCC-----------------------------AAGGTGGCCACTGGG-   5164
+                     |.|||                             ||    ||||.||.| 
+1               6085 AACCCCTCTACTCCACTTTCAAAACTACATTTTAAA----GCCAATGTGT   6130
+
+1               5165 -------CAGGCCTCCC-----------------------AGGTGTCCTC   5184
+                            .||..||.||                       ||.|.||||.
+1               6131 ATGTGAAGAGCACTACCAACATCGCTTTTGTTTGGTTTTAAGTTTTCCTT   6180
+
+1               5185 TT-----------------AACACTTA-----------------------   5194
+                     ||                 |||||..|                       
+1               6181 TTTGCTTGTTTTTAAAGCCAACACAAAAAACAACCAAGCACTCTTCCATA   6230
+
+1               5195 -------CTCGCTG-----------------------AGGTAGAA----C   5210
+                            ||.||||                       |.||||||    .
+1               6231 TATAAATCTGGCTGTATTCAGTAGCAATACAAAAGATATGTAGAAAGACT   6280
+
+1               5211 CTT---------------------------------ATCTGCCA------   5221
+                     |||                                 |.|||.||      
+1               6281 CTTTGGTTCACATTCCAATATTAAAATAGTGACACGAACTGGCAAAGTGG   6330
+
+1               5222 ------------------------------------TCTTCCTCCTCTTT   5235
+                                                         ||||.||..|||||
+1               6331 TTTTAAAAGCTTTCACATGGGATAAATGATTTTCTTTCTTTCTTTTCTTT   6380
+
+1               5236 AACC---TGGGGAGGACAGA--AACCCACT--------TAA---------   5263
+                     ...|   |||....|.||||  ||.|.|||        |||         
+1               6381 CTTCGTATGGTCTTGTCAGAATAAACTACTATCTTGAATAAAACAACATC   6430
+
+1               5264 -----GAGGTCAATG---------------GTCCAAAAAAGGA-------   5286
+                          .||||||.||               |||.||||||..|       
+1               6431 CAACCCAGGTCATTGAAATGAAACTGACCAGTCAAAAAAAAAAAAAAAAG   6480
+
+1               5287 ----CACTCACTCCCATAACGCCCCTCCAGTCTCCAG-------------   5319
+                         ||.|||.|...|.||..|    |.|.|.|.|||             
+1               6481 ACTTCAATCATTTAAAAAATTC----CTAATTTTCAGAAATATGAATAAA   6526
+
+1               5320 ------------GACCCT----------------CTCCC-----------   5330
+                                 .|||||                .||||           
+1               6527 TAGTTTTTGTTAAACCCTTTGTAAAATACTGAGGTTCCCATTAACAAATT   6576
+
+1               5331 -------------CCAGGAGAGCCTGGAGTCATCCTCAGT----CACCAA   5363
+                                  .|.|||.|   ||.||| ||    |||    .|||||
+1               6577 ATGGCCTCTGCTTGCTGGAAA---TGAAGT-AT----AGTTTAAGACCAA   6618
+
+1               5364 AGCTCTTAAGATAGAAGGAAA-----------------------------   5384
+                     |..|.|||..| |.|||.|||                             
+1               6619 ACATTTTACTA-ATAAGCAAATTTTAAGTATATATATAACTTGAACTTCA   6667
+
+1               5385 --------------CCCTCTGCT-------ACC-------ACCAGA----   5402
+                                   .||.|||||       .||       ||||||    
+1               6668 TAAATGTGAAGATTACCACTGCTTTTTATGGCCAGTCCTTACCAGAAGTA   6717
+
+1               5403 ------------------------GC--------------TGAGTTAGGC   5414
+                                             ||              |.|||||.||
+1               6718 TTTCAGTACAGAATATACAAAATGGCATTTCCTGTTGCTTTTAGTTATGC   6767
+
+1               5415 AGA-----GTGAGAGAAG--------------------------------   5427
+                     |||     ||||..|.||                                
+1               6768 AGAAATATGTGACTGTAGTGTCTTTAATTTAAACCACTATTTATTATTAA   6817
+
+1               5428 -------CAGGATG------------------------CTCTTACCCCCG   5446
+                            .||||||                        .|||        
+1               6818 GTTATTCTAGGATGATTAAAGTAATCAAAAGAAATAAAATCT--------   6859
+
+1               5447 GCGCTGGGCAGGCATGGGAGGCTGCGCCTGGGGCACAAGCAGGCGTTTTC   5496
+                             |||.|||                     ||||| ||.|||| 
+1               6860 --------CAGACAT---------------------AAGCA-GCATTTT-   6878
+
+1               5497 GGAATGGATCCATCATG--GTGGGTGGCATGCC---------AGGTCGAA   5535
+                         |...|||.|..||  ||...|...|||||         |.|||..|
+1               6879 ----TACCTCCTTTCTGCAGTCCTTTAAATGCCTCACAGAATATGTCTTA   6924
+
+1               5536 GCGGAGCTGCTGCACCAAATGGGGAGCCAGCAGGGGGTCCCACCTGC---   5582
+                            |..||.|..||||                     ||.|.|   
+1               6925 -------TCTTGTAAAAAAT---------------------ACTTTCATA   6946
+
+1               5583 --AAGCCA----GCCATGGGCATCCGGTTCCCT---------GGTGACAT   5617
+                       |.||||    |.||||   ||.|  ||||.|         ||..||||
+1               6947 AAAGGCCAAGTTGTCATG---ATTC--TTCCATTTGATTAAGGGCAACAT   6991
+
+1               5618 GCCAGGTCGCT-------GGGGGAAGTGAGCCAACGGGGGTGCATAGGTC   5660
+                     |      .|||       ||||.||   |...|||||             
+1               6992 G------TGCTATTTAAAGGGGAAA---AAATAACGG-------------   7019
+
+1               5661 AGGGGCAAGGCCCTCCGGGACCCATAGCCCAT-------GCCCTC-----   5698
+                                            |||||..||       ||..||     
+1               7020 -----------------------ATAGCAAATCAGCTTAGCTTTCAAAAA   7046
+
+1               5699 -------------CATC-------------------CCTCTCGTCAG---   5713
+                                  ||||                   .||.|..||||   
+1               7047 TAATTTGTTTTATCATCTAAGAATACTTGAGGAACTTCTTTGATCAGAAT   7096
+
+1               5714 -------------CCAGGTAGGGC----CTG-----AGCAGCACACCAGA   5741
+                                  .|.|.||..||    |||     |..|..|.||||..
+1               7097 TATATTTCATTGAACTGTTAAAGCATTTCTGATTTAAAGAAAAAACCATC   7146
+
+1               5742 GCCCTGCTGGAGC------------CCCA-----GGAACAAAG-------   5767
+                     ....||.||.|||            |.||     |.||||.||       
+1               7147 TAATTGTTGAAGCATTTCTGTATTTCACATGGGGGTAACAGAGACATTTA   7196
+
+1               5768 -------GGGAGTGGGCGCCTGAGCACAGAGTGTAAACCACACCTGCCCT   5810
+                            |.||||           .|||...||.||...|||.||     
+1               7197 TGTTACAGTGAGT-----------TACAAGTTGCAATTTACATCT-----   7230
+
+1               5811 GCCCCCTGCAAC---CGCCCTGGCAGC-----CATGCCAGCGAATGAGGC   5852
+                         .||..|||   ||.|.||...||     ..|||||      ||||.
+1               7231 ----TCTATAACTCACGACTTGATTGCTCTAAGTTGCCA------GAGGT   7270
+
+1               5853 CTGCCAGAACCTGGGC----------------------------------   5868
+                     .| |..|.|.||||.|                                  
+1               7271 AT-CGGGTAACTGGTCATTGTTTTTGTTGTTGTTGTTGTTTGTTTTATTT   7319
+
+1               5869 -----------------------------------------TGGGAGGAG   5877
+                                                              ||..||.||
+1               7320 ATTTTTTTTTTGGAGTTACACTACATGTATAGTATTGCTCATGTTAGCAG   7369
+
+1               5878 GGTCCTGCCTGCAGAGG-GAAGGGCC-------TTGGGGAGCTTTTCAGG   5919
+                     ..|.|||  |..||||| .|||.|.|       |.||.|..|||||.|..
+1               7370 TTTTCTG--TAAAGAGGACAAGTGTCAGGATAATAGGTGGACTTTTTACT   7417
+
+1               5920 GCCCATTGCTACCTTCCAGCCCCAGCATGC-TGTGCCCTATTCCCTGGGC   5968
+                     ..||..|..||||  .||..|.||.|.||| .|||         .|||.|
+1               7418 CACCTATTTTACC--ACAATCTCACCCTGCAGGTG---------ATGGTC   7456
+
+1               5969 AA-----GCTGGTCCCTATTCTCTCA------------------------   5989
+                     ||     ||||.|||.|.||..||||                        
+1               7457 AATGCTTGCTGCTCCATCTTTACTCATCATTAATGTTAATTTATGACAAC   7506
+
+1               5990 ------GACAGTCCTGCCAAGCCCTGCCCTCCTTCTCTTTCTCCCATCAT   6033
+                           ||.|..|.|..||||      |||..||...||       .||.
+1               7507 TCGGGGGAAAAACATAACAAG------CCTAGTTTGGTT-------ACAG   7543
+
+1               6034 GAAGA-AGAAGCATG-------------GCTGAGAGGCACAGGGGCAGTG   6069
+                     |.|.| |.||||.||             |||||.|||.|.||.||||..|
+1               7544 GTACACACAAGCTTGAATATTTCTCTGCGCTGAAAGGAAAAGTGGCATAG   7593
+
+1               6070 ----TCACTGCCAG---------GCAGAGGAGTGTA----CTATAGTATG   6102
+                         ||||..||.|         |.||||.|...||    |.||||   .
+1               7594 TTCATCACCACCTGCTACATTTTGTAGAGCATCTTACCAGCCATAG---A   7640
+
+1               6103 AGTAGGCCAATGGCGCAGAGCCCCAATCCCCATCCTCTGTGGCCG---AG   6149
+                     |.||||.||||            |.||   .|..||.||.||..|   .|
+1               7641 AATAGGACAAT------------CTAT---AAAACTTTGGGGAGGGTAGG   7675
+
+1               6150 GGAGAAAGGG-------GTCTG------GTAGGCAGCAGC--ACCCCAGG   6184
+                     ||||.||..|       |||||      ..|||||..|.|  |..|.|||
+1               7676 GGAGGAAATGACAAAATGTCTGTCAAAAACAGGCATAACCTAAAACAAGG   7725
+
+1               6185 TG-----AGC--AGGGCTGCAACAGGATGGCTTG----GAACGTGTACCA   6223
+                     ||     |||  |...||||.||     .|||||    ||||   |...|
+1               7726 TGGATATAGCAAATCTCTGCCAC-----TGCTTGAGAAGAAC---TTTGA   7767
+
+1               6224 GCTGGTGGGGG---------------TGGCCTCGGGCAGGGTACAGGGAC   6258
+                     |||.||||..|               ||.|.||.|              |
+1               7768 GCTTGTGGCAGTTTTGCAGACTTACATGACTTCAG--------------C   7803
+
+1               6259 CCTGTACCCTGTAGT-----------------------------------   6273
+                     .||.|||..||||.|                                   
+1               7804 ACTTTACAATGTATTTTTACTATGAATGTTCAATACAATTTAATATTTAT   7853
+
+1               6274 --CTGGTATCACATAGCCCCCACCCACAGCCCAGAACTG------GACCC   6315
+                       |||.|.|||.|                  ..||.|||      |.|..
+1               7854 AACTGATTTCAGA------------------GGGATCTGCTCCATGTCTA   7885
+
+1               6316 TCCTCTTACCTCCCT--------ACTGC---CCAACTACTACCCCTATG-   6353
+                     |.||.||||||.|.|        |.|||   ||||    |..|..|||| 
+1               7886 TTCTGTTACCTGCATGAAAACAGAATGCATGCCAA----TTTCAGTATGT   7931
+
+1               6354 ------------------------------------ACAGAAGACCCCAG   6367
+                                                         |.|.|||||..|.|
+1               7932 CAATAATCAAGGTTTTAAATGTTTGGAAGAAAATAAAAACAAGACTGCTG   7981
+
+1               6368 A-------------AGGGAAGCTATGG--CTCCTGG--------------   6388
+                     |             ||.||...|.|||  ||.||.|              
+1               7982 ATTTGTTCTGTATTAGTGACATTCTGGTACTTCTAGATTTGCAATACATT   8031
+
+1               6389 -GTGGCCTGT---GGGAAAGAGAGCAGCTAGCACCTG-------------   6421
+                      .||||.|.|   ...|||||||           |||             
+1               8032 TATGGCTTTTTTATTTAAAGAGA-----------CTGATTTTCTTCTGTT   8070
+
+1               6422 ----------------GACTCTGCCAG-----------TGGTCC------   6438
+                                     ||||||..|||           ||.|.|      
+1               8071 ATAAGATTTTTTTATTGACTCTCACAGCATTCAGTATTTGATGCAATTAA   8120
+
+1               6439 ----------AGGCACCACCTGGCAGCCAGGACTGGCTCTGGCT------   6472
+                               |..|||||          |.||.|..|||   ||      
+1               8121 AGTTATAAAAACTCACCA----------AAGATTCACTC---CTAATAAA   8157
+
+1               6473 ----------CCGTGTAGCCCTGGCAA-----------------------   6489
+                               .|||.||.|....||||                       
+1               8158 TAATTTTTTAACGTTTATCTTCTGCAAAACCTTTTAACTCTACTAGAGAC   8207
+
+1               6490 ----------TCCCAAGCTGGAGAAGGGGGCTA-----------------   6512
+                               |||||||       |.|.|.|||                 
+1               8208 ACATAAAGTTTCCCAAG-------AAGTGTCTACTGAACTTTTTATTTAT   8250
+
+1               6513 -----------AG-ATTATCCTGGGAGGCAAGGATAGAG-----------   6539
+                                || |||.|..|..||      |||.|||           
+1               8251 TTATATTTACGAGTATTTTTTTTTGA------GATGGAGTTTCACTCTTG   8294
+
+1               6540 --GCCCAGGCTGAGCAGCAGGAAAGTGGGAGACAGAAATAGC---TTCTT   6584
+                       ||||||.|||                  ||..|.|||.||   .|| |
+1               8295 TTGCCCAGACTG------------------GAGTGCAATGGCACAATC-T   8325
+
+1               6585 TAGATGCCTGCAG------------AAG-GATT-TCCCACCTGAGGCCTT   6620
+                     .||.|..||||||            ||| |||| |||..||||||     
+1               8326 CAGCTCACTGCAGCCTCCCAGGTTCAAGTGATTCTCCTGCCTGAG-----   8370
+
+1               6621 GCTCCCTGACATTTCTGTGGAGCCCATCTGGG-----AGTCACCTCCACC   6665
+                     .|||||             |||  .|.|||||     ||.|||||.|..|
+1               8371 CCTCCC-------------GAG--TAGCTGGGATTACAGGCACCTGCCAC   8405
+
+1               6666 CCCACCCGCC--------------------------------TCCCCAT-   6682
+                     |.|.||.|.|                                ||.|||| 
+1               8406 CACGCCTGGCTAATTTTGTGTATTTTTAGTAGAGATGGGGTTTCACCATG   8455
+
+1               6683 -------GGCTGCTGCCTGCAAGGCCTGTTTGGCAGCT------------   6713
+                            |||||  ||||..||..||||      |.||            
+1               8456 TTGGCCAGGCTG--GCCTCAAACTCCTG------ACCTCAGGTGATCCAC   8497
+
+1               6714 CTGCCTTG----CACACACTGTCCCTGGCAGCTTCACAGGGCTGGCCC--   6757
+                     ||||||.|    |.||.|.||   ||.|.|   |.|||||..||..||  
+1               8498 CTGCCTCGGCCTCTCAAAGTG---CTCGGA---TTACAGGTGTGAGCCAT   8541
+
+1               6758 ---CAGGGCCCAGA----TTA-------------------TGCAACGAGC   6781
+                        ..|.|.||.||    |||                   ||.||..||.
+1               8542 CGTGTGTGGCCTGAACTTTTAAATCATTTTTTCTGGTCATTGAAAGCAGG   8591
+
+1               6782 ACAA----------------------CCAGCCAACCAAGCCCGGCAGGGT   6809
+                     ||||                      |..||.||..|    |.|||...|
+1               8592 ACAATTTTATTTTATGTTGAGTTTTTCATGCAAATTA----CAGCACCTT   8637
+
+1               6810 GG----AGACT----------------------TGTACCAAATCAAAGGA   6833
+                     .|    |||||                      .|||...|||.|.||||
+1               8638 AGAAAAAGACTAAATAATTCAAGAGAAATATTAAGTAATGAATAACAGGA   8687
+
+1               6834 CCCTCCCCCACCCCAGCATCATGGAGATGAGATTCTTCCCCAACCTCTTC   6883
+                                        .|.|||.||.|.|                  
+1               8688 -------------------GAGGGAAATAAAA------------------   8700
+
+1               6884 ATCCCGCACTAAAC-------------------CCATGTTCCCAACACAG   6914
+                            |.|||||                   .||||||..||.|    
+1               8701 -------ATTAAACAATATAATCAAATGAAGAAGCATGTTTTCATC----   8739
+
+1               6915 AGGGTCAGATTCTTGACCAGATGCGGAGATG----------------GAA   6948
+                         |.|||.|...||....|.||.|.||||                |||
+1               8740 ----TAAGAATTAAGAATGAAAGCAGCGATGGTATTTAATTATTAATGAA   8785
+
+1               6949 AGAAACATGACCCACA-GACGTGAGGATGGGGAGAGGAGG---------A   6988
+                     |.|.||||||...|.| ||..|.|.|.|.|..||||.|.|         |
+1               8786 AAATACATGAATGAAATGATATCATGGTAGCCAGAGTAAGCCTATCAAAA   8835
+
+1               6989 G------------------------------------CAGGGTGGGAC--   7000
+                     |                                    |||.||.|..|  
+1               8836 GTCATAAAGGCAAATAGTTAAAGACCACAACCAGTTACAGAGTCGTTCCA   8885
+
+1               7001 GGAAGTGTT--------TGGGAGAATAAAAAGTTCAAAGTGGGGGGCTCT   7042
+                     .|||.||||        |.||    ||||.||..||        |.||||
+1               8886 AGAACTGTTGCAACCTGTAGG----TAAACAGCACA--------GACTCT   8923
+
+1               7043 --------GGGGCTTTGGGAGTCCTGCCAAAGTCTCTCTGCA-----TCA   7079
+                             ||||  ||||         ||||.|.|.||||.|     .||
+1               8924 ACATGCCAGGGG--TTGG---------CAAACTTTTTCTGTAAAGGTCCA   8962
+
+1               7080 GGAAGAGATTAATCAGAGCTGTTGAAAGGCAAAAGACAGCCTCTTT----   7125
+                     |..||..|.||.|.|.|||| |||.|.|.||..||   ||||||.|    
+1               8963 GATAGTAAATATTTAAAGCT-TTGCAGGCCATGAG---GCCTCTGTCTAG   9008
+
+1               7126 ----CTCTGCC------------------------------------TTA   7135
+                         |||||||                                    |.|
+1               9009 TCAACTCTGCCATTGAGGGTCAAAAGCAGCCACAGACAATATATAAATGA   9058
+
+1               7136 AAGATTGT-----TCTTTCTCTGG----------------CCTGAGAT--   7162
+                     |.||.|||     |.||||..|||                .||||.||  
+1               9059 ATGAATGTGGCCATGTTTCAATGGAATTTTATTTATGGATACTGAAATGT   9108
+
+1               7163 ----------------------------TATA------------------   7166
+                                                 ||||                  
+1               9109 GAATTTCACAAGATTTTCATACAAGAAATATATATTTTTTCAATCACATA   9158
+
+1               7167 -------------------------------------------------G   7167
+                                                                      .
+1               9159 AAAATGTTAAACACACACACACACACACACACAATTAGCTCTCAAGCTGA   9208
+
+1               7168 AAAAAAACTAAGTGTGGCT----------ACAGCTGTAA-----GCCCAG   7202
+                     |||||||..||.|.|.|||          |||.||||||     ||.|||
+1               9209 AAAAAAAAAAATTCTAGCTCCTTCACCACACATCTGTAACACTGGCACAG   9258
+
+1               7203 G--------CCCAG--------------------ACATCCCAGACT----   7220
+                     |        .||||                    |||..||.||||    
+1               9259 GTCAGTACCACCAGAAGCAAAGCTCTGAAAACTAACAGTCCTGACTCATG   9308
+
+1               7221 ----------------------AGTTTTTCCTAG--------TGCCTGAG   7240
+                                           |||..|||.|||        ||||    
+1               9309 GGAAAGGATTCATTGTGGTCAAAGTAATTCTTAGATCATAACTGCC----   9354
+
+1               7241 ACAAAGACAGGGAAGAACTGAAGCAG-----------TGGGTCCTGCAGA   7279
+                      |.||.|.|||.||||  |.||||||           |.|.|..||..|.
+1               9355 -CCAAAATAGGAAAGA--TCAAGCAGCTAACACTTTTTCGTTGTTGTTGT   9401
+
+1               7280 GGTGAGCGAGGGCC-----------------CTGTGGTCCCCAGGAA---   7309
+                     ..||||..||.|.|                 |||..||.|...||.|   
+1               9402 TTTGAGACAGAGTCTTGCTCTGTCACGCCGGCTGGAGTGCAGTGGCACGA   9451
+
+1               7310 -----GCTCCCTG----------CTGCAGTGTTCACAAAA----CCTGCA   7340
+                          ||||.|||          ||.|.|.|||||...||    |||||.
+1               9452 TCTTGGCTCACTGCAACCTCCACCTCCCGAGTTCAAGCAATTCTCCTGCC   9501
+
+1               7341 GCA-CCACCCATCCCTCCTGGGCAGGTGCTCCGGTAACAGG-AAGTCCCA   7388
+                     .|| ||.||||            ||..|||..|.|.||||| |.|..|||
+1               9502 TCAGCCTCCCA------------AGTAGCTGGGATTACAGGCATGCACCA   9539
+
+1               7389 --------------------------------AGACAAG-----GCC-TC   7400
+                                                     |||||.|     ||| |.
+1               9540 CCACACCCAGCTAATTTTTGTATTTTTAGTGGAGACAGGATTTTGCCATG   9589
+
+1               7401 ATAGGCAG---GGTCTGGAATAGGCTCC--AC--CCAGACATCTGCTCCA   7443
+                     .|.|||||   |||||.|||    ||||  ||  |.||..|||||| |||
+1               9590 TTGGGCAGGCTGGTCTTGAA----CTCCTGACCTCAAGTGATCTGC-CCA   9634
+
+1               7444 GGTTTCCTGGGC---CCAGAGCCCCTGGCTCACTCAGG-----GCCCCAG   7485
+                          ||..|||   |||.||..|...|.|.|  ||||     |||.|.|
+1               9635 -----CCATGGCCTTCCAAAGTGCTGTGATTA--CAGGTGTGAGCCACCG   9677
+
+1               7486 GGGAAGGCTGCTTATAGTTCAAGTCCCA----------------------   7513
+                     .|...|||  .||||||.|.|   |.||                      
+1               9678 TGCTTGGC--ATTATAGCTAA---CACATTTGTTAATTATGTTTTCTTTT   9722
+
+1               7514 ------------------GCTGAG------------CCTTG----CCAAG   7529
+                                       .|||||            .||||    |||.|
+1               9723 TTTTTTCCTTTTTTTTTTTCTGAGATGGAGTTTCACTCTTGTTGTCCAGG   9772
+
+1               7530 CT------CCATAGGGC-TTATAGGCGCTAGCAACTCCTCCCACTTCAAA   7572
+                     ||      |.||.|.|| .|.|.|||.|     |||.|..||.|      
+1               9773 CTGGAGTGCAATGGTGCGATCTTGGCTC-----ACTGCAACCTC------   9811
+
+1               7573 AAACAAAACAAAACAAAACAAACAAAAAAAAACAACTCAGGAGTTAAAGA   7622
+                                                     ||.|||.||.|||.|||.
+1               9812 --------------------------------CACCTCCGGGGTTCAAGT   9829
+
+1               7623 AAAAAAAAAAAGCAGTCCAGCACTCTGAGCCTCCCTA---------ACTC   7663
+                     .|          ...|||.||   ||.||||||||.|         |.|.
+1               9830 GA----------TTCTCCTGC---CTCAGCCTCCCGAGTAGCTGGGATTA   9866
+
+1               7664 CCTGCCTG---CAGCAGGACCAGGTA------------------------   7686
+                     |..||.||   ||.||.|.||||.||                        
+1               9867 CAGGCGTGTGCCACCACGCCCAGCTAATTTTTGTATTTTTAGTAGAGACG   9916
+
+1               7687 ---------------GGCCTGG-----ATCAATCCCCTGAACCCCAGATG   7716
+                                    ||||.||     .||.|.|.|||| |||.|||.||
+1               9917 GGGTTTTGCCATATTGGCCAGGCTGGTCTCGAACTCCTG-ACCTCAGGTG   9965
+
+1               7717 AGGAATCCAGGGCTCCGGTGAGCGTGCTTTGCCCTGCCCCAAATGTG---   7763
+                         |||||             |.|||.|...|||  |||||| |||   
+1               9966 ----ATCCA-------------CCTGCCTCAGCCT--CCCAAA-GTGCTG   9995
+
+1               7764 ---------------GCC-----------CTG------ATG---------   7772
+                                    |||           |||      |||         
+1               9996 GGATTACAGGCGTAAGCCACCACACCAGGCTGTTAATTATGTTTTCATTT  10045
+
+1               7773 CTCCTG--------GAACCTG-----GGCCTGAGGGCCTC----AGTTGG   7805
+                     ||||||        ||..|||     .||.||..|.|.||    ||||..
+1              10046 CTCCTGATTATAAAGATTCTGCTTTAAGCTTGTTGACTTCAAGAAGTTTC  10095
+
+1               7806 GGAACATACC--------ACCCACTCTCCC----------ATGA------   7831
+                     .|.|.|.|||        ||...|||||||          ||.|      
+1              10096 AGTATAAACCTTATGTAGACTTTCTCTCCCCAAAACTAAAATTATTCTAG  10145
+
+1               7832 --GTAAAAAGGATTTTGAGGCCGGGTGCAGTGGCTCACGCCTATAATCCC   7879
+                       .||||||.||.||  .|||||||.|||||||||||||||||||||.||
+1              10146 TTATAAAAATGAGTT--GGGCCGGGCGCAGTGGCTCACGCCTATAATTCC  10193
+
+1               7880 AGCACTTTGGGAGGCCGAGGCGGGTGGATCAC--AAGGTCAGGAGTTCGA   7927
+                     |||.||||||||||||||||||||||||||.|  .|||||.|||||||.|
+1              10194 AGCTCTTTGGGAGGCCGAGGCGGGTGGATCGCCTGAGGTCGGGAGTTCAA  10243
+
+1               7928 GACCATCCTGGCCAAGATGGTGAAACCTCGTCTCTACTAAAAATACAAAA   7977
+                     .||||.||||.||||.||||..|||||.||||||||||||||||||   |
+1              10244 TACCAGCCTGACCAACATGGAAAAACCCCGTCTCTACTAAAAATAC---A  10290
+
+1               7978 AAATTAGCCGGGCGTGGTGGTGGGCGCCTGTAATCCCAGCTACTCAGGAG   8027
+                     |||||||.|||||.||||||.....||||.|||||||||||||||.||||
+1              10291 AAATTAGGCGGGCATGGTGGCACATGCCTATAATCCCAGCTACTCGGGAG  10340
+
+1               8028 GCTTGAGGCA-GAGGATTGTTTGAACCTGGGAGGCGGAGGTTGCAGTGAG   8076
+                     || ||||||| |||.||||.|.|||||.|||||.||||||||||.|||||
+1              10341 GC-TGAGGCAGGAGAATTGCTGGAACCCGGGAGACGGAGGTTGCGGTGAG  10389
+
+1               8077 CTGAGATCATGTCACTGCACTCCAGCCTGGGCGAC-AGAGTGAGACTCCG   8125
+                     |.|||||...|.||.|||||||||||.|||||.|| ||||.||.|||||.
+1              10390 CCGAGATTGCGCCATTGCACTCCAGCTTGGGCAACAAGAGCGAAACTCCA  10439
+
+1               8126 TATCAGAAAAAAAAAAATTTTTTTTTTGAACTTTTTGAACTCTCTGGAGT   8175
+                     |.||   |||||||..|||                               
+1              10440 TCTC---AAAAAAAGGATT-------------------------------  10455
+
+1               8176 GAACCCAGCAATCTGAGGTTTTTGTTATTTTGTTGCCCAGGCTGGAGTGC   8225
+                                                                       
+1              10455 --------------------------------------------------  10455
+
+1               8226 AGTGGCAGGATCATAGCTCAATGCAGCCTTGAACTCCTGGACTCAAG--C   8273
+                           |.|||||                ||.||||.|    |.|||  |
+1              10456 ------AAGATCA----------------TGTACTCTT----TTAAGACC  10479
+
+1               8274 AATCCTCCTGCCACAGCATCCTGAGTAGCTGGGACCATAAGCG--CACAC   8321
+                     .||            |.||||   |||.||...||.|.|.|.|  ||.||
+1              10480 TAT------------GTATCC---GTAACTAATACAAAATGTGTCCAAAC  10514
+
+1               8322 CACCATGCTTGGCTAAATTTTTTTTTTTTTTTTTAAGAGATGATGGTCTC   8371
+                     |                             ||||||              
+1              10515 C-----------------------------TTTTAA--------------  10521
+
+1               8372 ACTATGTTGCTTAGGCTGGTCTTGAACTCCTGGTCTCAAGTAATCCTTCT   8421
+                                                                       
+1              10521 --------------------------------------------------  10521
+
+1               8422 GTCTGGGCCTCCCAAAGTGCTAGGATTACAGGTGTGAGCCCACCATATCC   8471
+                                 |||||        |||.|..|.|.|..|..|.|||.|.
+1              10522 ------------CAAAG--------TTATACATTTTATACTCCAATAGCA  10551
+
+1               8472 TGCCCTGGAGGTTTT-----TTTCTTTTCTTTTTCTTTTTTTAGGTTCCT   8516
+                     ||...||.||.||||     |||.|||.|.|||.|.|||..|...|.|||
+1              10552 TGTAATGTAGCTTTTGAGCATTTATTTGCCTTTCCCTTTGCTTAATACCT  10601
+
+1               8517 CTGTTAACTGTGATCCACAGCTAGAACCACCCTCTGGAGGAAGGGAGGTC   8566
+                             .|||||   .|..|||||              ||.|||    
+1              10602 --------GGTGAT---AAAATAGAA--------------AATGGA----  10622
+
+1               8567 ATCACTTCCCTTCTTTCAACTATTTGCTCAGCTTGGGCCTCAAATTC---   8613
+                          |||   |.|.|||.| |||       ||||.|.|.||.||||   
+1              10623 -----TTC---TATGTCAGC-ATT-------CTTGTGGCGCAGATTCAAA  10656
+
+1               8614 TCACTTTTCAAGTGCATCTCATGAGCCCTAACAGACAGGAACCCCTTTGT   8663
+                     ||||    ||.|||....|.||.||                   .|||  
+1              10657 TCAC----CAGGTGGTATTTATTAG-------------------ATTT--  10681
+
+1               8664 TTCCCAGATCTCAAGTCCCTTCTCCTGGCAGTCATACAACTGGACTTGGA   8713
+                          ||||     .|||.|.||||       .||.|||||   .|||.|
+1              10682 -----AGAT-----TTCCATACTCC-------AATTCAACT---ATTGTA  10711
+
+1               8714 AAGAAGGCAAAT----AGGATCCTCTTCAAACTCAGCCAAAGTTAGCTGG   8759
+                     ||..||  ||||    |.||||  |||||       ||.|.|...|.|||
+1              10712 AATTAG--AAATCATCATGATC--CTTCA-------CCTAGGCATGGTGG  10750
+
+1               8760 CTGGGTTCTCCT----TCCCATCTACCTCTCCTGCCAGGAGGAGGAAAGC   8805
+                     ||   ..|.|||    |||||.|.|.|.|| .||..|||..|||      
+1              10751 CT---CACACCTGTAATCCCACCCAGCACT-TTGAGAGGCCGAG------  10790
+
+1               8806 TAGTGGGATGGGAAACCCAGACTCAGGGCCATCTCCTACTTCCGCACAG-   8854
+                       ||||| |||                   |||    ||||..|..||| 
+1              10791 --GTGGG-TGG-------------------ATC----ACTTGAGGTCAGG  10814
+
+1               8855 ----CTAGCAGCCCAGGCCTAACCAG-CCAGCCAGCTTGGCCTTGCCACA   8899
+                         |.||             ||||| ||||||                 
+1              10815 AGTTCGAG-------------ACCAGCCCAGCC-----------------  10834
+
+1               8900 GGCCCAAGGCCACCCCCCACCAAAACATGTGGAATCCATCCTCTCAGGGG   8949
+                                            ||||||..|||   |||||      |.
+1              10835 -----------------------AACATGGTGAA---ATCCT------GT  10852
+
+1               8950 CTGTCCCAAGGGCACATTTCCTATGGCTTGCATGCCAAGGAAACTGGAGC   8999
+                     ||.|.|.||....|||                       .|||.|.|...
+1              10853 CTCTACTAAAAATACA-----------------------AAAATTAGCCG  10879
+
+1               9000 GGCTTGTCTGTTCCAGGTCCTTCCAAGGCCAAAGGCCCACAGATGGTGCC   9049
+                     |||.|||                                    ||||||.
+1              10880 GGCATGT------------------------------------TGGTGCA  10893
+
+1               9050 C-------AGGCCAGGT-CTCAGTGGGCAGGCCCAAGGGCTACAATGAAT   9091
+                     |       |..||||.| |||   |||        ||||          |
+1              10894 CGCCTGTAATCCCAGCTACTC---GGG--------AGGG----------T  10922
+
+1               9092 GATGCAGGGAGCCCTCAGCAACAC-----CCTGGGCCCATGAATCCCCAA   9136
+                     ||.||||        .||.|.|||     ||||||              |
+1              10923 GAGGCAG--------AAGAATCACTTGAACCTGGG--------------A  10950
+
+1               9137 CGGGGACAGCAAGGTGGGAG-------AGAT-GAGCCCCAGCTGGAATCC   9178
+                     .|.||      ||||.|.||       |||| |.|||.|.||....|..|
+1              10951 GGTGG------AGGTTGCAGTGAGTCAAGATCGCGCCACTGCACCCAAGC  10994
+
+1               9179 CTGGG-ACCAGGTCTGTCTCTGCCCATACCCAGACTCTCTTTTCTCTTGA   9227
+                     ||||| |.|||                |...|||||| |.|.||      
+1              10995 CTGGGCAACAG----------------AGTGAGACTC-CATCTC------  11021
+
+1               9228 GAAAGGAGGAAGAATGAGGAGTAAGAAGGAAAAAAAA---------ATCC   9268
+                      |||     ||.|||    |.|||.||..|||||.||         ||||
+1              11022 -AAA-----AATAAT----AATAATAATAAAAAATAAGAAATCATGATCC  11061
+
+1               9269 AGTCACTGTCCCTAGTT---------------------------------   9285
+                       |.|.|.||.|.||||                                 
+1              11062 --TTATTTTCACAAGTTTGCAAATATGGGGCTCACAAGGAACTAGAGTTT  11109
+
+1               9286 --AAGCCATCTCCTTAGAA----------GTGAGGGCCCAGTGGGGCAGG   9323
+                       ||.||||..||||..||          ||   ||||..|||.||    
+1              11110 AGAAACCATTGCCTTTAAATCTTTAAACGGT---GGCCAGGTGTGG----  11152
+
+1               9324 TAGGCTGTGTATACTCCACGAGGATCCCTA-------AGGACCTCTGCCT   9366
+                      .||||                .|||||||       ||.||.||     
+1              11153 -TGGCT----------------CATCCCTATAATCCCAGCACTTC-----  11180
+
+1               9367 GGAGACATGAGTCGAAAACAGAGGAAGCCCACAGCAAACCCGTAGATGAG   9416
+                                          ||||||||             .||.||| 
+1              11181 ---------------------AGGAAGCC-------------AAGGTGA-  11195
+
+1               9417 CAAGAAGCCAGTGTCAAATGCTTGGGCACATGGCTTCGGACGTGGTGGAG   9466
+                                 ||.||.||||||.||.||                ||||
+1              11196 ------------GTGAATTGCTTGAGCTCA----------------GGAG  11217
+
+1               9467 TT--AG---AACCTG------AAGGCCAAATAAAAATGCAGAGAGGGTGA   9505
+                     ||  ||   |.||||      |.|||.|||..|||||             
+1              11218 TTCAAGACCAGCCTGGGCCACATGGCGAAACCAAAAT-------------  11254
+
+1               9506 CAAGGCAGATGGGCACAGTTTCCAAGCCCTCTGGGGCAACCTGAACAGCA   9555
+                      .||.|||.||.|    ||..|..|..|||.|||..|.|.||...|...|
+1              11255 -TAGCCAGGTGTG----GTGGCTCATGCCTGTGGTCCCAGCTACTCGAGA  11299
+
+1               9556 GACT---------AGAGCACTGG----CAGGGTCAGGCTGAGGTCCTCAC   9592
+                     |.||         |||.||||.|    |||||   |||.|||||     .
+1              11300 GGCTGAGGTGGGAAGATCACTTGAGCCCAGGG---GGCAGAGGT-----T  11341
+
+1               9593 ACACTGAG--CAGAAGTCGCTGCTTTGCAAGGGCTTTTGAAGCTGCAA--   9638
+                     .||.||||  ||||.|.|.|..||...||..|.||       |.||||  
+1              11342 GCAATGAGTCCAGATGGCACCACTGCACACAGCCT-------CGGCAAAG  11384
+
+1               9639 TCTGAGCAGC--TCTCAAAACCCCAAAGGGGTCAGG--------------   9672
+                     ..||||.|.|  ||||||||....|||...||.|.|              
+1              11385 AGTGAGAACCTGTCTCAAAAAAGAAAAATTGTAATGGTTATGTACATTAC  11434
+
+1               9673 ---ACAGCACTCTTTGAAGCAACTCTCGCAGACTCCTCCGGCCCCAGAC-   9718
+                        |.|..|||..||.|||.||.|                    ||||| 
+1              11435 TTAAAATGACTTATTTAAGGAATT--------------------CAGACA  11464
+
+1               9719 -----CAGCAGGGCTCCACTCTGCACGTCCAGACTAATCAACTCCCGG--   9761
+                          ||              ||||     |.|.|.||||     |.|  
+1              11465 TGTTACA--------------TGCA-----AAAATGATCA-----CTGCT  11490
+
+1               9762 ------ACACGATGACAGGAGGCAGAAAGCCCAGAAGAGAGCCGGCCTGT   9805
+                           |.||..||....|||           |.||||||..|.|||..|
+1              11491 ATAAATATACATTGCATTGAG-----------AAAAGAGAAGCTGCCCTT  11529
+
+1               9806 GACTGGGCTGGGCCTCCCCTCAGGCCAGGCCACCACCGTCTCTG-GTCTA   9854
+                     |..|               ||||                .|.|| ||.||
+1              11530 GTTT---------------TCAG----------------ATTTGTGTTTA  11548
+
+1               9855 ---AGCTGGAGTCCTCCCAGCGAAGGCG------------CCTGGCCCTG   9889
+                        .||..|.|||||  .||.||.||||            .||||.||.|
+1              11549 TATTGCATGTGTCCT--AAGTGAGGGCGATCATAGGTAGAGCTGGGCCAG  11596
+
+1               9890 CCTCAGGAGTAAAGTCCGCCCGTGCACAAG--------CTGGAATCCCCT   9931
+                                    |||||..||||.|||        ||||...|||||
+1              11597 ---------------CCGCCGTTGCATAAGTAAGGAAACTGGGTCCCCCT  11631
+
+1               9932 GGCCCTAGCCTCAGCGTCCCGTGCCC------------------------   9957
+                                 ||.||.|.||.|.|                        
+1              11632 ------------AGTGTTCAGTTCTCATAATGACTCTCGAAAGGTGCAGA  11669
+
+1               9958 ---------GTGGGAAGCCAGGCTCCTTCCTCCTTATTAGCAGCCGGGAG   9998
+                              ||||.|||..|...|.|..|.||..|||      |||.|..
+1              11670 ACAAGAAAAGTGGCAAGAGAACTTACAACTTCGCTAT------CCGTGTA  11713
+
+1               9999 CCATCTCAGACACGCTAGAGCTCCGCCA----------GTTCCCAATCAG  10038
+                     .||.||||..||....|.|.||.|..||          |||.||      
+1              11714 ACAACTCACCCAAATCAAAACTACTTCAATGACTATCCGTTTCC------  11757
+
+1              10039 AAAAAACAGGGCAGACTTGGACTGGGACCAAGGCCGATGCAGGGTAACCC  10088
+                         .|||||| |.|.||.|||.||    ||..|.|||||          
+1              11758 ----TACAGGG-AAAGTTAGACGGG----AAACCTGATGC----------  11788
+
+1              10089 CGGTTTCTCAGCGAGGGCCCTTTCCCAAA---------------------  10117
+                                |.||..|..||.||||||                     
+1              11789 -----------CCAGAACATTTCCCCAAATATTATTGAGAAAATACATAT  11827
+
+1              10118 -------------------CTTTCTCATCACTTTCCAGC-CCTC------  10141
+                                        |.||...||..||||||||| .|||      
+1              11828 TGTGGCCATGTATTTGTGTCATTTATATGCCTTTCCAGCAACTCAAGAAC  11877
+
+1              10142 -----------CTACCCTA--GACTTCTCAACCCACCCGCCACAATTCAC  10178
+                                ||.|||||  .||||.|      ||.|.|...|||||| 
+1              11878 AAGCACGCTAACTTCCCTAACAACTTAT------ACACCCTGGAATTCA-  11920
+
+1              10179 TGGCTCCCCAAA-----------CTCCTC--------CATCTCCCAGTC-  10208
+                           .|||||           ||.|||        ||.||||||.|| 
+1              11921 ------ACCAAAACTTTAAGTACCTTCTCTGCATCGACACCTCCCATTCT  11964
+
+1              10209 -ACTCGGAA-----TCCCTGTGCCGCGGA-----AGCCCCCAGGCCTCCC  10247
+                      |.||..||     ||||||.||..|.||     |.|             
+1              11965 TAGTCCCAATTTTGTCCCTGAGCTCCTGATTTACATC-------------  12001
+
+1              10248 AGCTGCTTCCAGCCCTCCGCTGCAGAACCTGCTTCCCCTTCCCACTTCTC  10297
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10298 CACCGCGACCCGCCGCAGCCCGAGGGTCCCGGCCCGCCCTCCACCGTCTC  10347
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10348 CCGGAGTTCCTCATGCATTCCCCAGGGCCCTCACTCGAGGCCCCTTCAGC  10397
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10398 CGCCGGCCCGGGCGCCCTCGCAGCGCCTCTCGCCCCCGTCCGCTCGCGTC  10447
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10448 CTCCTTGCTCACCTGGTACTGCGCCGCGGGGCCCGCGGGGCCCATGGGGC  10497
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10498 GGAAGGCGGCGGCCCCGGGGCCCCCCACGCCTCCTGCCGGACCCGGTCCC  10547
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10548 CGGAGCGCCGGTCCGGGCAGCATGCCGGGTCCCGCGGGGGGAGGCGGCGC  10597
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10598 TCCCAGGGCCGCAGCCACGGCGCCGCCGCCAGGGCTTAGCGGGGGCAGCG  10647
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10648 GGAACCCGCCCGCGCCTCGGCCCGACATCGCTCCGTCCCGTCCCGCGGTG  10697
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10698 CCGCGATCCGGACTCCGGGCTCCGCGTCGAGTCCACTCCGTGCTCTGTGC  10747
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10748 TCCGCGATCCGGGACTTGGCGATCTTAATTCCGGGTTCCGGGATTTGTCG  10797
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10798 ATCCGGGCTCCGGGATTTCCTAATCCAAGTTCGCGAGTTCCTCACAGACC  10847
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10848 CGGTTCGGGACAGATTCCGCTCCTGCCCGGGAGATTCCGGATCCAGGATC  10897
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10898 TGCTGCGGGCCCGCCTTCCGTCCCCGGCCTCCGGAGGTTTGGCCGCCCGA  10947
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10948 GTCGAGTTACCCAGAGGCGGCTACGAACTCCCTGCCCCGCCCAACCCAGC  10997
+                                                                       
+1              12001 --------------------------------------------------  12001
+
+1              10998 CCAG  11001
+                         
+1              12001 ----  12001
+
+
+#---------------------------------------
+#---------------------------------------

@@ -2238,7 +2238,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Última actualización:</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">3 de mayo de 2026</p>
+      <p class="date">6 de mayo de 2026</p>
     </div>
   </div>
   
@@ -2267,67 +2267,107 @@ vertical-align: -.125em;
 <h1>Comandos básicos</h1>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 47%">
-<col style="width: 52%">
+<col style="width: 7%">
+<col style="width: 92%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Comando</th>
-<th style="text-align: left;">Función</th>
+<th>Función</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>pwd</td>
-<td style="text-align: left;">Conocer la dirección absoluta del directorio actual</td>
+<td><code>pwd</code></td>
+<td>Conocer la ruta absoluta del directorio actual.</td>
 </tr>
 <tr class="even">
-<td>cd ..</td>
-<td style="text-align: left;">Cambiar al directorio superior</td>
+<td><code>ls</code></td>
+<td>Listar los archivos y carpetas del directorio actual.</td>
 </tr>
 <tr class="odd">
-<td>cd a</td>
-<td style="text-align: left;">Entrar en el directorio “a”</td>
+<td><code>ls -lh</code></td>
+<td>Listar archivos con tamaños legibles y más información.</td>
 </tr>
 <tr class="even">
-<td>cp a b</td>
-<td style="text-align: left;">Crear una copia “b” del archivo “a”</td>
+<td><code>cd ..</code></td>
+<td>Cambiar al directorio superior.</td>
 </tr>
 <tr class="odd">
-<td>mv a b</td>
-<td style="text-align: left;">Renombrar el archivo “a” como “b”</td>
+<td><code>cd a</code></td>
+<td>Entrar en el directorio <code>a</code>.</td>
 </tr>
 <tr class="even">
-<td>mkdir a</td>
-<td style="text-align: left;">Crear el directorio “a”</td>
+<td><code>cd ~</code></td>
+<td>Volver al directorio personal del usuario.</td>
 </tr>
 <tr class="odd">
-<td>rm a</td>
-<td style="text-align: left;">Eliminar el <em>archivo</em> “a”</td>
+<td><code>mkdir a</code></td>
+<td>Crear el directorio <code>a</code>.</td>
 </tr>
 <tr class="even">
-<td>rm -r a</td>
-<td style="text-align: left;">Eliminar el <em>directorio</em> “a” y su contenido</td>
+<td><code>mkdir -p a/b/c</code></td>
+<td>Crear una estructura de directorios completa, incluyendo carpetas intermedias.</td>
 </tr>
 <tr class="odd">
-<td>touch a</td>
-<td style="text-align: left;">Crear el archivo vacío “a” o actualizar su fecha de consulta si ya existía</td>
+<td><code>cp a b</code></td>
+<td>Crear una copia <code>b</code> del archivo <code>a</code>.</td>
+</tr>
+<tr class="even">
+<td><code>cp -r a b</code></td>
+<td>Copiar recursivamente una carpeta completa.</td>
+</tr>
+<tr class="odd">
+<td><code>mv a b</code></td>
+<td>Renombrar o mover el archivo/carpeta <code>a</code> como <code>b</code>.</td>
+</tr>
+<tr class="even">
+<td><code>rm a</code></td>
+<td>Eliminar el archivo <code>a</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>rm -r a</code></td>
+<td>Eliminar el directorio <code>a</code> y todo su contenido.</td>
+</tr>
+<tr class="even">
+<td><code>touch a</code></td>
+<td>Crear un archivo vacío llamado <code>a</code> o actualizar su fecha de modificación.</td>
+</tr>
+<tr class="odd">
+<td><code>cat a</code></td>
+<td>Mostrar el contenido completo del archivo <code>a</code> en la terminal.</td>
+</tr>
+<tr class="even">
+<td><code>head a</code></td>
+<td>Mostrar las primeras líneas del archivo <code>a</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>tail a</code></td>
+<td>Mostrar las últimas líneas del archivo <code>a</code>.</td>
+</tr>
+<tr class="even">
+<td><code>less a</code></td>
+<td>Visualizar el archivo <code>a</code> de forma paginada.</td>
+</tr>
+<tr class="odd">
+<td><code>grep &quot;texto&quot; a</code></td>
+<td>Buscar una cadena de texto dentro del archivo <code>a</code>.</td>
+</tr>
+<tr class="even">
+<td><code>wc -l a</code></td>
+<td>Contar el número de líneas del archivo <code>a</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>chmod +x a</code></td>
+<td>Dar permiso de ejecución al archivo <code>a</code>.</td>
+</tr>
+<tr class="even">
+<td><code>man comando</code></td>
+<td>Abrir el manual de ayuda de un comando.</td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-tip callout-titled" title="Consejo">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Consejo
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Amplía la tabla modificando el documento fuente.</p>
-</div>
-</div>
+<p>He ampliado la tabla original incorporando comandos básicos adicionales que resultan útiles para trabajar en Bash durante las prácticas. En particular, he añadido comandos para listar archivos (<code>ls</code>), consultar contenidos (<code>cat</code>, <code>head</code>, <code>tail</code>, <code>less</code>), buscar patrones (<code>grep</code>), contar líneas (<code>wc -l</code>) y modificar permisos (<code>chmod +x</code>). Estos comandos son necesarios para comprobar archivos descargados, revisar resultados de alineamientos y organizar correctamente la estructura del repositorio. ::: {.callout-tip title=“Consejo”} Amplía la tabla modificando el documento fuente. :::</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2387,44 +2427,155 @@ vertical-align: -.125em;
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Utilizamos el carácter &quot;\&quot; para que Bash ignore el salto de línea</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>   <span class="co"># y poder distribuir los argumentos y opciones en más de una línea.</span></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>   <span class="ex">needle</span> <span class="at">-asequence</span> HumanChr17.fa <span class="dt">\</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">-bsequence</span> HumanaSMARCD2.fa <span class="dt">\</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">-bsequence</span> HumanSMARCD2.fa <span class="dt">\</span></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">-gapopen</span> 15.0 <span class="dt">\</span></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">-gapextend</span> 0.5 <span class="dt">\</span></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">-auto</span> <span class="dt">\</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">-outfile</span> aln1.txt</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">-outfile</span> aln.txt</span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<p>Tras corregir el nombre del archivo de entrada (<code>HumanSMARCD2.fa</code>), el bloque se ejecutó correctamente y produjo el archivo <code>aln.txt</code>, que se añade al repositorio como evidencia de ejecución. Este alineamiento global permite comparar el transcrito de SMARCD2 humano con la región genómica correspondiente del cromosoma 17. Sin embargo, al tratarse de un alineamiento global con <code>needle</code>, el resultado no es el enfoque más adecuado para reconstruir la estructura exón-intrón, ya que el transcrito maduro no contiene intrones mientras que la secuencia genómica sí. Por ello, el alineamiento global puede introducir huecos muy extensos y resulta menos informativo que una herramienta específica para alinear transcritos frente a genoma. :::{.callout-note icon=false} ## Desafíos 0. Lee detenidamente las órdenes y los comentarios y asegúrate de entenderlos. 1. Si al ejecutarlas aparece algún mensaje de error, léelo y corrige el error. 2. Lee la ayuda del programa <code>needle</code> e intenta ajustar los parámetros para obtener un alineamiento más convincente. 3. Prueba el programa <code>water</code>, para que el alineamiento sea local. 4. Intenta guardar el alineamiento en formato FASTA. 5. Alinea también el tránscrito de SMARCD2 de chimpancé a su cromosoma. 6. Alinea también los dos fragmentos cromosómicos.</p>
+<section id="resolución-de-los-desafíos" class="level2">
+<h2 class="anchored" data-anchor-id="resolución-de-los-desafíos">Resolución de los desafíos</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga del transcrito SMARCD2 humano</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> HumanSMARCD2.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> HumanSMARCD2.fa https://www.ebi.ac.uk/ena/browser/api/fasta/AAI36323.1</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga del fragmento genómico humano del cromosoma 17</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> HumanChr17.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> HumanChr17.fa <span class="dt">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;https://rest.ensembl.org/sequence/region/human/17:63832000..63843000:1?content-type=text/x-fasta&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga del transcrito SMARCD2 de chimpancé</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ChimpSMARCD2.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> ChimpSMARCD2.fa https://www.ebi.ac.uk/ena/browser/api/fasta/XP_001164869.2</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga del fragmento genómico homólogo del cromosoma 17 de chimpancé</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ChimpChr17.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> ChimpChr17.fa <span class="dt">\</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;https://rest.ensembl.org/sequence/region/pan_troglodytes/17:64300000..64312000:1?content-type=text/x-fasta&quot;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Desafíos
+<p>En primer lugar, se descargan las cuatro secuencias necesarias para completar los alineamientos propuestos: el transcrito humano, el fragmento genómico humano, el transcrito de chimpancé y el fragmento genómico homólogo de chimpancé. Las órdenes están condicionadas con <code>if [ ! -e archivo ]</code> para evitar descargas repetidas si los archivos ya existen en el directorio de trabajo.</p>
+<p>Alineamiento global con needle</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> aln_human_needle.txt <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">needle</span> <span class="at">-asequence</span> HumanChr17.fa <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">-bsequence</span> HumanSMARCD2.fa <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">-gapopen</span> 20.0 <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">-gapextend</span> 1.0 <span class="dt">\</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">-auto</span> <span class="dt">\</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">-outfile</span> aln_human_needle.txt</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>El programa <code>needle</code> realiza un alineamiento global mediante el algoritmo de Needleman-Wunsch. En este caso he aumentado ligeramente las penalizaciones por apertura y extensión de huecos (<code>gapopen = 20.0</code> y <code>gapextend = 1.0</code>) para intentar reducir la introducción excesiva de gaps. Aun así, este enfoque no es el más adecuado para comparar un transcrito maduro con una región genómica, ya que el genoma contiene intrones que no están presentes en el transcrito. Por ello, el resultado puede mostrar huecos largos y una estructura difícil de interpretar biológicamente.</p>
+<p>Alineamiento local con water</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> aln_human_water.txt <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">water</span> <span class="at">-asequence</span> HumanChr17.fa <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">-bsequence</span> HumanSMARCD2.fa <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">-gapopen</span> 20.0 <span class="dt">\</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">-gapextend</span> 1.0 <span class="dt">\</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">-auto</span> <span class="dt">\</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">-outfile</span> aln_human_water.txt</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>El programa <code>water</code> realiza un alineamiento local mediante el algoritmo de Smith-Waterman. Este enfoque es más apropiado cuando solo una parte de una secuencia se espera que alinee con otra, como ocurre al comparar un transcrito frente a una región genómica más larga. El alineamiento local permite centrarse en las regiones de mayor similitud, aunque sigue sin modelizar explícitamente la presencia de intrones.</p>
+<p>Guardar el alineamiento en formato FASTA</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> aln_human_needle.fasta <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">needle</span> <span class="at">-asequence</span> HumanChr17.fa <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">-bsequence</span> HumanSMARCD2.fa <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">-gapopen</span> 20.0 <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">-gapextend</span> 1.0 <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">-aformat</span> fasta <span class="dt">\</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">-auto</span> <span class="dt">\</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">-outfile</span> aln_human_needle.fasta</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Para guardar el alineamiento en formato FASTA se utiliza la opción <code>-aformat fasta</code>. Este formato es más sencillo de reutilizar en otros programas bioinformáticos, porque representa las secuencias alineadas con los huecos introducidos durante el alineamiento.</p>
+<p>Alineamiento del transcrito de chimpancé con su cromosoma</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> ChimpSMARCD2.fa ChimpChr17.fa</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ChimpSMARCD2.fa</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ChimpChr17.fa</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-rw-r--r-- 1 laumonv4 usuarios^del^dominio 12K may  6 10:40 ChimpChr17.fa
+-rw-r--r-- 1 laumonv4 usuarios^del^dominio   0 may  6 10:40 ChimpSMARCD2.fa
+&gt;chromosome:Pan_tro_3.0:17:64300000:64312000:1
+CTTGGGTGGGGACACAGTCAAGCCATATCAGATGGATAGATATAGAAATATTTTATACAT
+CTTTTAAATGTGATGCTTCCTGTACACTTTTGGCACAGGCTGTAGGTCTCAAAATAATGC
+AAAAAGTACCCCTATTATAGTTACTGAACCTTCACAGGGCAATCATTCTAGTTTTCTCAG
+GATAGTACTAGTTTATGCTCATGGAGTAGAAGATAGAATATTGCCGAAGTATCAGTTGTC
+TCCATTGGAGCCAAACTTGAAGAAGCTGTGTGATAAGACTTAATGGGGAGCTGGGCGCAG
+TGGCTCACGCCTGTAATCCCAGCACTTTTGGAGGCTGAGGGGGGCGGACCACCTGAGGTC
+AGGAGTTTGAGACCAGCCTGGCCAACATGGTGGAACCCTCTCTCTATTAAAAATACAAAA
+ATTATCCAGGCATGGTGGCACGCAGGGCAATTATCTATAAACCCTGTGACAAGACTGGTA
+GCCTCAATTCTCCTCTCATAAGTAACATAAACATAACTCATAATTTGCTGTGGTTCCTAC</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<ol start="0" type="1">
-<li>Lee detenidamente las órdenes y los comentarios y asegúrate de entenderlos.</li>
-<li>Si al ejecutarlas aparece algún mensaje de error, léelo y corrige el error.</li>
-<li>Lee la ayuda del programa <code>needle</code> e intenta ajustar los parámetros para obtener un alineamiento más convincente.</li>
-<li>Prueba el programa <code>water</code>, para que el alineamiento sea local.</li>
-<li>Intenta guardar el alineamiento en formato FASTA.</li>
-<li>Alinea también el tránscrito de SMARCD2 de chimpancé a su cromosoma.</li>
-<li>Alinea también los dos fragmentos cromosómicos.</li>
-</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ChimpSMARCD2.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> ChimpSMARCD2.fa <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>   https://www.ebi.ac.uk/ena/browser/api/fasta/XP_001164869.2</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ChimpChr17.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> ChimpChr17.fa <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;https://rest.ensembl.org/sequence/region/pan_troglodytes/17:64300000..64312000:1?content-type=text/x-fasta&quot;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">needle</span> <span class="at">-asequence</span> ChimpChr17.fa <span class="dt">\</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">-bsequence</span> ChimpSMARCD2.fa <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">-gapopen</span> 20.0 <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">-gapextend</span> 1.0 <span class="dt">\</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">-auto</span> <span class="dt">\</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">-outfile</span> aln_chimp_needle.txt</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Error: Unable to read sequence &#39;ChimpSMARCD2.fa&#39;
+Died: needle terminated: Bad value for &#39;-bsequence&#39; with -auto defined</code></pre>
 </div>
 </div>
+<p>El alineamiento de chimpancé no pudo completarse porque el archivo <code>ChimpSMARCD2.fa</code> no se leyó correctamente como FASTA. El error probablemente se debe a que la descarga no devolvió una secuencia válida, sino una página de error o un archivo vacío. Para verificarlo se comprobó el contenido con <code>head ChimpSMARCD2.fa</code>.</p>
+<p>Alineamiento entre los fragmentos cromosómicos humano y chimpancé</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> aln_chr_human_chimp.txt <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">needle</span> <span class="at">-asequence</span> HumanChr17.fa <span class="dt">\</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">-bsequence</span> ChimpChr17.fa <span class="dt">\</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">-gapopen</span> 15.0 <span class="dt">\</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">-gapextend</span> 0.5 <span class="dt">\</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">-auto</span> <span class="dt">\</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">-outfile</span> aln_chr_human_chimp.txt</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Finalmente, se ha realizado un alineamiento entre los fragmentos cromosómicos de humano y chimpancé. En este caso sí tiene más sentido utilizar un alineamiento global, ya que se comparan dos regiones genómicas homólogas. Debido a la proximidad evolutiva entre ambas especies, se espera que la conservación sea alta, aunque pueden aparecer diferencias puntuales, pequeñas inserciones/deleciones o regiones menos conservadas.</p>
+<p>Resumen de archivos generados</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> aln<span class="pp">*</span>.txt aln<span class="pp">*</span>.fasta <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-rw-r--r-- 1 laumonv4 usuarios^del^dominio  71K may  6 10:40 aln_chr_human_chimp.txt
+-rw-r--r-- 1 laumonv4 usuarios^del^dominio  23K may  6 10:40 aln_human_needle.fasta
+-rw-r--r-- 1 laumonv4 usuarios^del^dominio  52K may  6 10:40 aln_human_needle.txt
+-rw-r--r-- 1 laumonv4 usuarios^del^dominio 5,9K may  6 10:40 aln_human_water.txt</code></pre>
+</div>
+</div>
+<p>Como resultado de esta sección, se han generado varios archivos de alineamiento. El archivo <code>aln.txt</code> se incluye como evidencia mínima de ejecución solicitada en la corrección, y los archivos adicionales permiten comparar distintos enfoques de alineamiento: global, local y formato FASTA. :::</p>
 <p>Para alinear tránscritos o incluso proteínas a un genoma de referencia, es mejor usar el programa <code>exonerate</code> <span class="citation" data-cites="Slater2005">(<a href="#ref-Slater2005" role="doc-biblioref">Slater y Birney 2025</a>)</span>, que puede aplicar los parámetros más adecuados para este tipo de tarea. Puedes leer la documentación de <code>exonerate</code> mediante las órdenes <code>man exonerate</code> o <code>exonerate --help</code>. También existe <a href="https://www.animalgenome.org/bioinfo/resources/manuals/exonerate/index.html">documentación online sobre este programa</a>. En el bloque siguiente repetimos el mismo alineamiento que antes, con <code>exonerate</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> HumanSMARCD2.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> HumanSMARCD2.fa https://www.ebi.ac.uk/ena/browser/api/fasta/AAI36323.1</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> HumanChr17.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> HumanChr17.fa <span class="dt">\</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      https://rest.ensembl.org/sequence/region/human/17:63832000..63843000:1<span class="pp">?</span>content-type=text/x-fasta</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">exonerate</span> <span class="at">--model</span> est2genome HumanSMARCD2.fa HumanChr17.fa</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> HumanSMARCD2.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> HumanSMARCD2.fa https://www.ebi.ac.uk/ena/browser/api/fasta/AAI36323.1</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> HumanChr17.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> HumanChr17.fa <span class="dt">\</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>      https://rest.ensembl.org/sequence/region/human/17:63832000..63843000:1<span class="pp">?</span>content-type=text/x-fasta</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="ex">exonerate</span> <span class="at">--model</span> est2genome HumanSMARCD2.fa HumanChr17.fa</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Error in running command bash</code></pre>
 </div>
@@ -2440,45 +2591,57 @@ vertical-align: -.125em;
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Cómo puedes enviar el resultado de <code>exonerate</code> a un archivo?</p>
+<p>¿Cómo puedes enviar el resultado de <code>exonerate</code> a un archivo? El resultado de <code>exonerate</code> puede enviarse a un archivo usando redirección de salida estándar con <code>&gt;</code>. Por ejemplo:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">exonerate</span> <span class="at">--model</span> est2genome HumanSMARCD2.fa HumanChr17.fa <span class="kw">|</span> <span class="fu">tee</span> exonerate_human.txt</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>bash: línea 1: exonerate: orden no encontrada</code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">exonerate</span> <span class="at">--model</span> est2genome HumanSMARCD2.fa HumanChr17.fa <span class="op">&gt;</span> exonerate_human.txt</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Error in running command bash</code></pre>
+</div>
+</div>
+<p>En una primera ejecución, el bloque de <code>exonerate</code> produjo un error. La causa probable fue que alguno de los archivos de entrada no estaba disponible en la carpeta de trabajo o que el programa <code>exonerate</code> no estaba correctamente instalado en el entorno virtual. También es importante comprobar que las secuencias se hayan descargado correctamente y que los nombres de archivo coincidan exactamente con los usados en el comando. Para evitar que el error impida renderizar el documento, el bloque puede ejecutarse con <code>#| error: true</code>, dejando visible tanto el comando como el mensaje de error. En un entorno correctamente configurado, <code>exonerate --model est2genome HumanSMARCD2.fa HumanChr17.fa</code> permite alinear el transcrito frente a la región genómica y detectar los intrones como interrupciones del alineamiento.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="apéndice.-alineamientos-múltiples" class="level1">
 <h1>Apéndice. Alineamientos múltiples</h1>
 <p>Un programa muy popular para alineamiento de múltiples secuencias es <a href="https://drive5.com/muscle/"><code>muscle</code></a> <span class="citation" data-cites="Edgar2022">(<a href="#ref-Edgar2022" role="doc-biblioref">Edgar 2022</a>)</span>. Suponiendo que está instalado, vamos a probarlo con una colección de secuencias que pertenecen a la familia <a href="https://www.ebi.ac.uk/interpro/entry/pfam/PF00009/">PF00009</a>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> PF00009.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> PF00009.fa https://raw.githubusercontent.com/rcedgar/balifam/refs/heads/main/balifam100/in/PF00009.100</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> PF00009.afa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   <span class="ex">muscle</span> <span class="at">-align</span> PF00009.fa <span class="at">-output</span> PF00009.afa</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> PF00009.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">wget</span> <span class="at">-O</span> PF00009.fa https://raw.githubusercontent.com/rcedgar/balifam/refs/heads/main/balifam100/in/PF00009.100</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> PF00009.afa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>   <span class="ex">muscle</span> <span class="at">-align</span> PF00009.fa <span class="at">-output</span> PF00009.afa</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Error in running command bash</code></pre>
 </div>
 </div>
 <p>Para visualizar el alineamiento, podemos usar la función <code>BrowseSeqs()</code>, del paquete <code>DECIPHER</code> en el entorno de R. Esta función nos permite enviar el alineamiento a un archivo HTML, que puede abrirse en una ventana nueva. Si estamos compilando un documento HTML, podemos incorporar el alineamiento en el mismo documento mediante la función <code>includeHTML()</code> del paquete <code>htmltools</code>, al precio de aumentar considerablemente su tamaño.</p>
 <div class="cell" data-messages="false">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;htmltools&#39;</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;DECIPHER&#39;</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>PF00009 <span class="ot">&lt;-</span> <span class="fu">readAAStringSet</span>(<span class="st">&#39;PF00009.afa&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;htmltools&#39;</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;DECIPHER&#39;</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>PF00009 <span class="ot">&lt;-</span> <span class="fu">readAAStringSet</span>(<span class="st">&#39;PF00009.afa&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in .Call2(&quot;new_input_filexp&quot;, filepath, PACKAGE = &quot;XVector&quot;): cannot open file &#39;PF00009.afa&#39;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(PF00009, <span class="at">htmlFile =</span> <span class="st">&#39;PF00009.html&#39;</span>, <span class="at">openURL =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(PF00009, <span class="at">htmlFile =</span> <span class="st">&#39;PF00009.html&#39;</span>, <span class="at">openURL =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;PF00009&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">includeHTML</span>(<span class="st">&#39;./PF00009.html&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">includeHTML</span>(<span class="st">&#39;./PF00009.html&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in file(con, &quot;r&quot;): no se puede abrir la conexión</code></pre>
 </div>
 </div>
-</section>
-<section id="bibliografía" class="level1 unnumbered">
-
+<p>En esta práctica se ha preparado la estructura básica del cuaderno de trabajo y se han ejecutado comandos elementales de Bash para organizar archivos y directorios. Además, se ha realizado un primer alineamiento global con <code>needle</code>, cuyo resultado se ha guardado en <code>aln.txt</code>. Este archivo se incorpora al repositorio como evidencia de ejecución. La comparación entre <code>needle</code> y <code>exonerate</code> muestra que no todas las herramientas de alineamiento son equivalentes: mientras <code>needle</code> realiza un alineamiento global general, <code>exonerate</code> permite aplicar modelos específicos como <code>est2genome</code>, mucho más adecuados para comparar un transcrito maduro con una secuencia genómica que contiene intrones.</p>
 
 </section>
 

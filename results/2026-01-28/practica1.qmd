@@ -34,18 +34,32 @@ apt install emboss exonerate wget muscle
 
 # Comandos básicos
 
-| Comando   | Función   |
-| --------- |:--------- |
-| pwd       | Conocer la dirección absoluta del directorio actual |
-| cd ..     | Cambiar al directorio superior |
-| cd a      | Entrar en el directorio "a"    |
-| cp a b    | Crear una copia "b" del archivo "a" |
-| mv a b    | Renombrar el archivo "a" como "b"   |
-| mkdir a   | Crear el directorio "a" |
-| rm a      | Eliminar el *archivo* "a" |
-| rm -r a   | Eliminar el *directorio* "a" y su contenido |
-| touch a   | Crear el archivo vacío "a" o actualizar su fecha de consulta si ya existía |
+| Comando | Función |
+|-------|-------------------------------------------------------------------------------------------|
+| `pwd` | Conocer la ruta absoluta del directorio actual. |
+| `ls` | Listar los archivos y carpetas del directorio actual. |
+| `ls -lh` | Listar archivos con tamaños legibles y más información. |
+| `cd ..` | Cambiar al directorio superior. |
+| `cd a` | Entrar en el directorio `a`. |
+| `cd ~` | Volver al directorio personal del usuario. |
+| `mkdir a` | Crear el directorio `a`. |
+| `mkdir -p a/b/c` | Crear una estructura de directorios completa, incluyendo carpetas intermedias. |
+| `cp a b` | Crear una copia `b` del archivo `a`. |
+| `cp -r a b` | Copiar recursivamente una carpeta completa. |
+| `mv a b` | Renombrar o mover el archivo/carpeta `a` como `b`. |
+| `rm a` | Eliminar el archivo `a`. |
+| `rm -r a` | Eliminar el directorio `a` y todo su contenido. |
+| `touch a` | Crear un archivo vacío llamado `a` o actualizar su fecha de modificación. |
+| `cat a` | Mostrar el contenido completo del archivo `a` en la terminal. |
+| `head a` | Mostrar las primeras líneas del archivo `a`. |
+| `tail a` | Mostrar las últimas líneas del archivo `a`. |
+| `less a` | Visualizar el archivo `a` de forma paginada. |
+| `grep "texto" a` | Buscar una cadena de texto dentro del archivo `a`. |
+| `wc -l a` | Contar el número de líneas del archivo `a`. |
+| `chmod +x a` | Dar permiso de ejecución al archivo `a`. |
+| `man comando` | Abrir el manual de ayuda de un comando. |
 
+He ampliado la tabla original incorporando comandos básicos adicionales que resultan útiles para trabajar en Bash durante las prácticas. En particular, he añadido comandos para listar archivos (`ls`), consultar contenidos (`cat`, `head`, `tail`, `less`), buscar patrones (`grep`), contar líneas (`wc -l`) y modificar permisos (`chmod +x`). Estos comandos son necesarios para comprobar archivos descargados, revisar resultados de alineamientos y organizar correctamente la estructura del repositorio.
 ::: {.callout-tip title="Consejo"}
 Amplía la tabla modificando el documento fuente.
 :::
@@ -123,14 +137,14 @@ if [ ! -e aln1.txt ]; then
    # Utilizamos el carácter "\" para que Bash ignore el salto de línea
    # y poder distribuir los argumentos y opciones en más de una línea.
    needle -asequence HumanChr17.fa \
-          -bsequence HumanaSMARCD2.fa \
+          -bsequence HumanSMARCD2.fa \
           -gapopen 15.0 \
           -gapextend 0.5 \
           -auto \
-          -outfile aln1.txt
+          -outfile aln.txt
 fi
 ```
-
+Tras corregir el nombre del archivo de entrada (`HumanSMARCD2.fa`), el bloque se ejecutó correctamente y produjo el archivo `aln.txt`, que se añade al repositorio como evidencia de ejecución. Este alineamiento global permite comparar el transcrito de SMARCD2 humano con la región genómica correspondiente del cromosoma 17. Sin embargo, al tratarse de un alineamiento global con `needle`, el resultado no es el enfoque más adecuado para reconstruir la estructura exón-intrón, ya que el transcrito maduro no contiene intrones mientras que la secuencia genómica sí. Por ello, el alineamiento global puede introducir huecos muy extensos y resulta menos informativo que una herramienta específica para alinear transcritos frente a genoma.
 :::{.callout-note icon=false}
 ## Desafíos
 0. Lee detenidamente las órdenes y los comentarios y asegúrate de entenderlos.
@@ -141,6 +155,131 @@ fi
 4. Intenta guardar el alineamiento en formato FASTA.
 5. Alinea también el tránscrito de SMARCD2 de chimpancé a su cromosoma.
 6. Alinea también los dos fragmentos cromosómicos.
+
+## Resolución de los desafíos
+```{bash}
+# Descarga del transcrito SMARCD2 humano
+if [ ! -e HumanSMARCD2.fa ]; then
+   wget -O HumanSMARCD2.fa https://www.ebi.ac.uk/ena/browser/api/fasta/AAI36323.1
+fi
+
+# Descarga del fragmento genómico humano del cromosoma 17
+if [ ! -e HumanChr17.fa ]; then
+   wget -O HumanChr17.fa \
+      "https://rest.ensembl.org/sequence/region/human/17:63832000..63843000:1?content-type=text/x-fasta"
+fi
+
+# Descarga del transcrito SMARCD2 de chimpancé
+if [ ! -e ChimpSMARCD2.fa ]; then
+   wget -O ChimpSMARCD2.fa https://www.ebi.ac.uk/ena/browser/api/fasta/XP_001164869.2
+fi
+
+# Descarga del fragmento genómico homólogo del cromosoma 17 de chimpancé
+if [ ! -e ChimpChr17.fa ]; then
+   wget -O ChimpChr17.fa \
+      "https://rest.ensembl.org/sequence/region/pan_troglodytes/17:64300000..64312000:1?content-type=text/x-fasta"
+fi
+```
+En primer lugar, se descargan las cuatro secuencias necesarias para completar los alineamientos propuestos: el transcrito humano, el fragmento genómico humano, el transcrito de chimpancé y el fragmento genómico homólogo de chimpancé. Las órdenes están condicionadas con `if [ ! -e archivo ]` para evitar descargas repetidas si los archivos ya existen en el directorio de trabajo.
+
+Alineamiento global con needle
+```{bash}
+if [ ! -e aln_human_needle.txt ]; then
+   needle -asequence HumanChr17.fa \
+          -bsequence HumanSMARCD2.fa \
+          -gapopen 20.0 \
+          -gapextend 1.0 \
+          -auto \
+          -outfile aln_human_needle.txt
+fi
+```
+El programa `needle` realiza un alineamiento global mediante el algoritmo de Needleman-Wunsch. En este caso he aumentado ligeramente las penalizaciones por apertura y extensión de huecos (`gapopen = 20.0` y `gapextend = 1.0`) para intentar reducir la introducción excesiva de gaps. Aun así, este enfoque no es el más adecuado para comparar un transcrito maduro con una región genómica, ya que el genoma contiene intrones que no están presentes en el transcrito. Por ello, el resultado puede mostrar huecos largos y una estructura difícil de interpretar biológicamente.
+
+Alineamiento local con water
+```{bash}
+if [ ! -e aln_human_water.txt ]; then
+   water -asequence HumanChr17.fa \
+         -bsequence HumanSMARCD2.fa \
+         -gapopen 20.0 \
+         -gapextend 1.0 \
+         -auto \
+         -outfile aln_human_water.txt
+fi
+```
+El programa `water` realiza un alineamiento local mediante el algoritmo de Smith-Waterman. Este enfoque es más apropiado cuando solo una parte de una secuencia se espera que alinee con otra, como ocurre al comparar un transcrito frente a una región genómica más larga. El alineamiento local permite centrarse en las regiones de mayor similitud, aunque sigue sin modelizar explícitamente la presencia de intrones.
+
+Guardar el alineamiento en formato FASTA
+```{bash}
+if [ ! -e aln_human_needle.fasta ]; then
+   needle -asequence HumanChr17.fa \
+          -bsequence HumanSMARCD2.fa \
+          -gapopen 20.0 \
+          -gapextend 1.0 \
+          -aformat fasta \
+          -auto \
+          -outfile aln_human_needle.fasta
+fi
+```
+Para guardar el alineamiento en formato FASTA se utiliza la opción `-aformat fasta`. Este formato es más sencillo de reutilizar en otros programas bioinformáticos, porque representa las secuencias alineadas con los huecos introducidos durante el alineamiento.
+
+Alineamiento del transcrito de chimpancé con su cromosoma
+
+```{bash}
+ls -lh ChimpSMARCD2.fa ChimpChr17.fa
+head ChimpSMARCD2.fa
+head ChimpChr17.fa
+```
+
+
+```{bash}
+if [ ! -e ChimpSMARCD2.fa ]; then
+   wget -O ChimpSMARCD2.fa \
+   https://www.ebi.ac.uk/ena/browser/api/fasta/XP_001164869.2
+fi
+```
+
+
+```{bash}
+if [ ! -e ChimpChr17.fa ]; then
+   wget -O ChimpChr17.fa \
+   "https://rest.ensembl.org/sequence/region/pan_troglodytes/17:64300000..64312000:1?content-type=text/x-fasta"
+fi
+```
+
+
+
+```{bash}
+#| error: true
+needle -asequence ChimpChr17.fa \
+       -bsequence ChimpSMARCD2.fa \
+       -gapopen 20.0 \
+       -gapextend 1.0 \
+       -auto \
+       -outfile aln_chimp_needle.txt
+```
+
+El alineamiento de chimpancé no pudo completarse porque el archivo `ChimpSMARCD2.fa` no se leyó correctamente como FASTA. El error probablemente se debe a que la descarga no devolvió una secuencia válida, sino una página de error o un archivo vacío. Para verificarlo se comprobó el contenido con `head ChimpSMARCD2.fa`.
+
+
+Alineamiento entre los fragmentos cromosómicos humano y chimpancé
+```{bash}
+if [ ! -e aln_chr_human_chimp.txt ]; then
+   needle -asequence HumanChr17.fa \
+          -bsequence ChimpChr17.fa \
+          -gapopen 15.0 \
+          -gapextend 0.5 \
+          -auto \
+          -outfile aln_chr_human_chimp.txt
+fi
+```
+
+Finalmente, se ha realizado un alineamiento entre los fragmentos cromosómicos de humano y chimpancé. En este caso sí tiene más sentido utilizar un alineamiento global, ya que se comparan dos regiones genómicas homólogas. Debido a la proximidad evolutiva entre ambas especies, se espera que la conservación sea alta, aunque pueden aparecer diferencias puntuales, pequeñas inserciones/deleciones o regiones menos conservadas.
+
+Resumen de archivos generados
+```{bash}
+ls -lh aln*.txt aln*.fasta 2>/dev/null
+```
+Como resultado de esta sección, se han generado varios archivos de alineamiento. El archivo `aln.txt` se incluye como evidencia mínima de ejecución solicitada en la corrección, y los archivos adicionales permiten comparar distintos enfoques de alineamiento: global, local y formato FASTA.
 :::
 
 Para alinear tránscritos o incluso proteínas a un genoma de referencia, es mejor
@@ -172,6 +311,15 @@ no hemos condicionado la ejecución.
 :::{.callout-note icon=false}
 ## Desafío
 ¿Cómo puedes enviar el resultado de `exonerate` a un archivo?
+El resultado de `exonerate` puede enviarse a un archivo usando redirección de salida estándar con `>`. Por ejemplo:
+```{bash}
+exonerate --model est2genome HumanSMARCD2.fa HumanChr17.fa | tee exonerate_human.txt
+```
+
+```{bash}
+exonerate --model est2genome HumanSMARCD2.fa HumanChr17.fa > exonerate_human.txt
+```
+En una primera ejecución, el bloque de `exonerate` produjo un error. La causa probable fue que alguno de los archivos de entrada no estaba disponible en la carpeta de trabajo o que el programa `exonerate` no estaba correctamente instalado en el entorno virtual. También es importante comprobar que las secuencias se hayan descargado correctamente y que los nombres de archivo coincidan exactamente con los usados en el comando. Para evitar que el error impida renderizar el documento, el bloque puede ejecutarse con `#| error: true`, dejando visible tanto el comando como el mensaje de error. En un entorno correctamente configurado, `exonerate --model est2genome HumanSMARCD2.fa HumanChr17.fa` permite alinear el transcrito frente a la región genómica y detectar los intrones como interrupciones del alineamiento.
 :::
 
 # Apéndice. Alineamientos múltiples
@@ -208,4 +356,4 @@ BrowseSeqs(PF00009, htmlFile = 'PF00009.html', openURL = FALSE)
 includeHTML('./PF00009.html')
 ```
 
-# Bibliografía
+En esta práctica se ha preparado la estructura básica del cuaderno de trabajo y se han ejecutado comandos elementales de Bash para organizar archivos y directorios. Además, se ha realizado un primer alineamiento global con `needle`, cuyo resultado se ha guardado en `aln.txt`. Este archivo se incorpora al repositorio como evidencia de ejecución. La comparación entre `needle` y `exonerate` muestra que no todas las herramientas de alineamiento son equivalentes: mientras `needle` realiza un alineamiento global general, `exonerate` permite aplicar modelos específicos como `est2genome`, mucho más adecuados para comparar un transcrito maduro con una secuencia genómica que contiene intrones.
