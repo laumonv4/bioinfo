@@ -2238,7 +2238,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Última actualización:</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">3 de mayo de 2026</p>
+      <p class="date">6 de mayo de 2026</p>
     </div>
   </div>
   
@@ -2550,14 +2550,217 @@ $antifam
 </div>
 <p>Los siguientes 20 registros de Pfam se encuentran en <code>pfam01[[&#39;next&#39;]]</code>: https://www.ebi.ac.uk/interpro/api/entry/pfam/?cursor=cD1QRjAwMDIw. Y los podemos descargar igual.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(&#39;kablExtra&#39;)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(&#39;knitr&#39;)</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;knitr&#39;</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>pfam02 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(pfam01[[<span class="st">&#39;next&#39;</span>]])</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in kable(pfam02[[&quot;results&quot;]][[&quot;metadata&quot;]]) %&gt;% kable_styling(): no se pudo encontrar la función &quot;%&gt;%&quot;</code></pre>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 31%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">accession</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">source_database</th>
+<th style="text-align: left;">type</th>
+<th style="text-align: left;">integrated</th>
+<th style="text-align: left;">member_databases</th>
+<th style="text-align: left;">go_terms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PF00021</td>
+<td style="text-align: left;">u-PAR/Ly-6 domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR016054</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00022</td>
+<td style="text-align: left;">Actin</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">family</td>
+<td style="text-align: left;">IPR004000</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00023</td>
+<td style="text-align: left;">Ankyrin repeat</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">repeat</td>
+<td style="text-align: left;">IPR002110</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00024</td>
+<td style="text-align: left;">PAN domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR003609</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00025</td>
+<td style="text-align: left;">ADP-ribosylation factor family</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR006689</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00026</td>
+<td style="text-align: left;">Eukaryotic aspartyl protease</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR033121</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00027</td>
+<td style="text-align: left;">Cyclic nucleotide-binding domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000595</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00028</td>
+<td style="text-align: left;">Cadherin domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR002126</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00029</td>
+<td style="text-align: left;">Connexin</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR013092</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00030</td>
+<td style="text-align: left;">Beta/Gamma crystallin</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR001064</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00031</td>
+<td style="text-align: left;">Cystatin domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000010</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00032</td>
+<td style="text-align: left;">Cytochrome b(C-terminal)/b6/petD</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR005798</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00033</td>
+<td style="text-align: left;">Cytochrome b/b6/petB</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR005797</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00034</td>
+<td style="text-align: left;">Cytochrome c</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR009056</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00035</td>
+<td style="text-align: left;">Double-stranded RNA binding motif</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR014720</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00036</td>
+<td style="text-align: left;">EF hand domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR002048</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00037</td>
+<td style="text-align: left;">4Fe-4S binding domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR017896</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00038</td>
+<td style="text-align: left;">Intermediate filament protein</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">coiled_coil</td>
+<td style="text-align: left;">IPR039008</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00039</td>
+<td style="text-align: left;">Fibronectin type I domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000083</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00040</td>
+<td style="text-align: left;">Fibronectin type II domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000562</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -2766,14 +2969,214 @@ $antifam
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;kableExtra&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in library(&quot;kableExtra&quot;): no hay paquete llamado &#39;kableExtra&#39;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pfam02 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(pfam01[[<span class="st">&#39;next&#39;</span>]])</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in kable(pfam02[[&quot;results&quot;]][[&quot;metadata&quot;]]) %&gt;% kable_styling(): no se pudo encontrar la función &quot;%&gt;%&quot;</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;knitr&#39;</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pfam02 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(pfam01[[<span class="st">&#39;next&#39;</span>]])</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 31%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">accession</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">source_database</th>
+<th style="text-align: left;">type</th>
+<th style="text-align: left;">integrated</th>
+<th style="text-align: left;">member_databases</th>
+<th style="text-align: left;">go_terms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PF00021</td>
+<td style="text-align: left;">u-PAR/Ly-6 domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR016054</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00022</td>
+<td style="text-align: left;">Actin</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">family</td>
+<td style="text-align: left;">IPR004000</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00023</td>
+<td style="text-align: left;">Ankyrin repeat</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">repeat</td>
+<td style="text-align: left;">IPR002110</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00024</td>
+<td style="text-align: left;">PAN domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR003609</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00025</td>
+<td style="text-align: left;">ADP-ribosylation factor family</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR006689</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00026</td>
+<td style="text-align: left;">Eukaryotic aspartyl protease</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR033121</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00027</td>
+<td style="text-align: left;">Cyclic nucleotide-binding domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000595</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00028</td>
+<td style="text-align: left;">Cadherin domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR002126</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00029</td>
+<td style="text-align: left;">Connexin</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR013092</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00030</td>
+<td style="text-align: left;">Beta/Gamma crystallin</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR001064</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00031</td>
+<td style="text-align: left;">Cystatin domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000010</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00032</td>
+<td style="text-align: left;">Cytochrome b(C-terminal)/b6/petD</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR005798</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00033</td>
+<td style="text-align: left;">Cytochrome b/b6/petB</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR005797</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00034</td>
+<td style="text-align: left;">Cytochrome c</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR009056</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00035</td>
+<td style="text-align: left;">Double-stranded RNA binding motif</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR014720</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00036</td>
+<td style="text-align: left;">EF hand domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR002048</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00037</td>
+<td style="text-align: left;">4Fe-4S binding domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR017896</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00038</td>
+<td style="text-align: left;">Intermediate filament protein</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">coiled_coil</td>
+<td style="text-align: left;">IPR039008</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00039</td>
+<td style="text-align: left;">Fibronectin type I domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000083</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00040</td>
+<td style="text-align: left;">Fibronectin type II domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000562</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -2788,14 +3191,214 @@ $antifam
 <div class="callout-body-container callout-body">
 <p>Crea una tercera lista con los contenidos de la tercera página de registros de Pfam.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;kableExtra&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in library(&quot;kableExtra&quot;): no hay paquete llamado &#39;kableExtra&#39;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>pfam03 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(pfam02[[<span class="st">&#39;next&#39;</span>]])</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(pfam03[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in kable(pfam03[[&quot;results&quot;]][[&quot;metadata&quot;]]) %&gt;% kable_styling(): no se pudo encontrar la función &quot;%&gt;%&quot;</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;knitr&#39;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>pfam03 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(pfam02[[<span class="st">&#39;next&#39;</span>]])</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(pfam03[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 46%">
+<col style="width: 12%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">accession</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">source_database</th>
+<th style="text-align: left;">type</th>
+<th style="text-align: left;">integrated</th>
+<th style="text-align: left;">member_databases</th>
+<th style="text-align: left;">go_terms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PF00041</td>
+<td style="text-align: left;">Fibronectin type III domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR003961</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00042</td>
+<td style="text-align: left;">Globin</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000971</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00043</td>
+<td style="text-align: left;">Glutathione S-transferase, C-terminal domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR004046</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00044</td>
+<td style="text-align: left;">Glyceraldehyde 3-phosphate dehydrogenase, NAD binding domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR020828</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00045</td>
+<td style="text-align: left;">Hemopexin</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">repeat</td>
+<td style="text-align: left;">IPR018487</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00046</td>
+<td style="text-align: left;">Homeodomain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR001356</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00047</td>
+<td style="text-align: left;">Immunoglobulin domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR013151</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00048</td>
+<td style="text-align: left;">Small cytokines (intecrine/chemokine), interleukin-8 like</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR001811</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00049</td>
+<td style="text-align: left;">Insulin/IGF/Relaxin family</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR016179</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00050</td>
+<td style="text-align: left;">Kazal-type serine protease inhibitor domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR002350</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00051</td>
+<td style="text-align: left;">Kringle domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000001</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00052</td>
+<td style="text-align: left;">Laminin B (Domain IV)</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR000034</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00053</td>
+<td style="text-align: left;">Laminin EGF domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR002049</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00054</td>
+<td style="text-align: left;">Laminin G domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR001791</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00055</td>
+<td style="text-align: left;">Laminin N-terminal (Domain VI)</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR008211</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00056</td>
+<td style="text-align: left;">lactate/malate dehydrogenase, NAD binding domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR001236</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00057</td>
+<td style="text-align: left;">Low-density lipoprotein receptor domain class A</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">repeat</td>
+<td style="text-align: left;">IPR002172</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00058</td>
+<td style="text-align: left;">Low-density lipoprotein receptor repeat class B</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">repeat</td>
+<td style="text-align: left;">IPR000033</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PF00059</td>
+<td style="text-align: left;">Lectin C-type domain</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">IPR001304</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PF00060</td>
+<td style="text-align: left;">Ligand-gated ion channel</td>
+<td style="text-align: left;">pfam</td>
+<td style="text-align: left;">family</td>
+<td style="text-align: left;">IPR001320</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -2805,13 +3408,13 @@ $antifam
 <h1>Unión de <em>páginas</em> en un mismo <em>data frame</em></h1>
 <p>El paquete <code>jsonlite</code> nos ofrece la función <code>rbind_pages()</code> para juntar una lista de <em>data frames</em> en uno solo:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pfam <span class="ot">&lt;-</span> <span class="fu">rbind_pages</span>(<span class="fu">list</span>(pfam01[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]],</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                         pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pfam <span class="ot">&lt;-</span> <span class="fu">rbind_pages</span>(<span class="fu">list</span>(pfam01[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]],</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                         pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pfam <span class="ot">&lt;-</span> <span class="fu">rbind_pages</span>(<span class="fu">list</span>(pfam01[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]],</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                         pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]],</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                         pfam03[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pfam <span class="ot">&lt;-</span> <span class="fu">rbind_pages</span>(<span class="fu">list</span>(pfam01[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]],</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                         pfam02[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]],</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                         pfam03[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Pero para leer y descargar todas las páginas, necesitaríamos alguna manera de automatizar el proceso. En el Apéndice 2 encontrarás una solución posible.</p>
 </section>
@@ -2821,8 +3424,8 @@ $antifam
 <p>https://www.ebi.ac.uk/interpro/api/entry/pfam/PF06235</p>
 <p>La función genérica <code>str()</code> de R nos describe la estructura de cualquier objeto en R, y nos puede ayudar a entender cómo podemos acceder a cada dato del registro:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pf06235 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;entry/pfam/PF06235&#39;</span>))</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pf06235)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pf06235 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;entry/pfam/PF06235&#39;</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pf06235)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 1
  $ metadata:List of 21
@@ -2871,8 +3474,8 @@ $antifam
   ..$ is_updated_llm          : logi FALSE
   ..$ representative_structure: NULL</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>nombre_largo <span class="ot">&lt;-</span> pf06235[[<span class="st">&#39;metadata&#39;</span>]][[<span class="st">&#39;name&#39;</span>]][[<span class="st">&#39;name&#39;</span>]]</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>nombre_largo</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>nombre_largo <span class="ot">&lt;-</span> pf06235[[<span class="st">&#39;metadata&#39;</span>]][[<span class="st">&#39;name&#39;</span>]][[<span class="st">&#39;name&#39;</span>]]</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>nombre_largo</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;NADH dehydrogenase subunit 4L (NAD4L)&quot;</code></pre>
 </div>
@@ -2889,8 +3492,8 @@ $antifam
 <div class="callout-body-container callout-body">
 <p>Usa la función <code>fromJSON()</code> para guardar la información del registro P01923 (proteína de Swiss-Prot) y explora la estructura de los datos con la función <code>str()</code>. ¿Puedes extraer la secuencia?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>P01923 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;protein/reviewed/P01923&#39;</span>))</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>P01923[[<span class="st">&#39;metadata&#39;</span>]][[<span class="st">&#39;sequence&#39;</span>]]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>P01923 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;protein/reviewed/P01923&#39;</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>P01923[[<span class="st">&#39;metadata&#39;</span>]][[<span class="st">&#39;sequence&#39;</span>]]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;VLSPADKTNVKAAWGKVGAHAGDYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR&quot;</code></pre>
 </div>
@@ -2919,20 +3522,20 @@ $antifam
 <div class="callout-body-container callout-body">
 <p>Determina cuántos taxones de UniProtKB no tienen ninguna proteína asignada. ¿Y qué proporción de proteínas cuentan con una estructura terciaria?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>taxTot <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;taxonomy&#39;</span>))</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>taxCon <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;taxonomy/protein&#39;</span>))[[<span class="st">&#39;taxa&#39;</span>]][[<span class="st">&#39;uniprot&#39;</span>]]</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>taxSin <span class="ot">&lt;-</span> taxTot <span class="ot">&lt;-</span> taxCon</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>taxSin</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>taxTot <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;taxonomy&#39;</span>))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>taxCon <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;taxonomy/protein&#39;</span>))[[<span class="st">&#39;taxa&#39;</span>]][[<span class="st">&#39;uniprot&#39;</span>]]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>taxSin <span class="ot">&lt;-</span> taxTot <span class="ot">&lt;-</span> taxCon</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>taxSin</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1291419</code></pre>
 </div>
 </div>
 <p>::: el motivo por los que hay tantos taxones sin una proteína asignada es `porque entre las proteínas no revisadas han dejado de añadir proteínas muy parecidas a los que tienen otros taxones</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>protTot <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;protein&#39;</span>))[[<span class="st">&#39;proteins&#39;</span>]][[<span class="st">&#39;uniprot&#39;</span>]]</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>protCon <span class="ot">&lt;-</span><span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;protein/structure&#39;</span>))[[<span class="st">&#39;proteins&#39;</span>]][[<span class="st">&#39;uniprot&#39;</span>]]</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>protSin <span class="ot">&lt;-</span> protTot <span class="ot">&lt;-</span> protCon</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>protSin</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>protTot <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;protein&#39;</span>))[[<span class="st">&#39;proteins&#39;</span>]][[<span class="st">&#39;uniprot&#39;</span>]]</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>protCon <span class="ot">&lt;-</span><span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;protein/structure&#39;</span>))[[<span class="st">&#39;proteins&#39;</span>]][[<span class="st">&#39;uniprot&#39;</span>]]</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>protSin <span class="ot">&lt;-</span> protTot <span class="ot">&lt;-</span> protCon</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>protSin</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 67874</code></pre>
 </div>
@@ -2943,24 +3546,292 @@ $antifam
 <p>https://www.ebi.ac.uk/interpro/api/protein/reviewed/entry/pfam/PF00019</p>
 <p>Para extraer la información desde R, tenemos que familiarizarnos con la estructura de los datos.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>pfam00019 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;protein/reviewed/entry/pfam/PF00019&#39;</span>))</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pfam00019)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>pfam00019 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;protein/reviewed/entry/pfam/PF00019&#39;</span>))</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pfam00019)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;count&quot;    &quot;next&quot;     &quot;previous&quot; &quot;results&quot; </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>pfam00019[[<span class="st">&#39;count&#39;</span>]]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>pfam00019[[<span class="st">&#39;count&#39;</span>]]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 229</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pfam00019[[<span class="st">&#39;results&#39;</span>]])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pfam00019[[<span class="st">&#39;results&#39;</span>]])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;metadata&quot; &quot;entries&quot; </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># La función &quot;flaten()&quot; corrige el anidamiento de marcos de datos,</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">flatten</span>(pfam00019[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]])) <span class="sc">%&gt;%</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable_styling</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in kable(flatten(pfam00019[[&quot;results&quot;]][[&quot;metadata&quot;]])) %&gt;% kable_styling(): no se pudo encontrar la función &quot;%&gt;%&quot;</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># La función &quot;flaten()&quot; corrige el anidamiento de marcos de datos,</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">flatten</span>(pfam00019[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]])) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">accession</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">source_database</th>
+<th style="text-align: right;">length</th>
+<th style="text-align: left;">gene</th>
+<th style="text-align: left;">in_alphafold</th>
+<th style="text-align: left;">in_bfvd</th>
+<th style="text-align: left;">source_organism.taxId</th>
+<th style="text-align: left;">source_organism.scientificName</th>
+<th style="text-align: left;">source_organism.fullName</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A1C2U3</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9600</td>
+<td style="text-align: left;">Pongo pygmaeus</td>
+<td style="text-align: left;">Pongo pygmaeus (Bornean orangutan)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A1C2U6</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9544</td>
+<td style="text-align: left;">Macaca mulatta</td>
+<td style="text-align: left;">Macaca mulatta (Rhesus macaque)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A1C2U7</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9597</td>
+<td style="text-align: left;">Pan paniscus</td>
+<td style="text-align: left;">Pan paniscus (Pygmy chimpanzee)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A1C2V0</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9598</td>
+<td style="text-align: left;">Pan troglodytes</td>
+<td style="text-align: left;">Pan troglodytes (Chimpanzee)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A1C2V5</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9595</td>
+<td style="text-align: left;">Gorilla gorilla gorilla</td>
+<td style="text-align: left;">Gorilla gorilla gorilla (Western lowland gorilla)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A8E7N9</td>
+<td style="text-align: left;">Growth/differentiation factor 6-B</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">412</td>
+<td style="text-align: left;">gdf6b</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">7955</td>
+<td style="text-align: left;">Danio rerio</td>
+<td style="text-align: left;">Danio rerio (Zebrafish)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A9CB18</td>
+<td style="text-align: left;">Growth/differentiation factor 9</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">455</td>
+<td style="text-align: left;">GDF9</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9555</td>
+<td style="text-align: left;">Papio anubis</td>
+<td style="text-align: left;">Papio anubis (Olive baboon)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F1QWZ4</td>
+<td style="text-align: left;">Growth/differentiation factor 2</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">389</td>
+<td style="text-align: left;">gdf2</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">7955</td>
+<td style="text-align: left;">Danio rerio</td>
+<td style="text-align: left;">Danio rerio (Zebrafish)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">G5EBY8</td>
+<td style="text-align: left;">BMP-like protein unc-129</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">407</td>
+<td style="text-align: left;">unc-129</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">6239</td>
+<td style="text-align: left;">Caenorhabditis elegans</td>
+<td style="text-align: left;">Caenorhabditis elegans</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">G5EEL5</td>
+<td style="text-align: left;">Protein dbl-1</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">365</td>
+<td style="text-align: left;">dbl-1</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">6239</td>
+<td style="text-align: left;">Caenorhabditis elegans</td>
+<td style="text-align: left;">Caenorhabditis elegans</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">G7PWZ3</td>
+<td style="text-align: left;">Growth/differentiation factor 15</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">308</td>
+<td style="text-align: left;">GDF15</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9541</td>
+<td style="text-align: left;">Macaca fascicularis</td>
+<td style="text-align: left;">Macaca fascicularis (Crab-eating macaque)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O00292</td>
+<td style="text-align: left;">Left-right determination factor 2</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">366</td>
+<td style="text-align: left;">LEFTY2</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9606</td>
+<td style="text-align: left;">Homo sapiens</td>
+<td style="text-align: left;">Homo sapiens (Human)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">O08689</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">376</td>
+<td style="text-align: left;">Mstn</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">10090</td>
+<td style="text-align: left;">Mus musculus</td>
+<td style="text-align: left;">Mus musculus (Mouse)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O08717</td>
+<td style="text-align: left;">Inhibin beta E chain</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: left;">Inhbe</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">10090</td>
+<td style="text-align: left;">Mus musculus</td>
+<td style="text-align: left;">Mus musculus (Mouse)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">O13048</td>
+<td style="text-align: left;">Nodal homolog 4-A</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: left;">nodal4-a</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">8355</td>
+<td style="text-align: left;">Xenopus laevis</td>
+<td style="text-align: left;">Xenopus laevis (African clawed frog)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O14793</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9606</td>
+<td style="text-align: left;">Homo sapiens</td>
+<td style="text-align: left;">Homo sapiens (Human)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">O18828</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9557</td>
+<td style="text-align: left;">Papio hamadryas</td>
+<td style="text-align: left;">Papio hamadryas (Hamadryas baboon)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O18830</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9940</td>
+<td style="text-align: left;">Ovis aries</td>
+<td style="text-align: left;">Ovis aries (Sheep)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">O18831</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9823</td>
+<td style="text-align: left;">Sus scrofa</td>
+<td style="text-align: left;">Sus scrofa (Pig)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O18836</td>
+<td style="text-align: left;">Growth/differentiation factor 8</td>
+<td style="text-align: left;">reviewed</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: left;">MSTN</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">9913</td>
+<td style="text-align: left;">Bos taurus</td>
+<td style="text-align: left;">Bos taurus (Bovine)</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -2975,8 +3846,8 @@ $antifam
 <div class="callout-body-container callout-body">
 <p>Intenta obtener una lista de los dominios de Pfam presentes en vertebrados (taxon 7742). Al menos, los 20 primeros.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>vert <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;entry/pfam/taxonomy/uniprot/7742&#39;</span>))</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>vert[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]<span class="sc">$</span>name</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>vert <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;entry/pfam/taxonomy/uniprot/7742&#39;</span>))</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>vert[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]<span class="sc">$</span>name</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] &quot;7 transmembrane receptor (rhodopsin family)&quot;                    
  [2] &quot;7 transmembrane receptor (Secretin family)&quot;                     
@@ -3004,8 +3875,8 @@ $antifam
 <h2 class="anchored" data-anchor-id="ejercicio-6">Ejercicio 6</h2>
 <p>¿Cuántas proteínas de cocodrilos (taxon 8493) conocemos con el dominio <em>zinc finger, C2HC type</em> (Pfam PF01530)?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>pfam01530 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;protein/entry/pfam/PF01530/taxonomy/uniprot/8493&#39;</span>))</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>pfam01530</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>pfam01530 <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API,<span class="st">&#39;protein/entry/pfam/PF01530/taxonomy/uniprot/8493&#39;</span>))</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>pfam01530</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$proteins
 $proteins$unreviewed
@@ -3025,52 +3896,52 @@ $proteins$uniprot
 <p>A continuación utilizo un <strong>bucle</strong> para crear una lista de marcos de datos que después podemos unir mediante la función <code>rbind_pages()</code>. Mi objetivo es extraer todos los dominios de Pfam conocidos en equinodermos (taxon 7586).</p>
 <p>Descargar todas las páginas de dominios presentes en proteínas de equinodermos puede llevar bastante tiempo. Por eso, guardo el marco de datos resultante en un archivo y me ahorro tener que ejecutar la búsqueda cada vez que le doy al botón <code>Render</code>. Además, el bloque incluye la opción <code>eval: false</code>, para que no se ejecute. Cambia la opción cuando</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Si ya existe la tabla, la cargamos:</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&#39;equinodermata.Rds&#39;</span>)) {</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>   equinodermata <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&#39;equinodermata.Rds&#39;</span>)</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Si no existe, la creamos:</span></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>   primera <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;entry/pfam/taxonomy/uniprot/7586&#39;</span>))</span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>   todas <span class="ot">&lt;-</span> <span class="fu">list</span>(primera[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]])</span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>   siguienteURL <span class="ot">&lt;-</span> primera[[<span class="st">&#39;next&#39;</span>]]</span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> (<span class="sc">!</span> <span class="fu">is.null</span>(siguienteURL)) {</span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>      siguiente <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(siguienteURL)</span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>      cuantas <span class="ot">&lt;-</span> <span class="fu">length</span>(todas)</span>
-<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>      todas[[cuantas <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> siguiente[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]</span>
-<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>      siguienteURL <span class="ot">&lt;-</span> siguiente[[<span class="st">&#39;next&#39;</span>]]</span>
-<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>   }</span>
-<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>   equinodermata <span class="ot">&lt;-</span> <span class="fu">rbind_pages</span>(todas)</span>
-<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Aquí es donde guardamos una variable de R en un archivo Rds:</span></span>
-<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">saveRDS</span>(equinodermata, <span class="at">file =</span> <span class="st">&#39;equinodermata.Rds&#39;</span>)</span>
-<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">dim</span>(equinodermata)</span>
-<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Si ya existe la tabla, la cargamos:</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&#39;equinodermata.Rds&#39;</span>)) {</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>   equinodermata <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&#39;equinodermata.Rds&#39;</span>)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Si no existe, la creamos:</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>   primera <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;entry/pfam/taxonomy/uniprot/7586&#39;</span>))</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>   todas <span class="ot">&lt;-</span> <span class="fu">list</span>(primera[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]])</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>   siguienteURL <span class="ot">&lt;-</span> primera[[<span class="st">&#39;next&#39;</span>]]</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> (<span class="sc">!</span> <span class="fu">is.null</span>(siguienteURL)) {</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>      siguiente <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(siguienteURL)</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>      cuantas <span class="ot">&lt;-</span> <span class="fu">length</span>(todas)</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>      todas[[cuantas <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> siguiente[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>      siguienteURL <span class="ot">&lt;-</span> siguiente[[<span class="st">&#39;next&#39;</span>]]</span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>   equinodermata <span class="ot">&lt;-</span> <span class="fu">rbind_pages</span>(todas)</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Aquí es donde guardamos una variable de R en un archivo Rds:</span></span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">saveRDS</span>(equinodermata, <span class="at">file =</span> <span class="st">&#39;equinodermata.Rds&#39;</span>)</span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">dim</span>(equinodermata)</span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>A continuación, hago lo mismo para los cordados. Puesto que conocemos más proteínas de cordados que de equinodermos, no es sorprendente que haya más dominios proteicos conocidos de cordados. Por cierto, los cordados somos el taxon 7711.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&#39;chordata.Rds&#39;</span>)) {</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>   chordata <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&#39;chordata.Rds&#39;</span>)</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>   primera <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;entry/pfam/taxonomy/uniprot/7711&#39;</span>))</span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>   todas <span class="ot">&lt;-</span> <span class="fu">list</span>(primera[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]])</span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>   siguienteURL <span class="ot">&lt;-</span> primera[[<span class="st">&#39;next&#39;</span>]]</span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> (<span class="sc">!</span> <span class="fu">is.null</span>(siguienteURL)) {</span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>      siguiente <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(siguienteURL)</span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>      cuantas <span class="ot">&lt;-</span> <span class="fu">length</span>(todas)</span>
-<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>      todas[[cuantas <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> siguiente[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]</span>
-<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>      siguienteURL <span class="ot">&lt;-</span> siguiente[[<span class="st">&#39;next&#39;</span>]]</span>
-<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>   }</span>
-<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>   chordata <span class="ot">&lt;-</span> <span class="fu">rbind_pages</span>(todas)</span>
-<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">saveRDS</span>(chordata, <span class="at">file =</span> <span class="st">&#39;chordata.Rds&#39;</span>)</span>
-<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">dim</span>(chordata)</span>
-<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&#39;chordata.Rds&#39;</span>)) {</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>   chordata <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&#39;chordata.Rds&#39;</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>   primera <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">paste0</span>(API, <span class="st">&#39;entry/pfam/taxonomy/uniprot/7711&#39;</span>))</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>   todas <span class="ot">&lt;-</span> <span class="fu">list</span>(primera[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]])</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>   siguienteURL <span class="ot">&lt;-</span> primera[[<span class="st">&#39;next&#39;</span>]]</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> (<span class="sc">!</span> <span class="fu">is.null</span>(siguienteURL)) {</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>      siguiente <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(siguienteURL)</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>      cuantas <span class="ot">&lt;-</span> <span class="fu">length</span>(todas)</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>      todas[[cuantas <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> siguiente[[<span class="st">&#39;results&#39;</span>]][[<span class="st">&#39;metadata&#39;</span>]]</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>      siguienteURL <span class="ot">&lt;-</span> siguiente[[<span class="st">&#39;next&#39;</span>]]</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>   chordata <span class="ot">&lt;-</span> <span class="fu">rbind_pages</span>(todas)</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">saveRDS</span>(chordata, <span class="at">file =</span> <span class="st">&#39;chordata.Rds&#39;</span>)</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">dim</span>(chordata)</span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Por la diferencia en el número de dominios, sabemos que debe haber dominios en cordados que no aparecen en equinodermos. Pero podría haber también dominios en equinodermos que no aparecen en cordados. Vamos a comprobarlo con la función <code>setdiff()</code>, que devuelve los elementos del primer vector que no aparecen en el segundo:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>SoloEquinodermos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(equinodermata<span class="sc">$</span>accession, chordata<span class="sc">$</span>accession)</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Del marco de datos &quot;equinodermata&quot; selecciono las filas que corresponden a los</span></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># dominios exclusivos de equinodermos, y las filas &quot;accession&quot; y &quot;name&quot;:</span></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(equinodermata[equinodermata<span class="sc">$</span>accession <span class="sc">%in%</span> SoloEquinodermos,</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">c</span>(<span class="st">&#39;accession&#39;</span>, <span class="st">&#39;name&#39;</span>)]) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>SoloEquinodermos <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(equinodermata<span class="sc">$</span>accession, chordata<span class="sc">$</span>accession)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Del marco de datos &quot;equinodermata&quot; selecciono las filas que corresponden a los</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># dominios exclusivos de equinodermos, y las filas &quot;accession&quot; y &quot;name&quot;:</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(equinodermata[equinodermata<span class="sc">$</span>accession <span class="sc">%in%</span> SoloEquinodermos,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">c</span>(<span class="st">&#39;accession&#39;</span>, <span class="st">&#39;name&#39;</span>)])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="bibliografía" class="level1">
@@ -3079,7 +3950,7 @@ $proteins$uniprot
 <section id="información-sobre-la-sesión" class="level1">
 <h1>Información sobre la sesión</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </div>

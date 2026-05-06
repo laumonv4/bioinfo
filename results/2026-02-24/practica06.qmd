@@ -146,18 +146,18 @@ pfam01[['results']][['metadata']]
 Los siguientes 20 registros de Pfam se encuentran en `pfam01[['next']]`:
 `r pfam01[['next']]`. Y los podemos descargar igual.
 ```{r}
-# library('kablExtra')
+# library('knitr')
 library('knitr')
 pfam02 <- fromJSON(pfam01[['next']])
-kable(pfam02[['results']][['metadata']]) %>% kable_styling()
+kable(pfam02[['results']][['metadata']]) 
 kable(pfam02[['results']][['metadata']])
 ```
 
 
 ```{r}
-library('kableExtra')
+library('knitr')
 pfam02 <- fromJSON(pfam01[['next']])
-kable(pfam02[['results']][['metadata']]) %>% kable_styling()
+kable(pfam02[['results']][['metadata']])
 ```
 
 :::{.callout-note icon=false}
@@ -165,9 +165,9 @@ kable(pfam02[['results']][['metadata']]) %>% kable_styling()
 Crea una tercera lista con los contenidos de la tercera página de registros
 de Pfam.
 ```{r}
-library('kableExtra')
+library('knitr')
 pfam03 <- fromJSON(pfam02[['next']])
-kable(pfam03[['results']][['metadata']]) %>% kable_styling()
+kable(pfam03[['results']][['metadata']]) 
 ```
 
 :::
@@ -280,8 +280,7 @@ pfam00019[['count']]
 names(pfam00019[['results']])
 
 # La función "flaten()" corrige el anidamiento de marcos de datos,
-kable(flatten(pfam00019[['results']][['metadata']])) %>%
-   kable_styling()
+kable(flatten(pfam00019[['results']][['metadata']])) 
 ```
 
 :::{.callout-note icon=false}
@@ -376,7 +375,7 @@ SoloEquinodermos <- setdiff(equinodermata$accession, chordata$accession)
 # Del marco de datos "equinodermata" selecciono las filas que corresponden a los
 # dominios exclusivos de equinodermos, y las filas "accession" y "name":
 kable(equinodermata[equinodermata$accession %in% SoloEquinodermos,
-              c('accession', 'name')]) %>% kable_styling()
+              c('accession', 'name')])
 ```
 
 # Bibliografía
