@@ -1,11 +1,12 @@
 ---
----
 title: "Anotación"
-format: html
 bibliography: ../../doc/references.bib
+format: 
+  html:
+    embed-resources: true
 editor: visual
 ---
----
+
 ## Introducción
 
 En esta práctica vamos a trabajar con los resultados de la anotación estructural realizada sobre el ensamblaje de la práctica anterior. Desafortunadamente, los ordenadores virtuales no están preparados para realizar la anotación. Pero a continuación se muestran las órdenes que en un terminal de Bash producirían los resultados. Estas órdenes se supone que son ejecutadas desde una carpeta results/2026-04-21.
