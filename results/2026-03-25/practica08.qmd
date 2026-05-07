@@ -8,56 +8,58 @@ execute:
   error: true
 engine: knitr
 bibliography: ../../doc/references.bib
-format: html
+format: 
+  html:
+    embed-resources: true
 editor: visual
 ---
 
 ## Ejercicio 1. Identificación aproximada de ortólogos
+
 # Enmascarar e indexar los proteomas
+
 ```{bash}
-if [ ! -e ../../data/buchnera.paa ]; then
+if [ ! -e ../../data/buchnera.phr ]; then
    # Creamos un archivo para enmascarar zonas de baja complejidad:
-   if [ ! -e buchnera_seg.asnb ]; then
+   if [ ! -e ../../data/buchnera_seg.asnb ]; then
       segmasker -in ../../data/buchnera.fa \
                 -infmt fasta \
                 -parse_seqids \
                 -outfmt maskinfo_asn1_bin \
                 -out ../../data/buchnera_seg.asnb
    fi
-   # Y indexamos el archivo FASTA para BLAST:
-   makeblastdb  -in ../../data/buchnera.fa \
-                -input_type fasta \
-                -dbtype prot \
-                -parse_seqids \
-                -mask_data ../../data/buchnera_seg.asnb \
-                -out ../../data/buchnera \
-                -title "Proteoma de Buchnera"
+
+   # Indexamos el FASTA para BLAST:
+   makeblastdb -in ../../data/buchnera.fa \
+               -input_type fasta \
+               -dbtype prot \
+               -parse_seqids \
+               -mask_data ../../data/buchnera_seg.asnb \
+               -out ../../data/buchnera \
+               -title "Proteoma de Buchnera"
 fi
-# Hay que repetir todo esto para Blochmannia.
 ```
 
-
 # Hay que repetir todo esto para Blochmannia.
-```
 
 ```{bash}
-if [ ! -e ../../data/blochmannia.paa ]; then
-   # Creamos un archivo para enmascarar zonas de baja complejidad:
-   if [ ! -e blochmannia_seg.asnb ]; then
+if [ ! -e ../../data/blochmannia.phr ]; then
+
+   if [ ! -e ../../data/blochmannia_seg.asnb ]; then
       segmasker -in ../../data/blochmannia.fa \
                 -infmt fasta \
                 -parse_seqids \
                 -outfmt maskinfo_asn1_bin \
                 -out ../../data/blochmannia_seg.asnb
    fi
-   # Y indexamos el archivo FASTA para BLAST:
-   makeblastdb  -in ../../data/blochmannia.fa \
-                -input_type fasta \
-                -dbtype prot \
-                -parse_seqids \
-                -mask_data ../../data/blochmannia_seg.asnb \
-                -out ../../data/blochmannia \
-                -title "Proteoma de Blochmannia"
+
+   makeblastdb -in ../../data/blochmannia.fa \
+               -input_type fasta \
+               -dbtype prot \
+               -parse_seqids \
+               -mask_data ../../data/blochmannia_seg.asnb \
+               -out ../../data/blochmannia \
+               -title "Proteoma de Blochmannia"
 fi
 ```
 
@@ -65,16 +67,72 @@ Función match para comparar y cruzar la información de dos tablas. AL tener ya
 
 Podríamos comprobar si en las parejas que realmente coincide, comprobar si los valores E son fiables. Puedo mirar si hay muchos gaps o no, mirar si la longitud de la query, el subject etc, en comparación son muy grandes o no. Para ver su distribución puedo hacerlo con un histograma.
 
-##Ejercicio 2
+# Comparación de resultados
+
+```{r}
+buc2blo <- read.table(
+   'buc2blo.txt',
+   col.names = c('query', 'subject', 'qlen', 'slen',
+                 'length', 'evalue', 'bitscore')
+)
+blo2buc <- read.table(
+   'blo2buc.txt',
+   col.names = c('query', 'subject', 'qlen', 'slen',
+                 'length', 'evalue', 'bitscore')
+)
+```
+
+Nota. Echa un vistazo a estas tablas de resultados. ¿Sabrías identificar las parejas de proteínas que son recíprocamente la que más se parece una a la otra?
+
+
+```{r}
+# Cambiamos nombres para poder comparar fácilmente
+colnames(buc2blo)[1:2] <- c("buchnera", "blochmannia")
+colnames(blo2buc)[1:2] <- c("blochmannia", "buchnera")
+
+# Unimos ambas tablas por las dos columnas
+ortologos <- merge(
+   buc2blo[, c("buchnera", "blochmannia")],
+   blo2buc[, c("blochmannia", "buchnera")]
+)
+
+# Mostramos las parejas recíprocas
+head(ortologos)
+
+# Número total de posibles ortólogos
+nrow(ortologos)
+```
+Las proteínas identificadas en la tabla `ortologos` representan posibles pares de ortólogos entre Buchnera aphidicola y Blochmannia ocreatus, ya que cada proteína corresponde al mejor resultado BLAST de la otra especie de forma recíproca (*reciprocal best hits*).
+
+
+Nota. ¿Qué datos te gustaría representar gráficamente para ganar confianza en que los resultados son correctos y tienen sentido?
+
+Para evaluar si los resultados obtenidos mediante BLASTP son coherentes biológicamente, sería útil representar gráficamente variables como el bitscore, el valor E (e-value), la longitud del alineamiento y la relación entre las longitudes de las proteínas alineadas. 
+
+Por ejemplo, un gráfico de bitscore frente a e-value permitiría comprobar si los mejores alineamientos presentan simultáneamente puntuaciones altas y valores E muy bajos, como sería esperable en proteínas ortólogas reales. También sería útil comparar las longitudes de las proteínas enfrentadas (qlen y slen), ya que los ortólogos suelen conservar tamaños similares. 
+
+Además, un histograma de las longitudes de alineamiento o un diagrama de dispersión entre qlen y slen ayudarían a detectar alineamientos parciales, proteínas truncadas o posibles falsos positivos.
+
+```{r}
+plot(buc2blo$qlen,
+     buc2blo$slen,
+     xlab = "Longitud proteína Buchnera",
+     ylab = "Longitud proteína Blochmannia",
+     main = "Comparación de longitudes entre posibles ortólogos")
+
+abline(0,1,col="red")
+```
+## Ejercicio 2
 
 # PSI-BLAST
 
 ```{bash}
-# Como Swissprot debería estar ya descargada en `../../data`, podemos sacar
-# de ahí la secuencia de la proteína escogida:
-blastdbcmd -db ../../data/swissprot -entry P39615 -out P39615.fa
+# Extraemos la secuencia de SwissProt
+blastdbcmd -db ../../data/swissprot \
+           -entry P39615 \
+           -out P39615.fa
 
-# Y ahora la usamos como query en psi-blast:
+# Ejecutamos PSI-BLAST
 psiblast -db ../../data/swissprot \
          -query P39615.fa \
          -out P39615.blastout.txt \
@@ -84,12 +142,17 @@ psiblast -db ../../data/swissprot \
          -num_iterations 7 \
          -matrix BLOSUM62
 ```
-```{bash}
-# Como Swissprot debería estar ya descargada en `../../data`, podemos sacar
-# de ahí la secuencia de la proteína escogida:
-blastdbcmd -db ../../data/swissprot -entry B1AJI8 -out B1AJI8.fa
+El parámetro `-evalue` establece el umbral máximo de valor E para mostrar alineamientos en los resultados. En este caso, se mostrarán alineamientos con valor E inferior o igual a 0.1. 
 
-# Y ahora la usamos como query en psi-blast:
+Por otro lado, `-inclusion_ethresh` controla qué secuencias se incorporan al perfil de PSI-BLAST en cada iteración para construir la matriz de posiciones específicas (PSSM). Este parámetro es más estricto porque determina directamente qué secuencias influirán en las siguientes rondas de búsqueda. En este caso, únicamente se incorporan secuencias con valor E inferior a 0.001.
+
+La diferencia principal es que `-evalue` afecta a la visualización de resultados, mientras que `-inclusion_ethresh` afecta a la construcción iterativa del perfil evolutivo utilizado por PSI-BLAST.
+
+```{bash}
+blastdbcmd -db ../../data/swissprot \
+           -entry B1AJI8 \
+           -out B1AJI8.fa
+
 psiblast -db ../../data/swissprot \
          -query B1AJI8.fa \
          -out B1AJI8.blastout.txt \
@@ -99,7 +162,12 @@ psiblast -db ../../data/swissprot \
          -num_iterations 7 \
          -matrix BLOSUM62
 ```
+
+Los resultados obtenidos con diferentes proteínas query muestran que PSI-BLAST permite detectar homologías lejanas que no eran detectables mediante BLASTP convencional. Conforme avanzan las iteraciones, el perfil PSSM incorpora información evolutiva adicional y aumenta progresivamente la sensibilidad de la búsqueda.
+
+
 Semejanza entre las proteínas de la misma superfamilia es bastante ténue.
+
 ```{bash}
 for proteina in Q9CC1 P39615 B1AJI8 P47343; do
 blastdbcmd -db ../../data/swissprot -entry $proteina -out $proteina.fa
@@ -111,28 +179,50 @@ psiblast -db ../../data/swissprot \
          -num_iterations 7 \
          -matrix BLOSUM45
 ```
-```
+
 Para poder leer este archivo generado en R hay que tener en cuenta que el formato de salida número 6 hubiera sido más comodo que el formato de salida número 7. Así me da los resultados sin cabeceras ni nada.
 Poder incorporar los resultados a R tiene su utilidad.
 
 
 Consulta la ayuda de psiblast y asegúrate de entender para qué sirven los argumentos que hemos usado. Por ejemplo, ¿cuál es la diferencia entre -evalue y -inclusion_ethresh?¿Cómo harías que la búsqueda fuera más sensible todavía?
 
+Para aumentar todavía más la sensibilidad de la búsqueda podrían realizarse varias modificaciones:
+
+- aumentar el número de iteraciones (`-num_iterations`);
+- utilizar una matriz de sustitución más permisiva para homologías lejanas, como BLOSUM45;
+- aumentar ligeramente el umbral de inclusión (`-inclusion_ethresh`);
+- utilizar una base de datos más amplia;
+- reducir restricciones sobre cobertura o identidad.
+
+Sin embargo, aumentar demasiado la sensibilidad también incrementa el riesgo de incorporar falsos positivos al perfil iterativo.
+
 ## Ejercicio 3
+
 # Origen de la contaminación en un archivo FASTQ
+
+# Selección aleatoria de 20 queries
+
 ```{r}
 library('Biostrings')
-unmapped <- readDNAStringSet('../../data/contaminacion.fa.gz')
+
+unmapped <- readDNAStringSet('~/bioinfo/data/contaminacion.fa.gz')
+
 n <- length(unmapped)
+
 muestra <- unmapped[sample(1:n, 20)]
+
 writeXStringSet(muestra, 'muestra.fa')
 ```
+
+
 Para evitar sobrecargar los servidores del NCBI, se seleccionó una muestra aleatoria de 20 lecturas a partir del conjunto completo de secuencias no mapeadas. La selección se realizó utilizando la función sample() del lenguaje R sobre el objeto DNAStringSet, fijando una semilla para garantizar la reproducibilidad del análisis. Las secuencias seleccionadas se guardaron en un archivo FASTA (muestra.fa) que se utilizará como entrada para el análisis BLASTN.
 
 La selección aleatoria permite obtener una muestra representativa del conjunto total de lecturas no mapeadas, lo que facilita la inferencia del origen de la contaminación sin necesidad de analizar la totalidad de las secuencias.
 
 # BLASTN remoto
+
 ```{bash}
+#| eval: false
 if [ ! -e resultado.txt ]; then
    blastn -query muestra.fa \
           -db nr \
@@ -143,6 +233,10 @@ if [ ! -e resultado.txt ]; then
           -remote
 fi
 ```
+
+Este bloque no se ejecuta durante el renderizado porque realiza una búsqueda BLASTN remota contra la base de datos `nr` del NCBI. Al depender de servidores externos, puede tardar mucho tiempo o interrumpirse. El comando se mantiene documentado para indicar cómo se obtendría `resultado.txt` en un entorno con conexión estable y tiempo suficiente de ejecución.
+
+
 hace lo siguiente:
 
 usa muestra.fa como archivo de entrada
@@ -160,7 +254,9 @@ staxid: identificador taxonómico de la mejor secuencia encontrada
 -max_target_seqs 1 limita la salida a la secuencia más parecida
 -evalue 0.001 filtra resultados poco fiables
 -remote hace la búsqueda en los servidores del NCBI
+
 # Identificación taxonómica
+
 ```{bash}
 # Extraemos los identificadores taxonómicos (columna 9) de "resultado.txt":
 cut -f 9 resultado.txt | sort | uniq | paste -sd ',' > taxids.txt
@@ -169,6 +265,7 @@ cut -f 9 resultado.txt | sort | uniq | paste -sd ',' > taxids.txt
 datasets summary taxonomy taxon $(cat taxids.txt) --as-json-lines | \
 dataformat tsv taxonomy --template tax-summary > taxreport.txt
 ```
+
 extrae la columna 9 (staxid) de resultado.txt
 elimina taxids repetidos
 genera una lista separada por comas en taxids.txt
