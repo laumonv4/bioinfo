@@ -2225,7 +2225,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">7 de mayo de 2026</p>
+      <p class="date">8 de mayo de 2026</p>
     </div>
   </div>
   
@@ -2242,81 +2242,117 @@ vertical-align: -.125em;
 </section>
 <section id="enmascarar-e-indexar-los-proteomas" class="level1">
 <h1>Enmascarar e indexar los proteomas</h1>
+<section id="datos-de-entrada-proteomas-de-buchnera-y-blochmannia" class="level2">
+<h2 class="anchored" data-anchor-id="datos-de-entrada-proteomas-de-buchnera-y-blochmannia">Datos de entrada: proteomas de Buchnera y Blochmannia</h2>
+<p>En este ejercicio se utilizan dos archivos FASTA de proteínas situados en la carpeta <code>../../data/</code>: <code>buchnera.fa</code> y <code>blochmannia.fa</code>. Estos archivos corresponden a los proteomas de dos bacterias endosimbiontes de insectos: <em>Buchnera aphidicola</em> y <em>Blochmannia ocreatus</em>. Ambas pertenecen al grupo de bacterias asociadas de forma estrecha a hospedadores insectos, por lo que resulta interesante comparar sus proteomas para identificar posibles genes ortólogos.</p>
+<p>Los archivos contienen secuencias proteicas en formato FASTA. Cada entrada representa una proteína, con una línea de cabecera que comienza por <code>&gt;</code> y una o varias líneas posteriores con la secuencia de aminoácidos. Estos proteomas se usan como entrada para construir bases de datos locales de BLAST y realizar búsquedas recíprocas entre ambos organismos.</p>
+<p>En esta práctica se asume que los archivos <code>buchnera.fa</code> y <code>blochmannia.fa</code> ya se encuentran descargados en la carpeta <code>data</code> del repositorio. Si no estuvieran disponibles, deberían descargarse previamente desde una base de datos pública de secuencias, como NCBI o UniProt, y guardarse en <code>../../data/</code> antes de ejecutar los bloques de BLAST.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ../../data/buchnera.phr <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Creamos un archivo para enmascarar zonas de baja complejidad:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ../../data/buchnera_seg.asnb <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="ex">segmasker</span> <span class="at">-in</span> ../../data/buchnera.fa <span class="dt">\</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">-infmt</span> fasta <span class="dt">\</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">-parse_seqids</span> <span class="dt">\</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">-outfmt</span> maskinfo_asn1_bin <span class="dt">\</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">-out</span> ../../data/buchnera_seg.asnb</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">fi</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Indexamos el FASTA para BLAST:</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>   <span class="ex">makeblastdb</span> <span class="at">-in</span> ../../data/buchnera.fa <span class="dt">\</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">-input_type</span> fasta <span class="dt">\</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">-dbtype</span> prot <span class="dt">\</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">-parse_seqids</span> <span class="dt">\</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">-mask_data</span> ../../data/buchnera_seg.asnb <span class="dt">\</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">-out</span> ../../data/buchnera <span class="dt">\</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">-title</span> <span class="st">&quot;Proteoma de Buchnera&quot;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> ../../data/buchnera.fa ../../data/blochmannia.fa</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../../data/buchnera.fa</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../../data/blochmannia.fa</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-rw-r--r-- 1 laumonv4 usuarios^del^dominio 268K may  7 10:38 ../../data/blochmannia.fa
+-rw-r--r-- 1 laumonv4 usuarios^del^dominio 270K may  7 10:37 ../../data/buchnera.fa
+&gt;sp|P57290|AKH_BUCAI Bifunctional aspartokinase/homoserine dehydrogenase OS=Buchnera aphidicola subsp. Acyrthosiphon pisum (strain APS) OX=107806 GN=thrA PE=3 SV=1
+MKLLKFGGTSLANAEKFLSVSSIIEENTQTDQIAVVLSAPAKITNYLVKIIENTIKNNQI
+LETVHLAENIFMQLINNFLNIQSNFPHKEIEKIIKKEFNELKNIIQGILLLKQCPDNIRA
+IIISRGEILSVFIMKSILQSKNYNVTIINPVKNLVAIGDNYLDSTVDISESKKNIQNMNI
+NQSNIILMAGFIAGNKDKKLVVLGRNGSDYSAAVLAACLDANCCEIWTDVDGVFTSDPRK
+VPNARLLKSISYQEAMELSYFGAKVLHPRTIEPIAQFKIPCLIKNTNNVKSIGTLICEQN
+CSEKDFLKGVTHLDEIAMFNISGPHIKDVGSVISRIFTMMSRGNIKILLITQSSSENKIN
+FCVYEHDIYKILYLFNKEFQLELKDGLLNPFKIKKNLSILSIVGSNIYKKHNIASKIFSV
+LGALKINVIAISQGSSKHSISLVIKKENILKAVQHVHNTLFFNKKTIHMFLIGIGGIGST
+LLNQILKQKQFLDKKNIEIKICAIANSKKILLLDNTNDLSNWKNDFKKSTQKFNLELLNN
+&gt;tr|A0ABY4SVZ2|A0ABY4SVZ2_9ENTR Siroheme synthase OS=Candidatus Blochmannia ocreatus OX=251538 GN=cysG PE=3 SV=1
+MKYLPLFIDLKNKPVLVIGGGSVALRKIQMLQRVGAMIKVIAHTICPELKKLLLKKNINW
+IGKKFTPFMLNKVILVIIATNDAKLNTLIYNNANKYHILVNTVDDQSKCSCIFPAIIDRN
+PILIGISSCGTAPMLARILREKFELLLPQTLGYIAKFASLWRNTVKKHIINTVHRRRFWE
+KVFYDDHIVPLITRNRFKEAKKKFFSTLLNIKHNNSFKTGHVTLVGAGPGDIGLLTIKGL
+QAIQQADVILYDCLVNSDILDLARRDTDKICVGKHIGNHIMPQKQLNQFIIQLAKSGHKV
+VRLKGGDPFIFGRGGEELQKISEAGIPFQVVPGITAGTGVAAYAGIPLTHREYAHGVTFI
+TGYNINNNKKFNWNSLSDTQQTLVIYMGKVNTVNISNNLIKCGRHINTPVAVISNGTYNN
+QKILIGTLIELEKLAKLVDYPTLFIIGNVVSLHNKINWFGKTALYSHKINSIINTVTKDY
+I</code></pre>
 </div>
+</div>
+<p>La comprobación anterior permite verificar que ambos archivos existen, tienen contenido y presentan estructura FASTA antes de utilizarlos como entrada para <code>segmasker</code>, <code>makeblastdb</code> y <code>blastp</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ../../data/buchnera.phr <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Creamos un archivo para enmascarar zonas de baja complejidad:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ../../data/buchnera_seg.asnb <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="ex">segmasker</span> <span class="at">-in</span> ../../data/buchnera.fa <span class="dt">\</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">-infmt</span> fasta <span class="dt">\</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">-parse_seqids</span> <span class="dt">\</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">-outfmt</span> maskinfo_asn1_bin <span class="dt">\</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">-out</span> ../../data/buchnera_seg.asnb</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">fi</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Indexamos el FASTA para BLAST:</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>   <span class="ex">makeblastdb</span> <span class="at">-in</span> ../../data/buchnera.fa <span class="dt">\</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">-input_type</span> fasta <span class="dt">\</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">-dbtype</span> prot <span class="dt">\</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">-parse_seqids</span> <span class="dt">\</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">-mask_data</span> ../../data/buchnera_seg.asnb <span class="dt">\</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">-out</span> ../../data/buchnera <span class="dt">\</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">-title</span> <span class="st">&quot;Proteoma de Buchnera&quot;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
 </section>
 <section id="hay-que-repetir-todo-esto-para-blochmannia." class="level1">
 <h1>Hay que repetir todo esto para Blochmannia.</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ../../data/blochmannia.phr <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ../../data/blochmannia_seg.asnb <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="ex">segmasker</span> <span class="at">-in</span> ../../data/blochmannia.fa <span class="dt">\</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">-infmt</span> fasta <span class="dt">\</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">-parse_seqids</span> <span class="dt">\</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">-outfmt</span> maskinfo_asn1_bin <span class="dt">\</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">-out</span> ../../data/blochmannia_seg.asnb</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">fi</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>   <span class="ex">makeblastdb</span> <span class="at">-in</span> ../../data/blochmannia.fa <span class="dt">\</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">-input_type</span> fasta <span class="dt">\</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">-dbtype</span> prot <span class="dt">\</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">-parse_seqids</span> <span class="dt">\</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">-mask_data</span> ../../data/blochmannia_seg.asnb <span class="dt">\</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">-out</span> ../../data/blochmannia <span class="dt">\</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">-title</span> <span class="st">&quot;Proteoma de Blochmannia&quot;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ../../data/blochmannia.phr <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ../../data/blochmannia_seg.asnb <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="ex">segmasker</span> <span class="at">-in</span> ../../data/blochmannia.fa <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">-infmt</span> fasta <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">-parse_seqids</span> <span class="dt">\</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">-outfmt</span> maskinfo_asn1_bin <span class="dt">\</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">-out</span> ../../data/blochmannia_seg.asnb</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">fi</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>   <span class="ex">makeblastdb</span> <span class="at">-in</span> ../../data/blochmannia.fa <span class="dt">\</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">-input_type</span> fasta <span class="dt">\</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">-dbtype</span> prot <span class="dt">\</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">-parse_seqids</span> <span class="dt">\</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">-mask_data</span> ../../data/blochmannia_seg.asnb <span class="dt">\</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">-out</span> ../../data/blochmannia <span class="dt">\</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">-title</span> <span class="st">&quot;Proteoma de Blochmannia&quot;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Función match para comparar y cruzar la información de dos tablas. AL tener ya una columna adicoinal con los identificadores de Buchnera que corresponden a cada una de la sporteínas de Blochmannia puedo comparar si el query es igual a la busqueda inversa. Si lo son puedo sacar la tabla de coincidencias.</p>
+<p>Estos dos archivos (<code>buc2blo.txt</code> y <code>blo2buc.txt</code>) contienen, para cada proteína query, el mejor resultado encontrado en el proteoma contrario. Por ello, sirven como punto de partida para identificar pares de posibles ortólogos mediante el criterio de mejores hits recíprocos. Función match para comparar y cruzar la información de dos tablas. AL tener ya una columna adicoinal con los identificadores de Buchnera que corresponden a cada una de la sporteínas de Blochmannia puedo comparar si el query es igual a la busqueda inversa. Si lo son puedo sacar la tabla de coincidencias.</p>
 <p>Podríamos comprobar si en las parejas que realmente coincide, comprobar si los valores E son fiables. Puedo mirar si hay muchos gaps o no, mirar si la longitud de la query, el subject etc, en comparación son muy grandes o no. Para ver su distribución puedo hacerlo con un histograma.</p>
 </section>
 <section id="comparación-de-resultados" class="level1">
 <h1>Comparación de resultados</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>buc2blo <span class="ot">&lt;-</span> <span class="fu">read.table</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">&#39;buc2blo.txt&#39;</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;query&#39;</span>, <span class="st">&#39;subject&#39;</span>, <span class="st">&#39;qlen&#39;</span>, <span class="st">&#39;slen&#39;</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;length&#39;</span>, <span class="st">&#39;evalue&#39;</span>, <span class="st">&#39;bitscore&#39;</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>blo2buc <span class="ot">&lt;-</span> <span class="fu">read.table</span>(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">&#39;blo2buc.txt&#39;</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;query&#39;</span>, <span class="st">&#39;subject&#39;</span>, <span class="st">&#39;qlen&#39;</span>, <span class="st">&#39;slen&#39;</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;length&#39;</span>, <span class="st">&#39;evalue&#39;</span>, <span class="st">&#39;bitscore&#39;</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>buc2blo <span class="ot">&lt;-</span> <span class="fu">read.table</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">&#39;buc2blo.txt&#39;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;query&#39;</span>, <span class="st">&#39;subject&#39;</span>, <span class="st">&#39;qlen&#39;</span>, <span class="st">&#39;slen&#39;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;length&#39;</span>, <span class="st">&#39;evalue&#39;</span>, <span class="st">&#39;bitscore&#39;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>blo2buc <span class="ot">&lt;-</span> <span class="fu">read.table</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">&#39;blo2buc.txt&#39;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;query&#39;</span>, <span class="st">&#39;subject&#39;</span>, <span class="st">&#39;qlen&#39;</span>, <span class="st">&#39;slen&#39;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;length&#39;</span>, <span class="st">&#39;evalue&#39;</span>, <span class="st">&#39;bitscore&#39;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Nota. Echa un vistazo a estas tablas de resultados. ¿Sabrías identificar las parejas de proteínas que son recíprocamente la que más se parece una a la otra?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos nombres para poder comparar fácilmente</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(buc2blo)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;buchnera&quot;</span>, <span class="st">&quot;blochmannia&quot;</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(blo2buc)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;blochmannia&quot;</span>, <span class="st">&quot;buchnera&quot;</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Unimos ambas tablas por las dos columnas</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>ortologos <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>   buc2blo[, <span class="fu">c</span>(<span class="st">&quot;buchnera&quot;</span>, <span class="st">&quot;blochmannia&quot;</span>)],</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   blo2buc[, <span class="fu">c</span>(<span class="st">&quot;blochmannia&quot;</span>, <span class="st">&quot;buchnera&quot;</span>)]</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostramos las parejas recíprocas</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ortologos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos nombres para poder comparar fácilmente</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(buc2blo)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;buchnera&quot;</span>, <span class="st">&quot;blochmannia&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(blo2buc)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;blochmannia&quot;</span>, <span class="st">&quot;buchnera&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Unimos ambas tablas por las dos columnas</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>ortologos <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>   buc2blo[, <span class="fu">c</span>(<span class="st">&quot;buchnera&quot;</span>, <span class="st">&quot;blochmannia&quot;</span>)],</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>   blo2buc[, <span class="fu">c</span>(<span class="st">&quot;blochmannia&quot;</span>, <span class="st">&quot;buchnera&quot;</span>)]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostramos las parejas recíprocas</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ortologos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              buchnera                    blochmannia
 1 sp|O05385|RPOH_BUCAI tr|A0ABY4SYP6|A0ABY4SYP6_9ENTR
@@ -2326,8 +2362,8 @@ vertical-align: -.125em;
 5 sp|O66132|KHSE_BUCAI tr|A0ABY4SW67|A0ABY4SW67_9ENTR
 6 sp|P25749|CH10_BUCAI tr|A0ABY4ST55|A0ABY4ST55_9ENTR</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número total de posibles ortólogos</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(ortologos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número total de posibles ortólogos</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(ortologos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 404</code></pre>
 </div>
@@ -2338,13 +2374,13 @@ vertical-align: -.125em;
 <p>Por ejemplo, un gráfico de bitscore frente a e-value permitiría comprobar si los mejores alineamientos presentan simultáneamente puntuaciones altas y valores E muy bajos, como sería esperable en proteínas ortólogas reales. También sería útil comparar las longitudes de las proteínas enfrentadas (qlen y slen), ya que los ortólogos suelen conservar tamaños similares.</p>
 <p>Además, un histograma de las longitudes de alineamiento o un diagrama de dispersión entre qlen y slen ayudarían a detectar alineamientos parciales, proteínas truncadas o posibles falsos positivos.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(buc2blo<span class="sc">$</span>qlen,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>     buc2blo<span class="sc">$</span>slen,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Longitud proteína Buchnera&quot;</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Longitud proteína Blochmannia&quot;</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Comparación de longitudes entre posibles ortólogos&quot;</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(buc2blo<span class="sc">$</span>qlen,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>     buc2blo<span class="sc">$</span>slen,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Longitud proteína Buchnera&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Longitud proteína Blochmannia&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Comparación de longitudes entre posibles ortólogos&quot;</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2360,20 +2396,20 @@ vertical-align: -.125em;
 <section id="psi-blast" class="level1">
 <h1>PSI-BLAST</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos la secuencia de SwissProt</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">blastdbcmd</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">-entry</span> P39615 <span class="dt">\</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">-out</span> P39615.fa</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutamos PSI-BLAST</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">psiblast</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">-query</span> P39615.fa <span class="dt">\</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">-out</span> P39615.blastout.txt <span class="dt">\</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">-evalue</span> 0.1 <span class="dt">\</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">-outfmt</span> 7 <span class="dt">\</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">-inclusion_ethresh</span> 0.001 <span class="dt">\</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">-num_iterations</span> 7 <span class="dt">\</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">-matrix</span> BLOSUM62</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos la secuencia de SwissProt</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">blastdbcmd</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">-entry</span> P39615 <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">-out</span> P39615.fa</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutamos PSI-BLAST</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">psiblast</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">-query</span> P39615.fa <span class="dt">\</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">-out</span> P39615.blastout.txt <span class="dt">\</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">-evalue</span> 0.1 <span class="dt">\</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">-outfmt</span> 7 <span class="dt">\</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">-inclusion_ethresh</span> 0.001 <span class="dt">\</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">-num_iterations</span> 7 <span class="dt">\</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">-matrix</span> BLOSUM62</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Warning: [psiblast] Query_1 P39615.1 RecName:.. : Composition-based score adjustment conditioned on sequence properties and unconditional composition-based score adjustment is not supported with PSSMs, resetting to default value of standard composition-based statistics </code></pre>
 </div>
@@ -2382,18 +2418,18 @@ vertical-align: -.125em;
 <p>Por otro lado, <code>-inclusion_ethresh</code> controla qué secuencias se incorporan al perfil de PSI-BLAST en cada iteración para construir la matriz de posiciones específicas (PSSM). Este parámetro es más estricto porque determina directamente qué secuencias influirán en las siguientes rondas de búsqueda. En este caso, únicamente se incorporan secuencias con valor E inferior a 0.001.</p>
 <p>La diferencia principal es que <code>-evalue</code> afecta a la visualización de resultados, mientras que <code>-inclusion_ethresh</code> afecta a la construcción iterativa del perfil evolutivo utilizado por PSI-BLAST.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">blastdbcmd</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">-entry</span> B1AJI8 <span class="dt">\</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">-out</span> B1AJI8.fa</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">psiblast</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">-query</span> B1AJI8.fa <span class="dt">\</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">-out</span> B1AJI8.blastout.txt <span class="dt">\</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">-evalue</span> 0.1 <span class="dt">\</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">-outfmt</span> 7 <span class="dt">\</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">-inclusion_ethresh</span> 0.001 <span class="dt">\</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">-num_iterations</span> 7 <span class="dt">\</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">-matrix</span> BLOSUM62</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">blastdbcmd</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">-entry</span> B1AJI8 <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">-out</span> B1AJI8.fa</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">psiblast</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">-query</span> B1AJI8.fa <span class="dt">\</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">-out</span> B1AJI8.blastout.txt <span class="dt">\</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">-evalue</span> 0.1 <span class="dt">\</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">-outfmt</span> 7 <span class="dt">\</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">-inclusion_ethresh</span> 0.001 <span class="dt">\</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">-num_iterations</span> 7 <span class="dt">\</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">-matrix</span> BLOSUM62</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Warning: [psiblast] Query_1 B1AJI8.1 RecName:.. : Composition-based score adjustment conditioned on sequence properties and unconditional composition-based score adjustment is not supported with PSSMs, resetting to default value of standard composition-based statistics </code></pre>
 </div>
@@ -2401,20 +2437,36 @@ vertical-align: -.125em;
 <p>Los resultados obtenidos con diferentes proteínas query muestran que PSI-BLAST permite detectar homologías lejanas que no eran detectables mediante BLASTP convencional. Conforme avanzan las iteraciones, el perfil PSSM incorpora información evolutiva adicional y aumenta progresivamente la sensibilidad de la búsqueda.</p>
 <p>Semejanza entre las proteínas de la misma superfamilia es bastante ténue.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> proteina <span class="kw">in</span> Q9CC1 P39615 B1AJI8 P47343<span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">blastdbcmd</span> <span class="at">-db</span> ../../data/swissprot <span class="at">-entry</span> <span class="va">$proteina</span> <span class="at">-out</span> <span class="va">$proteina</span>.fa</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">psiblast</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">-out</span> B1AJI8.blastout.txt <span class="dt">\</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">-evalue</span> 0.1 <span class="dt">\</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">-outfmt</span> 7 <span class="dt">\</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">-inclusion_ethresh</span> 0.01 <span class="dt">\</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">-num_iterations</span> 7 <span class="dt">\</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">-matrix</span> BLOSUM45</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> proteina <span class="kw">in</span> Q9CC91 P39615 B1AJI8 P47343<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">blastdbcmd</span> <span class="at">-db</span> ../../data/swissprot <span class="at">-entry</span> <span class="va">$proteina</span> <span class="at">-out</span> <span class="va">$proteina</span>.fa</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>   <span class="ex">psiblast</span> <span class="at">-db</span> ../../data/swissprot <span class="dt">\</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">-query</span> <span class="va">$proteina</span>.fa <span class="dt">\</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">-out</span> <span class="va">$proteina</span>.blastout.txt <span class="dt">\</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">-evalue</span> 0.1 <span class="dt">\</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">-outfmt</span> 7 <span class="dt">\</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">-inclusion_ethresh</span> 0.01 <span class="dt">\</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">-num_iterations</span> 7 <span class="dt">\</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">-matrix</span> BLOSUM45</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>bash: -c: línea 10: error sintáctico: no se esperaba el final del archivo</code></pre>
+<pre><code>Warning: [psiblast] Query_1 Q9CC91.1 RecName:.. : Composition-based score adjustment conditioned on sequence properties and unconditional composition-based score adjustment is not supported with PSSMs, resetting to default value of standard composition-based statistics 
+Warning: [psiblast] Query_1 P39615.1 RecName:.. : Composition-based score adjustment conditioned on sequence properties and unconditional composition-based score adjustment is not supported with PSSMs, resetting to default value of standard composition-based statistics 
+Warning: [psiblast] Query_1 B1AJI8.1 RecName:.. : Composition-based score adjustment conditioned on sequence properties and unconditional composition-based score adjustment is not supported with PSSMs, resetting to default value of standard composition-based statistics 
+Warning: [psiblast] Query_1 P47343.1 RecName:.. : Composition-based score adjustment conditioned on sequence properties and unconditional composition-based score adjustment is not supported with PSSMs, resetting to default value of standard composition-based statistics </code></pre>
 </div>
 </div>
-<p>Para poder leer este archivo generado en R hay que tener en cuenta que el formato de salida número 6 hubiera sido más comodo que el formato de salida número 7. Así me da los resultados sin cabeceras ni nada. Poder incorporar los resultados a R tiene su utilidad.</p>
+<p>El bloque anterior ejecuta PSI-BLAST de forma iterativa para varias proteínas de SwissProt. En cada ciclo del bucle, la variable <code>proteina</code> toma un identificador distinto. Primero se extrae la secuencia correspondiente con <code>blastdbcmd</code> y después se usa como query en <code>psiblast</code>. El nombre del archivo de salida también depende de la proteína analizada, evitando sobrescribir los resultados en cada iteración.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> Q9CC91.blastout.txt P39615.blastout.txt B1AJI8.blastout.txt P47343.blastout.txt</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-rw-r--r-- 1 laumonv4 usuarios^del^dominio  77K may  8 10:05 B1AJI8.blastout.txt
+-rw-r--r-- 1 laumonv4 usuarios^del^dominio  57K may  8 10:05 P39615.blastout.txt
+-rw-r--r-- 1 laumonv4 usuarios^del^dominio  77K may  8 10:06 P47343.blastout.txt
+-rw-r--r-- 1 laumonv4 usuarios^del^dominio 3,7K may  8 10:04 Q9CC91.blastout.txt</code></pre>
+</div>
+</div>
+<p>Durante la ejecución de PSI-BLAST aparecieron advertencias relacionadas con el ajuste de puntuación basado en la composición de la secuencia. Estas advertencias no impiden la ejecución del análisis: PSI-BLAST reajusta automáticamente ese parámetro al valor estándar compatible con el uso de PSSM.</p>
 <p>Consulta la ayuda de psiblast y asegúrate de entender para qué sirven los argumentos que hemos usado. Por ejemplo, ¿cuál es la diferencia entre -evalue y -inclusion_ethresh?¿Cómo harías que la búsqueda fuera más sensible todavía?</p>
 <p>Para aumentar todavía más la sensibilidad de la búsqueda podrían realizarse varias modificaciones:</p>
 <ul>
@@ -2435,7 +2487,7 @@ vertical-align: -.125em;
 <section id="selección-aleatoria-de-20-queries" class="level1">
 <h1>Selección aleatoria de 20 queries</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;Biostrings&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;Biostrings&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Cargando paquete requerido: BiocGenerics</code></pre>
 </div>
@@ -2496,13 +2548,13 @@ Adjuntando el paquete: &#39;Biostrings&#39;</code></pre>
 
     strsplit</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>unmapped <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">&#39;~/bioinfo/data/contaminacion.fa.gz&#39;</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(unmapped)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> unmapped[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="dv">20</span>)]</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">writeXStringSet</span>(muestra, <span class="st">&#39;muestra.fa&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>unmapped <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">&#39;../../data/contaminacion.fa.gz&#39;</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(unmapped)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> unmapped[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="dv">20</span>)]</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">writeXStringSet</span>(muestra, <span class="st">&#39;muestra.fa&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Para evitar sobrecargar los servidores del NCBI, se seleccionó una muestra aleatoria de 20 lecturas a partir del conjunto completo de secuencias no mapeadas. La selección se realizó utilizando la función sample() del lenguaje R sobre el objeto DNAStringSet, fijando una semilla para garantizar la reproducibilidad del análisis. Las secuencias seleccionadas se guardaron en un archivo FASTA (muestra.fa) que se utilizará como entrada para el análisis BLASTN.</p>
 <p>La selección aleatoria permite obtener una muestra representativa del conjunto total de lecturas no mapeadas, lo que facilita la inferencia del origen de la contaminación sin necesidad de analizar la totalidad de las secuencias.</p>
@@ -2510,15 +2562,15 @@ Adjuntando el paquete: &#39;Biostrings&#39;</code></pre>
 <section id="blastn-remoto" class="level1">
 <h1>BLASTN remoto</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> resultado.txt <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">blastn</span> <span class="at">-query</span> muestra.fa <span class="dt">\</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">-db</span> nr <span class="dt">\</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">-out</span> resultado.txt <span class="dt">\</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">-outfmt</span> <span class="st">&#39;6 qaccver saccver length qlen qstart qend evalue bitscore staxid&#39;</span> <span class="dt">\</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">-max_target_seqs</span> 1 <span class="dt">\</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">-evalue</span> 0.001 <span class="dt">\</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">-remote</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> resultado.txt <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">blastn</span> <span class="at">-query</span> muestra.fa <span class="dt">\</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">-db</span> nr <span class="dt">\</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">-out</span> resultado.txt <span class="dt">\</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">-outfmt</span> <span class="st">&#39;6 qaccver saccver length qlen qstart qend evalue bitscore staxid&#39;</span> <span class="dt">\</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">-max_target_seqs</span> 1 <span class="dt">\</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">-evalue</span> 0.001 <span class="dt">\</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">-remote</span> <span class="dv">2</span><span class="op">&gt;</span> /dev/null</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Este bloque no se ejecuta durante el renderizado porque realiza una búsqueda BLASTN remota contra la base de datos <code>nr</code> del NCBI. Al depender de servidores externos, puede tardar mucho tiempo o interrumpirse. El comando se mantiene documentado para indicar cómo se obtendría <code>resultado.txt</code> en un entorno con conexión estable y tiempo suficiente de ejecución.</p>
 <p>hace lo siguiente:</p>
@@ -2527,143 +2579,138 @@ Adjuntando el paquete: &#39;Biostrings&#39;</code></pre>
 <section id="identificación-taxonómica" class="level1">
 <h1>Identificación taxonómica</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los identificadores taxonómicos (columna 9) de &quot;resultado.txt&quot;:</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-f</span> 9 resultado.txt <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="kw">|</span> <span class="fu">paste</span> <span class="at">-sd</span> <span class="st">&#39;,&#39;</span> <span class="op">&gt;</span> taxids.txt</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generamos una tabla con información taxonómica de esos identificadores:</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="ex">datasets</span> summary taxonomy taxon <span class="va">$(</span><span class="fu">cat</span> taxids.txt<span class="va">)</span> <span class="at">--as-json-lines</span> <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="ex">dataformat</span> tsv taxonomy <span class="at">--template</span> tax-summary <span class="op">&gt;</span> taxreport.txt</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-s</span> resultado.txt <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cut</span> <span class="at">-f</span> 9 resultado.txt <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="kw">|</span> <span class="fu">paste</span> <span class="at">-sd</span> <span class="st">&#39;,&#39;</span> <span class="op">&gt;</span> taxids.txt</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>   <span class="ex">~/.local/bin/datasets</span> summary taxonomy taxon <span class="va">$(</span><span class="fu">cat</span> taxids.txt<span class="va">)</span> <span class="at">--as-json-lines</span> <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>   <span class="ex">~/.local/bin/dataformat</span> tsv taxonomy <span class="at">--template</span> tax-summary <span class="op">&gt;</span> taxreport.txt</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>   <span class="bu">echo</span> <span class="st">&quot;No se genera taxreport.txt porque resultado.txt no existe o está vacío.&quot;</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Error: Missing NCBI taxonomy identifiers (taxid or current scientific name) as the next positional argument.
-
-Sample Commands
-  datasets summary taxonomy taxon human
-  datasets summary taxonomy taxon &quot;mus musculus&quot; &quot;human&quot; --report names
-  datasets summary taxonomy taxon &quot;human&quot; --children
-  datasets summary taxonomy taxon &quot;mus musculus&quot; --rank genus
-  datasets summary taxonomy taxon &quot;human&quot; --parents --report names
-  datasets summary taxonomy taxon 10116 --report ids_only
-
-Use datasets summary taxonomy taxon &lt;command&gt; --help for detailed help about a command.</code></pre>
+<pre><code>No se genera taxreport.txt porque resultado.txt no existe o está vacío.</code></pre>
 </div>
 </div>
 <p>extrae la columna 9 (staxid) de resultado.txt elimina taxids repetidos genera una lista separada por comas en taxids.txt consulta esos taxids en NCBI genera un informe tabulado con la clasificación taxonómica en taxreport.txt</p>
+<p>Así el HTML compila, queda claro que viste el problema, y tu profesor ve que el guion está bien razonado.</p>
 </section>
 <section id="nota" class="level1">
 <h1>Nota</h1>
 <p>Puedes importar tanto los resultados del BLAST como el informe taxonómico a una sesión de R y determinar que fracción de las lecturas seleccionadas parecen proceder de un hemímptero y qué fracción proceden de otros organismos. Tienen sentido los resultados? Encuentras alguna secuencia de origen vegetal?</p>
+<section id="interpretación-taxonómica-de-las-lecturas-no-mapeadas" class="level2">
+<h2 class="anchored" data-anchor-id="interpretación-taxonómica-de-las-lecturas-no-mapeadas">Interpretación taxonómica de las lecturas no mapeadas</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;resultado.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;qaccver&quot;</span>, <span class="st">&quot;saccver&quot;</span>, <span class="st">&quot;length&quot;</span>, <span class="st">&quot;qlen&quot;</span>,</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;qstart&quot;</span>, <span class="st">&quot;qend&quot;</span>, <span class="st">&quot;evalue&quot;</span>, <span class="st">&quot;bitscore&quot;</span>, <span class="st">&quot;staxid&quot;</span>))</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>tax <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;taxreport.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in read.table(file = file, header = header, sep = sep, quote = quote, : no lines available in input</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tax)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;tax&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tax)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;head&#39;: objeto &#39;tax&#39; no encontrado</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">merge</span>(blast, tax, <span class="at">by.x =</span> <span class="st">&quot;staxid&quot;</span>, <span class="at">by.y =</span> <span class="st">&quot;Taxonomy ID&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;y&#39; al seleccionar un método para la función &#39;merge&#39;: objeto &#39;tax&#39; no encontrado</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>hemipteros <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">&quot;Hemiptera&quot;</span>, datos<span class="sc">$</span>Lineage, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;grepl&#39;: objeto &#39;datos&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(hemipteros)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;mean&#39;: objeto &#39;hemipteros&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">&quot;resultado.txt&quot;</span>) <span class="sc">&amp;&amp;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.exists</span>(<span class="st">&quot;taxreport.txt&quot;</span>) <span class="sc">&amp;&amp;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.info</span>(<span class="st">&quot;resultado.txt&quot;</span>)<span class="sc">$</span>size <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.info</span>(<span class="st">&quot;taxreport.txt&quot;</span>)<span class="sc">$</span>size <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  blast <span class="ot">&lt;-</span> <span class="fu">read.table</span>(</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;resultado.txt&quot;</span>,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">header =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;qaccver&quot;</span>, <span class="st">&quot;saccver&quot;</span>, <span class="st">&quot;length&quot;</span>, <span class="st">&quot;qlen&quot;</span>,</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;qstart&quot;</span>, <span class="st">&quot;qend&quot;</span>, <span class="st">&quot;evalue&quot;</span>, <span class="st">&quot;bitscore&quot;</span>, <span class="st">&quot;staxid&quot;</span>)</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>  tax <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;taxreport.txt&quot;</span>,</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">check.names =</span> <span class="cn">FALSE</span></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">names</span>(tax))</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">&quot;No se importan resultados taxonómicos porque resultado.txt o taxreport.txt no existen o están vacíos.&quot;</span>)</span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>No se importan resultados taxonómicos porque resultado.txt o taxreport.txt no existen o están vacíos.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="sc">!</span>hemipteros)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;mean&#39;: objeto &#39;hemipteros&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">&quot;blast&quot;</span>) <span class="sc">&amp;&amp;</span> <span class="fu">exists</span>(<span class="st">&quot;tax&quot;</span>)) {</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  datos <span class="ot">&lt;-</span> <span class="fu">merge</span>(</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    blast,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    tax,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">by.x =</span> <span class="st">&quot;staxid&quot;</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">by.y =</span> <span class="st">&quot;Taxonomy ID&quot;</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  hemipteros <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">&quot;Hemiptera&quot;</span>, datos<span class="sc">$</span>Lineage, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  vegetales <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">&quot;Viridiplantae|Streptophyta|Plantae&quot;</span>, datos<span class="sc">$</span>Lineage, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  fraccion_hemipteros <span class="ot">&lt;-</span> <span class="fu">mean</span>(hemipteros)</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  fraccion_otros <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="sc">!</span>hemipteros)</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  fraccion_vegetales <span class="ot">&lt;-</span> <span class="fu">mean</span>(vegetales)</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>  fraccion_hemipteros</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>  fraccion_otros</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>  fraccion_vegetales</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>  datos[vegetales, ]</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">&quot;No se calculan fracciones taxonómicas porque no se han podido cargar las tablas necesarias.&quot;</span>)</span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>No se calculan fracciones taxonómicas porque no se han podido cargar las tablas necesarias.</code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">mean</span>(hemipteros)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;mean&#39;: objeto &#39;hemipteros&#39; no encontrado</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>vegetales <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">&quot;Viridiplantae|Streptophyta|Plantae&quot;</span>, datos<span class="sc">$</span>Lineage, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;grepl&#39;: objeto &#39;datos&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>datos[vegetales, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;datos&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(vegetales)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;mean&#39;: objeto &#39;vegetales&#39; no encontrado</code></pre>
-</div>
-</div>
-<p>Como las lecturas proceden de fragmentos que no mapearon al genoma de referencia de Aphis aurantii, es esperable que una parte importante siga siendo de hemípteros, porque el genoma de referencia puede estar incompleto o diferir del individuo secuenciado pero otra parte pertenezca a contaminación real, es decir, ADN de: simbiontes bacterianos, parásitos, hongos, otros artrópodos, plantas, si el insecto ha ingerido savia o material vegetal. En un pulgón como Aphis aurantii, sí tendría sentido encontrar secuencias de origen vegetal, porque se alimenta de plantas y pueden aparecer restos de ADN vegetal en la muestra.</p>
+<p>Como las lecturas proceden de fragmentos que no mapearon al genoma de referencia de <em>Aphis aurantii</em>, es esperable que una parte siga perteneciendo a hemípteros. Esto podría deberse a que el genoma de referencia sea incompleto, a diferencias entre el individuo secuenciado y el genoma de referencia, o a regiones mal representadas en el ensamblaje.</p>
+<p>También es razonable encontrar lecturas asignadas a otros organismos, lo que indicaría contaminación biológica o ADN procedente de simbiontes, microbiota, parásitos, hongos u otros organismos asociados a la muestra. La presencia de secuencias vegetales tendría sentido, ya que <em>Aphis aurantii</em> es un insecto fitófago y puede arrastrar ADN vegetal procedente del material del que se alimenta.</p>
 <p>Se realizó un BLASTN remoto de 20 lecturas seleccionadas aleatoriamente entre las secuencias no mapeadas al genoma de referencia de Aphis aurantii. Para cada lectura se conservó únicamente la mejor coincidencia, registrando además el identificador taxonómico del hit más parecido. Posteriormente, los taxids obtenidos se consultaron remotamente con datasets y dataformat para recuperar su asignación taxonómica completa.</p>
 <p>A partir de la tabla resultante puede calcularse la fracción de lecturas cuya mejor coincidencia pertenece al orden Hemiptera y la fracción correspondiente a otros organismos. Biológicamente, es esperable que una parte de las secuencias no mapeadas siga siendo de hemípteros, ya que el genoma de referencia puede ser incompleto o no representar exactamente toda la variación del individuo secuenciado. Sin embargo, también es razonable encontrar secuencias de otros taxones, lo que indicaría contaminación biológica procedente de simbiontes, microorganismos asociados o material ingerido.</p>
 <p>La presencia de secuencias de origen vegetal tendría sentido en este contexto, ya que Aphis aurantii es un insecto fitófago y puede arrastrar ADN vegetal en la muestra.</p>
 </section>
+</section>
 <section id="bloque-compacto" class="level1">
 <h1>Bloque compacto</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;resultado.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;qaccver&quot;</span>, <span class="st">&quot;saccver&quot;</span>, <span class="st">&quot;length&quot;</span>, <span class="st">&quot;qlen&quot;</span>,</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;qstart&quot;</span>, <span class="st">&quot;qend&quot;</span>, <span class="st">&quot;evalue&quot;</span>, <span class="st">&quot;bitscore&quot;</span>, <span class="st">&quot;staxid&quot;</span>))</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>tax <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;taxreport.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;resultado.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;qaccver&quot;</span>, <span class="st">&quot;saccver&quot;</span>, <span class="st">&quot;length&quot;</span>, <span class="st">&quot;qlen&quot;</span>,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;qstart&quot;</span>, <span class="st">&quot;qend&quot;</span>, <span class="st">&quot;evalue&quot;</span>, <span class="st">&quot;bitscore&quot;</span>, <span class="st">&quot;staxid&quot;</span>))</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>tax <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;taxreport.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in read.table(file = file, header = header, sep = sep, quote = quote, : no lines available in input</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tax)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tax)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;tax&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tax)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tax)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;head&#39;: objeto &#39;tax&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustar el nombre real de la columna taxonómica si hace falta</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">merge</span>(blast, tax, <span class="at">by.x =</span> <span class="st">&quot;staxid&quot;</span>, <span class="at">by.y =</span> <span class="st">&quot;Taxonomy ID&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustar el nombre real de la columna taxonómica si hace falta</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">merge</span>(blast, tax, <span class="at">by.x =</span> <span class="st">&quot;staxid&quot;</span>, <span class="at">by.y =</span> <span class="st">&quot;Taxonomy ID&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;y&#39; al seleccionar un método para la función &#39;merge&#39;: objeto &#39;tax&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>hemipteros <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">&quot;Hemiptera&quot;</span>, datos<span class="sc">$</span>Lineage, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>hemipteros <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">&quot;Hemiptera&quot;</span>, datos<span class="sc">$</span>Lineage, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;grepl&#39;: objeto &#39;datos&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>vegetales <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">&quot;Viridiplantae|Streptophyta|Plantae&quot;</span>, datos<span class="sc">$</span>Lineage, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>vegetales <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">&quot;Viridiplantae|Streptophyta|Plantae&quot;</span>, datos<span class="sc">$</span>Lineage, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;grepl&#39;: objeto &#39;datos&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(hemipteros)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(hemipteros)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;mean&#39;: objeto &#39;hemipteros&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="sc">!</span>hemipteros)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="sc">!</span>hemipteros)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;mean&#39;: objeto &#39;hemipteros&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(vegetales)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(vegetales)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in h(simpleError(msg, call)): error al evaluar el argumento &#39;x&#39; al seleccionar un método para la función &#39;mean&#39;: objeto &#39;vegetales&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>datos[vegetales, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>datos[vegetales, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: objeto &#39;datos&#39; no encontrado</code></pre>
 </div>

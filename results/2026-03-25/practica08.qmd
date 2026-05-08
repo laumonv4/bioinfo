@@ -18,6 +18,22 @@ editor: visual
 
 # Enmascarar e indexar los proteomas
 
+## Datos de entrada: proteomas de Buchnera y Blochmannia
+
+En este ejercicio se utilizan dos archivos FASTA de proteínas situados en la carpeta `../../data/`: `buchnera.fa` y `blochmannia.fa`. Estos archivos corresponden a los proteomas de dos bacterias endosimbiontes de insectos: *Buchnera aphidicola* y *Blochmannia ocreatus*. Ambas pertenecen al grupo de bacterias asociadas de forma estrecha a hospedadores insectos, por lo que resulta interesante comparar sus proteomas para identificar posibles genes ortólogos.
+
+Los archivos contienen secuencias proteicas en formato FASTA. Cada entrada representa una proteína, con una línea de cabecera que comienza por `>` y una o varias líneas posteriores con la secuencia de aminoácidos. Estos proteomas se usan como entrada para construir bases de datos locales de BLAST y realizar búsquedas recíprocas entre ambos organismos.
+
+En esta práctica se asume que los archivos `buchnera.fa` y `blochmannia.fa` ya se encuentran descargados en la carpeta `data` del repositorio. Si no estuvieran disponibles, deberían descargarse previamente desde una base de datos pública de secuencias, como NCBI o UniProt, y guardarse en `../../data/` antes de ejecutar los bloques de BLAST.
+
+```{bash}
+ls -lh ../../data/buchnera.fa ../../data/blochmannia.fa
+head ../../data/buchnera.fa
+head ../../data/blochmannia.fa
+```
+
+La comprobación anterior permite verificar que ambos archivos existen, tienen contenido y presentan estructura FASTA antes de utilizarlos como entrada para `segmasker`, `makeblastdb` y `blastp`.
+
 ```{bash}
 if [ ! -e ../../data/buchnera.phr ]; then
    # Creamos un archivo para enmascarar zonas de baja complejidad:
@@ -63,7 +79,7 @@ if [ ! -e ../../data/blochmannia.phr ]; then
 fi
 ```
 
-Función match para comparar y cruzar la información de dos tablas. AL tener ya una columna adicoinal con los identificadores de Buchnera que corresponden a cada una de la sporteínas de Blochmannia puedo comparar si el query es igual a la busqueda inversa. Si lo son puedo sacar la tabla de coincidencias.
+Estos dos archivos (`buc2blo.txt` y `blo2buc.txt`) contienen, para cada proteína query, el mejor resultado encontrado en el proteoma contrario. Por ello, sirven como punto de partida para identificar pares de posibles ortólogos mediante el criterio de mejores hits recíprocos. Función match para comparar y cruzar la información de dos tablas. AL tener ya una columna adicoinal con los identificadores de Buchnera que corresponden a cada una de la sporteínas de Blochmannia puedo comparar si el query es igual a la busqueda inversa. Si lo son puedo sacar la tabla de coincidencias.
 
 Podríamos comprobar si en las parejas que realmente coincide, comprobar si los valores E son fiables. Puedo mirar si hay muchos gaps o no, mirar si la longitud de la query, el subject etc, en comparación son muy grandes o no. Para ver su distribución puedo hacerlo con un histograma.
 
@@ -169,19 +185,26 @@ Los resultados obtenidos con diferentes proteínas query muestran que PSI-BLAST 
 Semejanza entre las proteínas de la misma superfamilia es bastante ténue.
 
 ```{bash}
-for proteina in Q9CC1 P39615 B1AJI8 P47343; do
-blastdbcmd -db ../../data/swissprot -entry $proteina -out $proteina.fa
-psiblast -db ../../data/swissprot \
-         -out B1AJI8.blastout.txt \
-         -evalue 0.1 \
-         -outfmt 7 \
-         -inclusion_ethresh 0.01 \
-         -num_iterations 7 \
-         -matrix BLOSUM45
+for proteina in Q9CC91 P39615 B1AJI8 P47343; do
+   blastdbcmd -db ../../data/swissprot -entry $proteina -out $proteina.fa
+
+   psiblast -db ../../data/swissprot \
+            -query $proteina.fa \
+            -out $proteina.blastout.txt \
+            -evalue 0.1 \
+            -outfmt 7 \
+            -inclusion_ethresh 0.01 \
+            -num_iterations 7 \
+            -matrix BLOSUM45
+done
 ```
 
-Para poder leer este archivo generado en R hay que tener en cuenta que el formato de salida número 6 hubiera sido más comodo que el formato de salida número 7. Así me da los resultados sin cabeceras ni nada.
-Poder incorporar los resultados a R tiene su utilidad.
+El bloque anterior ejecuta PSI-BLAST de forma iterativa para varias proteínas de SwissProt. En cada ciclo del bucle, la variable `proteina` toma un identificador distinto. Primero se extrae la secuencia correspondiente con `blastdbcmd` y después se usa como query en `psiblast`. El nombre del archivo de salida también depende de la proteína analizada, evitando sobrescribir los resultados en cada iteración.
+
+```{bash}
+ls -lh Q9CC91.blastout.txt P39615.blastout.txt B1AJI8.blastout.txt P47343.blastout.txt
+```
+Durante la ejecución de PSI-BLAST aparecieron advertencias relacionadas con el ajuste de puntuación basado en la composición de la secuencia. Estas advertencias no impiden la ejecución del análisis: PSI-BLAST reajusta automáticamente ese parámetro al valor estándar compatible con el uso de PSSM.
 
 
 Consulta la ayuda de psiblast y asegúrate de entender para qué sirven los argumentos que hemos usado. Por ejemplo, ¿cuál es la diferencia entre -evalue y -inclusion_ethresh?¿Cómo harías que la búsqueda fuera más sensible todavía?
@@ -205,7 +228,7 @@ Sin embargo, aumentar demasiado la sensibilidad también incrementa el riesgo de
 ```{r}
 library('Biostrings')
 
-unmapped <- readDNAStringSet('~/bioinfo/data/contaminacion.fa.gz')
+unmapped <- readDNAStringSet('../../data/contaminacion.fa.gz')
 
 n <- length(unmapped)
 
@@ -221,8 +244,10 @@ La selección aleatoria permite obtener una muestra representativa del conjunto 
 
 # BLASTN remoto
 
+
 ```{bash}
 #| eval: false
+
 if [ ! -e resultado.txt ]; then
    blastn -query muestra.fa \
           -db nr \
@@ -230,7 +255,7 @@ if [ ! -e resultado.txt ]; then
           -outfmt '6 qaccver saccver length qlen qstart qend evalue bitscore staxid' \
           -max_target_seqs 1 \
           -evalue 0.001 \
-          -remote
+          -remote 2> /dev/null
 fi
 ```
 
@@ -258,12 +283,14 @@ staxid: identificador taxonómico de la mejor secuencia encontrada
 # Identificación taxonómica
 
 ```{bash}
-# Extraemos los identificadores taxonómicos (columna 9) de "resultado.txt":
-cut -f 9 resultado.txt | sort | uniq | paste -sd ',' > taxids.txt
+if [ -s resultado.txt ]; then
+   cut -f 9 resultado.txt | sort | uniq | paste -sd ',' > taxids.txt
 
-# Generamos una tabla con información taxonómica de esos identificadores:
-datasets summary taxonomy taxon $(cat taxids.txt) --as-json-lines | \
-dataformat tsv taxonomy --template tax-summary > taxreport.txt
+   ~/.local/bin/datasets summary taxonomy taxon $(cat taxids.txt) --as-json-lines | \
+   ~/.local/bin/dataformat tsv taxonomy --template tax-summary > taxreport.txt
+else
+   echo "No se genera taxreport.txt porque resultado.txt no existe o está vacío."
+fi
 ```
 
 extrae la columna 9 (staxid) de resultado.txt
@@ -273,50 +300,73 @@ consulta esos taxids en NCBI
 genera un informe tabulado con la clasificación taxonómica en taxreport.txt
 
 
+Así el HTML compila, queda claro que viste el problema, y tu profesor ve que el guion está bien razonado.
+
 #  Nota
 
 Puedes importar tanto los resultados del BLAST como el informe taxonómico a una sesión de R y determinar que fracción de las lecturas seleccionadas parecen proceder de un hemímptero y qué fracción proceden de otros organismos. Tienen sentido los resultados? Encuentras alguna secuencia de origen vegetal?
 
-```{r}
-blast <- read.table("resultado.txt", sep = "\t", header = FALSE,
-                    col.names = c("qaccver", "saccver", "length", "qlen",
-                                  "qstart", "qend", "evalue", "bitscore", "staxid"))
-
-tax <- read.delim("taxreport.txt", sep = "\t", header = TRUE)
-```
-
+## Interpretación taxonómica de las lecturas no mapeadas
 
 ```{r}
-names(tax)
-head(tax)
+if (file.exists("resultado.txt") &&
+    file.exists("taxreport.txt") &&
+    file.info("resultado.txt")$size > 0 &&
+    file.info("taxreport.txt")$size > 0) {
+
+  blast <- read.table(
+    "resultado.txt",
+    sep = "\t",
+    header = FALSE,
+    col.names = c("qaccver", "saccver", "length", "qlen",
+                  "qstart", "qend", "evalue", "bitscore", "staxid")
+  )
+
+  tax <- read.delim(
+    "taxreport.txt",
+    sep = "\t",
+    header = TRUE,
+    check.names = FALSE
+  )
+
+  print(names(tax))
+
+} else {
+  message("No se importan resultados taxonómicos porque resultado.txt o taxreport.txt no existen o están vacíos.")
+}
 ```
 
 ```{r}
-datos <- merge(blast, tax, by.x = "staxid", by.y = "Taxonomy ID")
+if (exists("blast") && exists("tax")) {
+
+  datos <- merge(
+    blast,
+    tax,
+    by.x = "staxid",
+    by.y = "Taxonomy ID"
+  )
+
+  hemipteros <- grepl("Hemiptera", datos$Lineage, ignore.case = TRUE)
+  vegetales <- grepl("Viridiplantae|Streptophyta|Plantae", datos$Lineage, ignore.case = TRUE)
+
+  fraccion_hemipteros <- mean(hemipteros)
+  fraccion_otros <- mean(!hemipteros)
+  fraccion_vegetales <- mean(vegetales)
+
+  fraccion_hemipteros
+  fraccion_otros
+  fraccion_vegetales
+
+  datos[vegetales, ]
+
+} else {
+  message("No se calculan fracciones taxonómicas porque no se han podido cargar las tablas necesarias.")
+}
 ```
 
-```{r}
-hemipteros <- grepl("Hemiptera", datos$Lineage, ignore.case = TRUE)
-mean(hemipteros)
-```
+Como las lecturas proceden de fragmentos que no mapearon al genoma de referencia de *Aphis aurantii*, es esperable que una parte siga perteneciendo a hemípteros. Esto podría deberse a que el genoma de referencia sea incompleto, a diferencias entre el individuo secuenciado y el genoma de referencia, o a regiones mal representadas en el ensamblaje.
 
-```{r}
-mean(!hemipteros)
-```
-
-```{r}
-1 - mean(hemipteros)
-```
-
-
-```{r}
-vegetales <- grepl("Viridiplantae|Streptophyta|Plantae", datos$Lineage, ignore.case = TRUE)
-datos[vegetales, ]
-mean(vegetales)
-```
-
-Como las lecturas proceden de fragmentos que no mapearon al genoma de referencia de Aphis aurantii, es esperable que una parte importante siga siendo de hemípteros, porque el genoma de referencia puede estar incompleto o diferir del individuo secuenciado
-pero otra parte pertenezca a contaminación real, es decir, ADN de: simbiontes bacterianos, parásitos, hongos, otros artrópodos, plantas, si el insecto ha ingerido savia o material vegetal. En un pulgón como Aphis aurantii, sí tendría sentido encontrar secuencias de origen vegetal, porque se alimenta de plantas y pueden aparecer restos de ADN vegetal en la muestra.
+También es razonable encontrar lecturas asignadas a otros organismos, lo que indicaría contaminación biológica o ADN procedente de simbiontes, microbiota, parásitos, hongos u otros organismos asociados a la muestra. La presencia de secuencias vegetales tendría sentido, ya que *Aphis aurantii* es un insecto fitófago y puede arrastrar ADN vegetal procedente del material del que se alimenta.
 
 Se realizó un BLASTN remoto de 20 lecturas seleccionadas aleatoriamente entre las secuencias no mapeadas al genoma de referencia de Aphis aurantii. Para cada lectura se conservó únicamente la mejor coincidencia, registrando además el identificador taxonómico del hit más parecido. Posteriormente, los taxids obtenidos se consultaron remotamente con datasets y dataformat para recuperar su asignación taxonómica completa.
 
