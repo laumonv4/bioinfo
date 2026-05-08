@@ -6,6 +6,7 @@ Repositorio con las prácticas realizadas en la asignatura de Bioinformática.
 
 - `data/` → datos de entrada
 - `doc/` → referencias bibliográficas
+- `docs/`: contiene la versión web generada para GitHub Pages, utilizada para visualizar las prácticas compiladas directamente desde el navegador.
 - `results/` → resultados de las prácticas
 
 ## Prácticas
@@ -27,23 +28,6 @@ Cada carpeta contiene:
 - guion (.qmd)
 - versión compilada (.html)
 - resultados relevantes
-
-## Ejecución de los guiones
-Algunos chunks de código, especialmente aquellos que implican descarga de datos o ejecución de herramientas externas (p. ej., wget, curl, fastp), se han configurado con la opción:
-
-#| eval: false
-
-Esto se ha hecho para evitar ejecuciones largas, dependencias externas o errores durante el renderizado automático del documento.
-
-Para ejecutar completamente los análisis, el usuario deberá modificar estos chunks cambiando la opción a:
-
-#| eval: true
-
-o eliminando la línea, asegurándose previamente de que:
-
-Las herramientas necesarias están instaladas (p. ej., fastp)
-Existe conexión a internet
-Las rutas a los datos son correctas
 
 ## Pipeline
 QC → fastp  
