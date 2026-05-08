@@ -1,6 +1,8 @@
 ---
 title: "Visualización y exploración de datos"
-format: html
+format:
+  html:
+    embed-resources: true
 lang: es
 date: today
 execute: 
