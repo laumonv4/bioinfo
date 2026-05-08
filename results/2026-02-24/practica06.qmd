@@ -245,12 +245,21 @@ dominio o elemento funcional en InterPro.
 
 :::{.callout-note icon=false}
 ## Ejercicio 4
+
 Determina cuántos taxones de UniProtKB no tienen ninguna proteína asignada.
 ¿Y qué proporción de proteínas cuentan con una estructura terciaria?
+
 ```{r}
-taxTot <- fromJSON(paste0(API,'taxonomy'))
-taxCon <- fromJSON(paste0(API,'taxonomy/protein'))[['taxa']][['uniprot']]
-taxSin <- taxTot <- taxCon
+taxJSON <- fromJSON(paste0(API, 'taxonomy'))
+taxConJSON <- fromJSON(paste0(API, 'taxonomy/uniprot'))
+
+taxTot <- taxJSON[['taxa']][['uniprot']]
+taxCon <- taxConJSON[['taxa']]
+
+taxSin <- taxTot - taxCon
+
+taxTot
+taxCon
 taxSin
 ```
 
@@ -258,7 +267,7 @@ taxSin
 ```{r}
 protTot <- fromJSON(paste0(API,'protein'))[['proteins']][['uniprot']]
 protCon <-fromJSON(paste0(API,'protein/structure'))[['proteins']][['uniprot']]
-protSin <- protTot <- protCon
+protSin <- protTot - protCon
 protSin
 ```
 
@@ -300,6 +309,7 @@ vert[['results']][['metadata']]$name
 pfam01530 <- fromJSON(paste0(API,'protein/entry/pfam/PF01530/taxonomy/uniprot/8493'))
 pfam01530
 ```
+
 Los cocodrilos tienen 15 proteínas
 :::
 
