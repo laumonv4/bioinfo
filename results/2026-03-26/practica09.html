@@ -2225,7 +2225,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">6 de mayo de 2026</p>
+      <p class="date">8 de mayo de 2026</p>
     </div>
   </div>
   
@@ -2554,124 +2554,124 @@ vertical-align: -.125em;
 </section>
 <section id="ejercicio-6" class="level1">
 <h1>Ejercicio</h1>
-<pre><code>El árbol no está enraizado. Como las secuencias no son todas de la misma época, utiliza rtt() para situar la raíz en el punto más compatible con la hipótesis de reloj molecular.</code></pre>
+<p>El árbol no está enraizado. Como las secuencias no son todas de la misma época, utiliza rtt() para situar la raíz en el punto más compatible con la hipótesis de reloj molecular.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phangorn)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>fechas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;H.s.modern_AP008640&quot;</span> <span class="ot">=</span> <span class="dv">2008</span>,</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;H.s.modern_J01415&quot;</span> <span class="ot">=</span> <span class="dv">1981</span>,</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;H.s.modern_FJ236981&quot;</span> <span class="ot">=</span> <span class="dv">2009</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># etc.</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>arbol_rtt <span class="ot">&lt;-</span> <span class="fu">rtt</span>(mt_ml<span class="sc">$</span>tree, <span class="at">tip.date =</span> fechas)</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(arbol_rtt, <span class="at">main =</span> <span class="st">&quot;Árbol enraizado con rtt()&quot;</span>, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phangorn)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>fechas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;H.s.modern_AP008640&quot;</span> <span class="ot">=</span> <span class="dv">2008</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;H.s.modern_J01415&quot;</span> <span class="ot">=</span> <span class="dv">1981</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;H.s.modern_FJ236981&quot;</span> <span class="ot">=</span> <span class="dv">2009</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># etc.</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>arbol_rtt <span class="ot">&lt;-</span> <span class="fu">rtt</span>(mt_ml<span class="sc">$</span>tree, <span class="at">tip.date =</span> fechas)</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(arbol_rtt, <span class="at">main =</span> <span class="st">&quot;Árbol enraizado con rtt()&quot;</span>, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector de fechas con nombres idénticos a las puntas del árbol</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>fechas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &quot;nombre_punta&quot; = fecha,</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>arbol_rtt <span class="ot">&lt;-</span> <span class="fu">rtt</span>(mt_ml<span class="sc">$</span>tree, <span class="at">tip.date =</span> fechas)</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(arbol_rtt, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Árbol enraizado con rtt()&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector de fechas con nombres idénticos a las puntas del árbol</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>fechas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &quot;nombre_punta&quot; = fecha,</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>arbol_rtt <span class="ot">&lt;-</span> <span class="fu">rtt</span>(mt_ml<span class="sc">$</span>tree, <span class="at">tip.date =</span> fechas)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(arbol_rtt, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Árbol enraizado con rtt()&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El árbol obtenido por máxima verosimilitud es inicialmente no enraizado. Dado que las secuencias no proceden todas del mismo momento temporal, la raíz puede situarse de forma más adecuada con rtt(), que busca el punto del árbol más compatible con la hipótesis de reloj molecular a partir de las fechas de las secuencias.</p>
-<pre><code>¿Podrías obtener el árbol más verosímil para el subconjunto de secuencias del género Homo?</code></pre>
+<p>¿Podrías obtener el árbol más verosímil para el subconjunto de secuencias del género Homo?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>modelos_homo <span class="ot">&lt;-</span> <span class="fu">modelTest</span>(mtdna_homo, <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>modelos_homo[<span class="fu">order</span>(modelos_homo<span class="sc">$</span>BIC), ]</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>mt_ml_homo <span class="ot">&lt;-</span> <span class="fu">pml_bb</span>(modelos_homo, <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_homo, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">&quot;Árbol más verosímil del género Homo&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>modelos_homo <span class="ot">&lt;-</span> <span class="fu">modelTest</span>(mtdna_homo, <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>modelos_homo[<span class="fu">order</span>(modelos_homo<span class="sc">$</span>BIC), ]</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>mt_ml_homo <span class="ot">&lt;-</span> <span class="fu">pml_bb</span>(modelos_homo, <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_homo, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">&quot;Árbol más verosímil del género Homo&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phangorn)</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subconjunto de secuencias del género Homo</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>homo_names <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;^H</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="fu">names</span>(mtdna36), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>mtdna_homo <span class="ot">&lt;-</span> mtdna36[homo_names]</span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de modelo</span></span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>modelos_homo <span class="ot">&lt;-</span> <span class="fu">modelTest</span>(mtdna_homo, <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Árbol de máxima verosimilitud</span></span>
-<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>mt_ml_homo <span class="ot">&lt;-</span> <span class="fu">pml_bb</span>(modelos_homo, <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
-<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Representación</span></span>
-<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_homo, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Árbol más verosímil del género Homo&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phangorn)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subconjunto de secuencias del género Homo</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>homo_names <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;^H</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="fu">names</span>(mtdna36), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>mtdna_homo <span class="ot">&lt;-</span> mtdna36[homo_names]</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de modelo</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>modelos_homo <span class="ot">&lt;-</span> <span class="fu">modelTest</span>(mtdna_homo, <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Árbol de máxima verosimilitud</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>mt_ml_homo <span class="ot">&lt;-</span> <span class="fu">pml_bb</span>(modelos_homo, <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Representación</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_homo, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Árbol más verosímil del género Homo&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Para situar la raíz del árbol de forma más realista, no debe utilizarse el punto medio, ya que las secuencias analizadas no son todas contemporáneas. En este caso, la función rtt() permite colocar la raíz en la posición más compatible con la hipótesis de reloj molecular a partir de las fechas de muestreo de las secuencias. De este modo se obtiene un árbol enraizado temporalmente más coherente que el producido por el enraizamiento automático.</p>
 <p>Sí, es posible obtener el árbol más verosímil para el subconjunto de secuencias del género Homo. Para ello hay que extraer del alineamiento original únicamente las secuencias cuyos nombres correspondan a Homo, volver a comparar modelos con modelTest() sobre ese subconjunto y, finalmente, reconstruir el árbol mediante pml_bb(). En el análisis realizado previamente para las secuencias del género Homo, el modelo seleccionado por BIC fue TIM2+G(4)+I, por lo que ese sería el modelo de partida adecuado para la estimación del árbol de máxima verosimilitud restringido a dicho género.</p>
 <section id="con-datación-de-puntas-tip-dating" class="level2">
 <h2 class="anchored" data-anchor-id="con-datación-de-puntas-tip-dating">Con datación de puntas (tip dating)</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Habíamos creado el vector &quot;fechas&quot;, pero incluye al gorila.</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>fechas36 <span class="ot">&lt;-</span> fechas[<span class="fu">names</span>(mtdna36)]</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>mt_ml_clock <span class="ot">&lt;-</span> <span class="fu">pml_bb</span>(modelos,</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">&#39;tipdated&#39;</span>,</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">tip.dates =</span> fechas36, <span class="at">rearrangement =</span> <span class="st">&#39;NNI&#39;</span>,</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>mt_ml_clock</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Habíamos creado el vector &quot;fechas&quot;, pero incluye al gorila.</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>fechas36 <span class="ot">&lt;-</span> fechas[<span class="fu">names</span>(mtdna36)]</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>mt_ml_clock <span class="ot">&lt;-</span> <span class="fu">pml_bb</span>(modelos,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">&#39;tipdated&#39;</span>,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">tip.dates =</span> fechas36, <span class="at">rearrangement =</span> <span class="st">&#39;NNI&#39;</span>,</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">control =</span> <span class="fu">pml.control</span>(<span class="at">trace =</span> <span class="dv">0</span>))</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>mt_ml_clock</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_clock, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_clock, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
 <section id="ejercicio-7" class="level1">
 <h1>Ejercicio</h1>
-<pre><code>¿Cuál es la tasa de mutación global estimada?</code></pre>
+<p>¿Cuál es la tasa de mutación global estimada?</p>
 <p>La salida de mt_ml_clock indica explícitamente: Rate: 1.15857e-08 Por tanto, la tasa de mutación global estimada es: 1.15857×10-8</p>
-<pre><code>¿En qué unidades està expresada?</code></pre>
+<p>¿En qué unidades està expresada?</p>
 <p>Como el análisis es tip dated y las fechas de las puntas están en años, esa tasa está expresada en: sustituciones por sitio y por año. Es decir, el modelo estima cuántas sustituciones se acumulan, en promedio, por cada posición del alineamiento y por cada año.</p>
-<pre><code>¿Cuánto tiempo dice el árbol que divergimos de los chimpancés? (Puedes usar la función cophenetic(), puesto que en el árbol datado las longitudes de las ramas están en años).</code></pre>
+<p>¿Cuánto tiempo dice el árbol que divergimos de los chimpancés? (Puedes usar la función cophenetic(), puesto que en el árbol datado las longitudes de las ramas están en años).</p>
 <p>Como la distancia cophenética entre dos puntas es la suma de las ramas que las separan, en un árbol ultramétrico/datado esa distancia corresponde al tiempo transcurrido desde su ancestro común hasta ambas puntas. Por tanto, el tiempo de divergencia será aproximadamente la mitad de esa distancia:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tasa global</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>mt_ml_clock</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co"># distancia entre una secuencia humana y una de chimpancé</span></span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cophenetic</span>(mt_ml_clock<span class="sc">$</span>tree)[<span class="st">&quot;H.s.modern_AP008640&quot;</span>, <span class="st">&quot;P.troglodytes_JF727168&quot;</span>]</span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="co"># tiempo de divergencia</span></span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cophenetic</span>(mt_ml_clock<span class="sc">$</span>tree)[<span class="st">&quot;H.s.modern_AP008640&quot;</span>, <span class="st">&quot;P.troglodytes_JF727168&quot;</span>] <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tasa global</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>mt_ml_clock</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># distancia entre una secuencia humana y una de chimpancé</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cophenetic</span>(mt_ml_clock<span class="sc">$</span>tree)[<span class="st">&quot;H.s.modern_AP008640&quot;</span>, <span class="st">&quot;P.troglodytes_JF727168&quot;</span>]</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co"># tiempo de divergencia</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cophenetic</span>(mt_ml_clock<span class="sc">$</span>tree)[<span class="st">&quot;H.s.modern_AP008640&quot;</span>, <span class="st">&quot;P.troglodytes_JF727168&quot;</span>] <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>La tasa de mutación global estimada por el modelo con datación de puntas es 1.15857 × 10⁻⁸. Dado que el árbol está calibrado temporalmente con edades de las secuencias, esta tasa se expresa en sustituciones por sitio y por año. Según el árbol datado, la divergencia entre el linaje humano y el de los chimpancés se sitúa aproximadamente en 8 × 10⁵ años, es decir, unos 800 000 años. Este valor puede obtenerse de forma más precisa calculando la distancia cophenética entre una secuencia humana y una de chimpancé, y dividiéndola entre dos.</p>
 <section id="estimación-de-edades" class="level2">
 <h2 class="anchored" data-anchor-id="estimación-de-edades">Estimación de edades</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>mt_ml_rtt <span class="ot">&lt;-</span> <span class="fu">rtt</span>(mt_ml<span class="sc">$</span>tree, fechas36)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_rtt, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nodelabels</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>mt_ml_rtt <span class="ot">&lt;-</span> <span class="fu">rtt</span>(mt_ml<span class="sc">$</span>tree, fechas36)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_rtt, <span class="at">align.tip.label =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nodelabels</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>fechasNodos <span class="ot">&lt;-</span> <span class="fu">c</span>(fechas36, <span class="sc">-</span><span class="dv">6500000</span>, <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">34</span>))</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>fechasEstimadas <span class="ot">&lt;-</span> <span class="fu">estimate.dates</span>(mt_ml_rtt, fechasNodos)</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>tasaEstimada <span class="ot">&lt;-</span> <span class="fu">estimate.mu</span>(mt_ml_rtt, fechasNodos)</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creamos una copia del árbol...</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>mt_ml_años <span class="ot">&lt;-</span> mt_ml_rtt</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ...y actualizamos las longitudes de sus ramas como la resta</span></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co"># entre las fechas de los nodos que conectan:</span></span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>mt_ml_años<span class="sc">$</span>edge.length <span class="ot">&lt;-</span> fechasEstimadas[mt_ml_años<span class="sc">$</span>edge[,<span class="dv">2</span>]] <span class="sc">-</span></span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>                          fechasEstimadas[mt_ml_años<span class="sc">$</span>edge[,<span class="dv">1</span>]]</span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_años)</span>
-<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="fu">axisPhylo</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>fechasNodos <span class="ot">&lt;-</span> <span class="fu">c</span>(fechas36, <span class="sc">-</span><span class="dv">6500000</span>, <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">34</span>))</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>fechasEstimadas <span class="ot">&lt;-</span> <span class="fu">estimate.dates</span>(mt_ml_rtt, fechasNodos)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>tasaEstimada <span class="ot">&lt;-</span> <span class="fu">estimate.mu</span>(mt_ml_rtt, fechasNodos)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creamos una copia del árbol...</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>mt_ml_años <span class="ot">&lt;-</span> mt_ml_rtt</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ...y actualizamos las longitudes de sus ramas como la resta</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="co"># entre las fechas de los nodos que conectan:</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>mt_ml_años<span class="sc">$</span>edge.length <span class="ot">&lt;-</span> fechasEstimadas[mt_ml_años<span class="sc">$</span>edge[,<span class="dv">2</span>]] <span class="sc">-</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>                          fechasEstimadas[mt_ml_años<span class="sc">$</span>edge[,<span class="dv">1</span>]]</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mt_ml_años)</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="fu">axisPhylo</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>tasaEstimada</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>tasaEstimada</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>[1] 1.314357e-08</p>
 <p>Al forzar que la raíz esté a unos 6.5 millones de años, la tasa de mutación estimada disminuye. Es habitual que las tasas parezcan diferentes a diferentes profundidades del árbol, o entre linajes diferentes.</p>
 <p>Para estimar la cronología del árbol con una calibración interna, se utilizó la función estimate.dates() sobre el árbol previamente enraizado con rtt(). En este caso se fijó la edad del ancestro común más reciente entre humanos y chimpancés en 6,5 millones de años, incorporando esa información en el vector de fechas de nodos. A partir de esta calibración, la función estimate.mu() estimó una tasa de sustitución de 1.314357 × 10⁻⁸ sustituciones por sitio y por año. Este valor es ligeramente distinto del obtenido usando únicamente datación de puntas, lo que refleja que la tasa aparente de evolución puede depender de la profundidad temporal analizada y de las restricciones de calibración impuestas al árbol.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">estimate.mu</span>(mt_nj, fechas, <span class="at">p.tol =</span> <span class="fl">0.05</span> )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">estimate.mu</span>(mt_nj, fechas, <span class="at">p.tol =</span> <span class="fl">0.05</span> )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Este dato se refiere a la tasa de cambio por cada posición y unidad de tiempo (en años). Hay sustituciones por posición y por años. Esto sería el reloj molecular</p>
 </section>
