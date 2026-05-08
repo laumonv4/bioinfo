@@ -105,15 +105,11 @@ fi
 
 Consulta la ayuda de hifiasm (hifiasm -h) y contesta las preguntas siguientes:
 
-```         
 ¿Los parámetros corresponden al ensamblaje de un genoma haploide o diploide?
-```
 
 Por defecto, hifiasm está diseñado para ensamblar genomas diploides. Lo sabemos porque genera dos ensamblajes, primary assembly (p_ctg) y alternate/haplotype assembly (a_ctg) que implementa resolución de haplotipos basada en heterocigosidad. Los parámetros por defecto corresponden a un ensamblaje diploide (haplotype-aware).
 
-```         
 ¿Qué nivel de eliminación de duplicaciones hemos aplicado? (El paso de eliminar duplicaciones sirve para que las zonas de alta heterocigosidad no sean ensambladas como contigs diferentes). 
-```
 
 Hifiasm incluye un proceso interno de purga de duplicaciones (relacionado con evitar ensamblar haplotipos como contigs separados). Este comportamiento está controlado por parámetros como:
 

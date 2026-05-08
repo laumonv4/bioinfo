@@ -2225,7 +2225,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">6 de mayo de 2026</p>
+      <p class="date">8 de mayo de 2026</p>
     </div>
   </div>
   
@@ -2315,18 +2315,15 @@ max: 59075</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> asm1/At4.bp.p_ctg.gfa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">~/bin/hifiasm/hifiasm</span> <span class="at">-o</span> asm1/At4 <span class="at">-t</span> 2 <span class="at">-f</span> 0 ../../data/At4.10.fa.gz <span class="dv">2</span><span class="op">&gt;</span> asm1/hifiasm.log</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Error in running command bash</code></pre>
-</div>
 </div>
 <p>-d indica que existe la carpeta mientras que la orden -e es para si existe archivo.</p>
 </section>
 <section id="ejercicio-2" class="level1">
 <h1>Ejercicio 2</h1>
 <p>Consulta la ayuda de hifiasm (hifiasm -h) y contesta las preguntas siguientes:</p>
-<pre><code>¿Los parámetros corresponden al ensamblaje de un genoma haploide o diploide?</code></pre>
+<p>¿Los parámetros corresponden al ensamblaje de un genoma haploide o diploide?</p>
 <p>Por defecto, hifiasm está diseñado para ensamblar genomas diploides. Lo sabemos porque genera dos ensamblajes, primary assembly (p_ctg) y alternate/haplotype assembly (a_ctg) que implementa resolución de haplotipos basada en heterocigosidad. Los parámetros por defecto corresponden a un ensamblaje diploide (haplotype-aware).</p>
-<pre><code>¿Qué nivel de eliminación de duplicaciones hemos aplicado? (El paso de eliminar duplicaciones sirve para que las zonas de alta heterocigosidad no sean ensambladas como contigs diferentes). </code></pre>
+<p>¿Qué nivel de eliminación de duplicaciones hemos aplicado? (El paso de eliminar duplicaciones sirve para que las zonas de alta heterocigosidad no sean ensambladas como contigs diferentes).</p>
 <p>Hifiasm incluye un proceso interno de purga de duplicaciones (relacionado con evitar ensamblar haplotipos como contigs separados). Este comportamiento está controlado por parámetros como:</p>
 <p>-l → longitud mínima para purga -s → sensibilidad en separación de haplotipos</p>
 <p>Sin modificar parámetros, hifiasm aplica un nivel de purga por defecto que está diseñado para separar haplotipos reales y evitar duplicaciones artefactuales por heterocigosidad. No es una purga agresiva porque no colapsa a todo haploide pero tampoco es mínima porque sí elimina redundancias evidentes. Se aplica una eliminación de duplicaciones, ooptimizada para genomas diploides con heterocigosidad moderada.</p>
@@ -2361,17 +2358,14 @@ max: 59075</code></pre>
 <p>Siguiendo el mismo razonamiento determinamos que la cobertura heterocigota ≈ la mitad de la homocigota.</p>
 <p>Los ensamblajes primario y por haplotipos se presentan en formato GFA. Para extraer las secuencias en formato FASTA podemos usar el pequeño script siguiente, en lenguaje AWK, desde el terminal de Bash:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;(/^S/){print &quot;&gt;&quot; $2 &quot;\n&quot; $3}&#39;</span> asm1/At4.bp.p_ctg.gfa <span class="op">&gt;</span> asm1/At4.fa</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>awk: cannot open asm1/At4.bp.p_ctg.gfa (No such file or directory)</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;(/^S/){print &quot;&gt;&quot; $2 &quot;\n&quot; $3}&#39;</span> asm1/At4.bp.p_ctg.gfa <span class="op">&gt;</span> asm1/At4.fa</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="calidad-del-ensamblaje-ejercicio-4" class="level2">
 <h2 class="anchored" data-anchor-id="calidad-del-ensamblaje-ejercicio-4">Calidad del ensamblaje #Ejercicio 4</h2>
 <p>Consulta la ayuda de compleasm.py y averigua qué significan los argumentos utilizados.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/bin/compleasm_kit/compleasm.py run <span class="dt">\</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">-t</span> 2 <span class="at">-l</span> brassicales <span class="at">-a</span> asm1/At4.fa <span class="at">-o</span> asm1_eval</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/bin/compleasm_kit/compleasm.py run <span class="dt">\</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">-t</span> 2 <span class="at">-l</span> brassicales <span class="at">-a</span> asm1/At4.fa <span class="at">-o</span> asm1_eval</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Traceback (most recent call last):
   File &quot;/home/VMAULES/laumonv4/bin/compleasm_kit/compleasm.py&quot;, line 23, in &lt;module&gt;
@@ -2390,7 +2384,7 @@ ModuleNotFoundError: No module named &#39;pandas&#39;</code></pre>
 <section id="visualización-del-grafo" class="level2">
 <h2 class="anchored" data-anchor-id="visualización-del-grafo">Visualización del grafo</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/bin/Bandage</span> image asm1/At4.bp.p_ctg.gfa graph.png</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/bin/Bandage</span> image asm1/At4.bp.p_ctg.gfa graph.png</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Error in running command bash</code></pre>
 </div>
