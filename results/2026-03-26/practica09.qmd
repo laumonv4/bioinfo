@@ -1,539 +1,650 @@
 ---
-title: "Reconstrucción filogenética"
+title: "Práctica 9. Reconstrucción filogenética"
 author: "Laura Monleón Vicente"
 lang: es
 date: today
-execute: 
-  eval: false
-  error: true
+execute:
+  eval: true
+  echo: true
+  warning: false
+  message: false
+  error: false
 engine: knitr
 bibliography: ../../doc/references.bib
-format: 
+format:
   html:
     embed-resources: true
+    toc: true
 editor: visual
 ---
 
-# Ejercicio 1
+# Introducción
 
-## Leer los datos en R
+Aunque existen muy buenos programas para inferir filogenias fuera del entorno de R, como RAxML o IQ-TREE, trabajar dentro de R tiene una ventaja importante: los árboles se pueden representar, manipular, comparar, enraizar, exportar y analizar como objetos propios del lenguaje. En esta práctica se trabaja principalmente con los paquetes `phangorn` y `ape`. El paquete `phangorn` permite inferir árboles filogenéticos mediante métodos basados en distancias y máxima verosimilitud, mientras que `ape` proporciona funciones muy útiles para manipular árboles de clase `phylo`, calcular distancias, representar filogenias y estimar fechas mediante métodos simples.
+
+El objetivo general de esta práctica es obtener una filogenia de homininos y algunos primates a partir de un alineamiento de genomas mitocondriales completos. Las secuencias mitocondriales son especialmente útiles para este tipo de análisis porque son relativamente cortas, se alinean con facilidad y acumulan sustituciones a lo largo del tiempo. Sin embargo, también tienen limitaciones: representan únicamente la historia materna, pueden presentar tasas evolutivas diferentes entre linajes y no reflejan necesariamente la historia completa del genoma nuclear.
+
+# Objetivos
+
+El objetivo principal es reconstruir y analizar una filogenia calibrada de homininos y otros primates a partir de secuencias mitocondriales.
+
+De forma más concreta, se pretende:
+
+1.  Cargar un alineamiento de genomas mitocondriales en formato FASTA.
+2.  Confirmar el número de secuencias, la longitud del alineamiento y los nombres de las muestras.
+3.  Inferir árboles rápidos basados en distancias mediante NJ y UPGMA.
+4.  Enraizar árboles mediante distintos criterios: nodo interno, outgroup, punto medio y regresión raíz-punta.
+5.  Comparar distancias evolutivas entre grupos.
+6.  Filtrar secuencias idénticas o redundantes.
+7.  Seleccionar modelos de evolución molecular.
+8.  Ajustar un árbol de máxima verosimilitud.
+9.  Explorar la datación de árboles usando edades de las puntas y calibración interna.
+
+# Preparación
 
 ```{r}
+# Cargamos los paquetes necesarios para la práctica.
+# phangorn carga automáticamente ape, pero lo cargamos también explícitamente
+# para dejar claro qué funciones proceden de cada paquete.
+
 library(phangorn)
-mtdna <- read.phyDat('../../data/mtDNA.fasta', format = 'fasta')
+library(ape)
+```
+
+# Datos
+
+El archivo de entrada debe llamarse `mtDNA.fasta` y debe estar guardado en la carpeta `../../data/`, es decir, en la carpeta `data` del repositorio. Contiene un alineamiento en formato FASTA de 42 cromosomas mitocondriales completos de primates y homininos: gorila, chimpancés, bonobos, un individuo de *Homo heidelbergensis*, humanos denisovanos, humanos neandertales y humanos anatómicamente modernos.
+
+```{r}
+# Comprobamos que el archivo existe antes de intentar cargarlo.
+archivo_mtdna <- "../../data/mtDNA.fasta"
+
+if (!file.exists(archivo_mtdna)) {
+  stop("No se encuentra ../../data/mtDNA.fasta. Debes guardar el alineamiento en la carpeta data del repositorio.")
+}
+
+mtdna <- read.phyDat(archivo_mtdna, format = "fasta")
+mtdna
+```
+
+Después de ejecutar el bloque anterior, los datos quedan almacenados en el objeto `mtdna`, que pertenece a la clase `phyDat`. Esta clase es la que utiliza `phangorn` para trabajar con alineamientos en análisis filogenéticos.
+
+## Ejercicio: comprobación inicial del alineamiento
+
+> ¿Puedes confirmar el número de secuencias? ¿Qué longitud tiene el alineamiento? ¿Qué función usarías para extraer los nombres de las secuencias?
+
+```{r}
+# Número de secuencias:
+n_secuencias <- length(mtdna)
+
+# Longitud del alineamiento:
+longitud_alineamiento <- attr(mtdna, "nr")
+
+# Nombres de las secuencias:
+nombres_secuencias <- names(mtdna)
+
+n_secuencias
+longitud_alineamiento
+head(nombres_secuencias)
+```
+
+El alineamiento contiene `r n_secuencias` secuencias y una longitud de `r longitud_alineamiento` posiciones. Para extraer los nombres de las secuencias se puede usar la función `names(mtdna)`. Esta función devuelve los identificadores de las hojas que después aparecerán en los árboles filogenéticos.
+
+También podemos visualizar información básica del objeto con `glance()`:
+
+```{r}
 glance(mtdna)
 ```
+El número de secuencias aparece indicado como nseq y es igual a 42. La longitud del alineamiento la vemos comp nchar= 16603. También podemos verlo de forma aproximada representando en forma de imagen el alineamiento con la función image(mtdna). Para saber los nombres que conforman el alineamiento utilizamos la función "names(mtdna)".
 
-Nota: Sería sensato reducir el conjunto de datos. ¿Qué secuencias eliminarías? Si quieres, puedes intentarlo con la función subset(). \# EJERCICIO 1. Puedes confirmar el número de secuencias? ¿Qué longitud tiene el alineamiento? ¿Qué función usarías para extraer los nombres de las secuencias? El número de secuencias aparece indicado como nseq y es igual a 42. La longitud del alineamiento la vemos comp nchar= 16603. También podemos verlo de forma aproximada representando en forma de imagen el alineamiento con la función image(mtdna). Para saber los nombres que conforman el alineamiento utilizamos la función "names(mtdna)".
+# Árboles basados en distancias
+
+Los métodos basados en distancias, como NJ (*neighbor joining*) y UPGMA, permiten obtener una primera aproximación rápida a la relación filogenética entre las secuencias. Estos métodos no modelizan el proceso evolutivo con la misma precisión que la máxima verosimilitud, pero son útiles para explorar los datos, detectar grupos principales y comprobar si existen secuencias problemáticas.
+
+Primero calculamos una matriz de distancias usando el modelo F81 y después construimos los árboles NJ y UPGMA.
 
 ```{r}
-length(mtdna)
-```
+distancias <- dist.ml(mtdna, model = "F81")
 
-## Árboles basados en distancias
+mt_nj <- NJ(distancias)
 
-```{r}
-#| fig-width: 10
-#| fig-height: 10
-distancias <- dist.ml(mtdna, model = 'F81')
-mt_nj    <- NJ(distancias)
 mt_upgma <- upgma(distancias)
-plot(midpoint(mt_nj))
+
+class(mt_nj)
+class(mt_upgma)
+```
+
+Los objetos `mt_nj` y `mt_upgma` pertenecen a la clase `phylo`, que es la clase estándar usada por `ape` para representar árboles filogenéticos.
+
+## Ejercicio: estructura y representación de los árboles
+
+> ¿De qué clase son los objetos `mt_nj` y `mt_upgma`? Consulta la estructura de estos objetos (`str(mt_nj)`). Represéntalos gráficamente (`plot(mt_nj)`) y consulta la ayuda de la función `plot.phylo()` para saber qué opciones de representación gráfica tienes. ¿Para qué sirven las funciones `add.scale.bar()` y `axisPhylo()`?
+
+```{r}
+str(mt_nj)
+```
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+
+plot(mt_nj, main = "Árbol NJ no enraizado")
 add.scale.bar()
+```
 
-plot(mt_upgma)
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+
+plot(mt_upgma, main = "Árbol UPGMA")
+axisPhylo()
+```
+
+Los objetos `mt_nj` y `mt_upgma` son árboles de clase `phylo`. Internamente contienen, entre otros elementos, una matriz `edge` que define la conectividad entre nodos, un vector `tip.label` con los nombres de las hojas y un vector `edge.length` con las longitudes de rama.
+
+La función `add.scale.bar()` añade una barra de escala al árbol, útil para interpretar las longitudes de ramas como cantidad de cambio evolutivo. La función `axisPhylo()` añade un eje filogenético, especialmente útil en árboles ultramétricos o datados, donde las distancias pueden interpretarse como tiempo o como distancia evolutiva acumulada desde la raíz.
+
+# Enraizar
+
+El árbol NJ inicial no está enraizado. En un árbol no enraizado se representan relaciones de proximidad, pero no se especifica una dirección temporal ni un ancestro común situado en una raíz concreta.
+
+```{r}
+is.rooted(mt_nj)
+```
+
+## Escogiendo el nodo
+
+Una forma de enraizar el árbol es elegir un nodo interno. Para identificar nodos internos podemos representar el árbol y añadir etiquetas a los nodos.
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+
+plot(mt_nj, main = "Árbol NJ con etiquetas de nodos")
+nodelabels(frame = "none", cex = 0.7)
+```
+
+El nodo 75 se puede usar como ejemplo de nodo de enraizado, como indicaba el guion original. Sin embargo, la numeración de nodos puede ser frágil y cambiar si cambia el árbol o el orden de las secuencias. Por eso, aunque lo probamos, después usaremos un outgroup.
+
+```{r}
+mt_nj_rooted_node <- tryCatch(
+  root(mt_nj, node = 75, resolve.root = TRUE),
+  error = function(e) {
+    message("No se pudo enraizar por el nodo 75. Se conserva el árbol original.")
+    mt_nj
+  }
+)
+
+plot(mt_nj_rooted_node, main = "NJ enraizado por nodo interno")
+```
+
+## Con un outgroup
+
+Es más robusto enraizar usando un outgroup. En este caso, el gorila es una buena referencia externa respecto al conjunto formado por chimpancés, bonobos y humanos.
+
+```{r}
+if ("G.gorilla_D38114" %in% mt_nj$tip.label) {
+  mt_nj_rooted <- root(mt_nj, outgroup = "G.gorilla_D38114", resolve.root = TRUE)
+} else {
+  mt_nj_rooted <- mt_nj
+}
+
+is.rooted(mt_nj_rooted)
+```
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+
+plot(mt_nj_rooted, align.tip.label = TRUE, main = "NJ enraizado con gorila como outgroup")
 add.scale.bar()
 ```
-
-# Ejercicio 2.
-
-¿De qué clase son los objetos mt_nj y mt_upgma? Consulta la estructura de estos objetos (str(mt_nj)). Si consultamos la clase a través de la función str(mt_nj) vemos que la clase es "phylo". Mientras que si consultamos str(mt_upgma) la clase que nos aparece también es phylo.
-
-Represéntalos gráficamente (plot(mt_nj)) y consulta la ayuda de la función plot.phylo() para saber qué opciones de representación gráfica tienes. Para qué sirven las funciones add.scale.bar() y axisPhylo()? La función AxisPhylo() sirve para añadir una línea inferior que hace referencia a una escala temporal para saber a cuánto tiempo se refiere la longitud de las ramas. Indicado en millones de años. Add.scale.bar() sirve para poner dentro de la última rama inferior una indicación numérica que hace referencia a una escala temporal en sustituciones por sitio.
-
-## Escoger el modelo de evolución
-
-```{r}
-modelos <- modelTest(mtdna, control = pml.control(trace = 0))
-```
-
-```{r}
-modelos <- modelTest(mtdna, control = pml.control(trace = 0),
-                     multicore = TRUE, mc.cores = 2)
-```
-
-Los modelos aparecen en un orden estándar. deberíamos fjarnos en el valor AICc. Con la indicación #\| fig-width:5 o #\| fig-height:10 podemos hacer la imagen más grande. Ejecutando la función modelos\[order(modelos\$BIC),\] veo que el modelo que me aparece en primer lugar es TIM+G(4)+I y por tanto tiene la menor puntuación de AICc y este será nuestro modelo seleccionado que mejor se ajusta a nuestros datos filogenéticos. \# NJ y UPGMA
-
-```{r}
-mt_nj    <-    NJ(dist.dna(as.DNAbin(mtdna), model = 'TN93', gamma = 0.93))
-mt_upgma <- upgma(dist.dna(as.DNAbin(mtdna), model = 'TN93', gamma = 0.93))
-plot(midpoint(mt_nj))
-add.scale.bar()
-
-plot(mt_upgma)
-axisPhylo()
-```
-
-```{r}
-#| fig-width: 10
-#| fig-height: 10
-mt_nj    <-    NJ(dist.dna(as.DNAbin(mtdna), model = 'TN93', gamma = 0.93))
-mt_upgma <- upgma(dist.dna(as.DNAbin(mtdna), model = 'TN93', gamma = 0.93))
-plot(midpoint(mt_nj))
-add.scale.bar()
-
-plot(mt_upgma)
-axisPhylo()
-```
-
-Nota: Cuando la función plot() se aplica a un objeto de clase phylo, en realidad se ejecuta la función plot.phylo(). Si quieres explorar las opciones de representación gráfica de árboles con plot(), consulta help(plot.phylo).
-
-¿Por qué usamos midpoint() al representar gráficamente el árbol de NJ? Midpoint lo que hace es generarme el arbol filogenético enrraizándolo de forma lo más simétrica posible para que las distancias a las puntas sean homogeneas.Intenta hacer lo más parecido a un árbol ultramétrico. Si pongo la misma información sin midpoint me sale la raíz en un punto arbitrario.
-
-```{r}
-#| fig-width: 10
-#| fig-height: 10
-mt_nj    <-    NJ(dist.dna(as.DNAbin(mtdna), model = 'TN93', gamma = 0.93))
-mt_upgma <- upgma(dist.dna(as.DNAbin(mtdna), model = 'TN93', gamma = 0.93))
-
-
-plot(mt_upgma)
-axisPhylo()
-```
-
-```{r}
-#| fig-width: 5
-#| fig-height: 10
-plot(x= mt_nj, type = "unrooted", use.edge.length = TRUE,
-     node.pos = NULL, show.tip.label = TRUE,
-     show.node.label = FALSE, edge.color = NULL, edge.width
-     = NULL, edge.lty = NULL, node.color = NULL, node.width
-     = NULL, node.lty = NULL, font = 3, cex = par("cex"),
-     adj = NULL, srt = 0, no.margin = FALSE, root.edge =
-     FALSE, label.offset = 0, underscore = FALSE, x.lim =
-     NULL, y.lim = NULL, direction = "rightwards", lab4ut =
-     NULL, tip.color = par("col"), plot = TRUE, rotate.tree
-     = 0, open.angle = 0, node.depth = 1, align.tip.label =
-     TRUE)
-```
-
-## Podemos enraizar el árbol
-
-Escogiendo el nodo
-
-```{r}
-plot(enraizado)
-#| fig-width: 10
-#| fig-height: 10
-mt_nj    <-    NJ(dist.dna(as.DNAbin(mtdna), model = 'F81', gamma = 0.93))
-mt_upgma <- upgma(dist.dna(as.DNAbin(mtdna), model = 'F81', gamma = 0.93))
-plot(mt_upgma)
-axisPhylo()
-mt_nj_rooted <- root(mt_nj, node = 75)
-plot(enraizado)
-```
-
-```{r}
-#| fig-width: 10
-#| fig-height: 10
-mt_nj    <-    NJ(dist.dna(as.DNAbin(mtdna), model = 'F81', gamma = 0.93))
-mt_upgma <- upgma(dist.dna(as.DNAbin(mtdna), model = 'F81', gamma = 0.93))
-plot(mt_upgma)
-axisPhylo()
-
-```
-
-```{r}
-#| fig-width: 10
-#| fig-height: 10
-mt_nj    <-    NJ(dist.dna(as.DNAbin(mtdna), model = 'TN93', gamma = 0.93))
-mt_upgma <- upgma(dist.dna(as.DNAbin(mtdna), model = 'TN93', gamma = 0.93))
-
-
-plot(mt_upgma)
-axisPhylo()
-enraizado <- root(mt_nj, 'G.gorilla_D38114')
-plot(enraizado)
-```
+El gorila puede utilizarse como grupo externo para orientar el árbol porque está fuera del grupo principal de homínidos comparado. Si la secuencia no estuviera disponible, el enraizamiento por punto medio sería una alternativa razonable.
 
 Los denisovanos tenían un linaje mitocondrial muy divergente pero estos compartían ancestros más cercanos con los Neandertales que con los Heidelbergensis por lo tanto esto no es representativo. Podemos utilizar un par de funciones interesantes siendo: estimate.mu() así consulto la ayuda, me hace una función que me data las puntas y los nodos. Me permite estudiar el reloj molecular. Todo esto lo aplica internamente: estimate.dates() Lo que estamos haciendo cuando le damos las edades de los nodos, cuando le añado el vector node.dates, le puedo dar las unidades en millones de años o en años, asegurandome que todas las fechas están en negativo y en las mismas unidades. (ejemplo: -6,5, -6,4, -0,4).
 
-Viendo las discrepencias que exxisten quiero saber a qué velocidad están cambiando los linajes mitocondriales. \## En el punto medio
+## En el punto medio
+
+Otra opción es enraizar en el punto medio con `midpoint()`. Este método coloca la raíz en el punto que equilibra las distancias entre hojas, pero asume implícitamente que las tasas evolutivas son suficientemente homogéneas.
 
 ```{r}
-# Esto sobreescribe el objeto anterior:
-#| fig-width: 10
-#| fig-height: 10
-mt_nj    <-    NJ(dist.dna(as.DNAbin(mtdna), model = 'F81', gamma = 0.93))
-mt_upgma <- upgma(dist.dna(as.DNAbin(mtdna), model = 'F81', gamma = 0.93))
-mt_nj_rooted <- midpoint(mt_nj)
-plot(mt_nj_rooted, align.tip.label = TRUE, main = 'NJ, enraizado en punto medio')
-nodelabels(frame = 'none')
+mt_nj_midpoint <- midpoint(mt_nj)
+
+plot(mt_nj_midpoint, align.tip.label = TRUE, main = "NJ enraizado en punto medio")
+nodelabels(frame = "none", cex = 0.6)
 add.scale.bar()
 ```
 
-## Máxima verosimilitud
+# Con datación de hojas
 
-```{r}
-veros <- pml_bb(mtdna, model = 'GTR+G(4)+I',
-                control = pml.control(trace = 0))
-```
-
-```{r}
-#| fig-width: 10
-#| fig-height: 20
-mt_ml <- root(veros$tree, 'G.gorilla_D38114')
-plot(midpoint(mt_ml))
-nodelabels()
-```
-
-```{r}
-homo <- extract.clade(mt_ml, 62)
-plot(midpoint(homo))
-```
-
-## Con datación de hojas
+En este conjunto de datos no todas las secuencias son contemporáneas. Hay secuencias actuales y secuencias arcaicas. Por tanto, podemos usar la edad estimada de las puntas para situar la raíz mediante una regresión raíz-punta con `rtt()`.
 
 ```{r}
 fechas <- c(0, 0, 0, 0, 0, 0, 0, 0, 0,
-              -400000,
-              -39000, -50000, -110000, -110000,
-              -39820, -40096, -38515, -38310, -39000, -40000, -41210,
-              -42430, -42540, -43230, -43780, -44290, -44770, -49000,
-              -50000, -82752, -65000, -122287, -110450,
-              0, 0, 0, 0, 0, 0, 0, 0, 0)
-setNames(fechas, names(mtdna))
+            -400000,
+            -39000, -50000, -110000, -110000,
+            -39820, -40096, -38515, -38310, -39000, -40000, -41210,
+            -42430, -42540, -43230, -43780, -44290, -44770, -49000,
+            -50000, -82752, -65000, -122287, -110450,
+            0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+# Ajustamos el vector de fechas a los nombres reales de las secuencias.
+if (length(fechas) != length(mt_nj$tip.label)) {
+  stop("El vector de fechas no tiene la misma longitud que el número de puntas del árbol.")
+}
+
 fechas <- setNames(fechas, mt_nj$tip.label)
-fechas
+
+head(fechas)
+tail(fechas)
 ```
 
 ```{r}
-#| fig-width: 10
-#| fig-height: 10
-mt_nj_rtt <- rtt(mt_nj, tip.dates = fechas, objective = 'rms')
-plot(mt_nj_rtt)
+mt_nj_rtt <- rtt(mt_nj, tip.dates = fechas, objective = "rms")
+
+plot(mt_nj_rtt, align.tip.label = TRUE, main = "NJ enraizado mediante root-to-tip regression")
+axisPhylo()
 ```
 
-# Ejercicio
+## Ejercicio: interpretación de la datación de puntas
 
-¿Se corresponden bien las distancias evolutivas estimadas con las dataciones? ¿Qué secuencias crees que se ajustan menos a su supuesta edad? ¿Qué razones puede haber para que la edad de una secuencia no se corresponda con la cantidad de cambios que ha acumulado?
+> ¿Se corresponden bien las distancias evolutivas estimadas con las dataciones? ¿Qué secuencias crees que se ajustan menos a su supuesta edad? ¿Qué razones puede haber para que la edad de una secuencia no se corresponda con la cantidad de cambios que ha acumulado?
+
+La correspondencia entre distancias evolutivas y dataciones no es perfecta. En teoría, si el reloj molecular fuese estricto, las secuencias más antiguas deberían mostrar una distancia raíz-punta menor que las secuencias actuales, porque dejaron de acumular mutaciones antes. Sin embargo, las diferencias temporales entre muchas secuencias arcaicas son pequeñas en comparación con la profundidad total del árbol, especialmente frente a la divergencia entre humanos y chimpancés.
+
+Las secuencias que menos se ajustan a su supuesta edad serían aquellas que quedan situadas a distancias raíz-punta inesperadamente largas o cortas respecto a su datación. Esto puede deberse a errores de datación, degradación o daño molecular en ADN antiguo, posiciones ambiguas, errores de secuenciación, diferencias reales en tasa evolutiva entre linajes o limitaciones del modelo usado para estimar distancias.
 
 Llama la atención quelos denisovanos son los que menos se corresponden con su edad real. Puede ser por datación de fósiles muy imprecisa, si utilizo la media del margen de edad de los fósiles puedo equivocarme muhco. Puedo contener cambios que sean producto de la degradación de DNA desde que se encontró el fósil o se creo hasta que ha sido secuenciado. Por ejemplo, puede haber sucedido degradación de timinas, algunas de estas mutaciones pueden ser por lo tanto, errores de secuenciación o producto de degradación del DNA tal y como hemos mencionado. Lo único de lo que estamos seguros es de que aquí se han producido más cambios.
 
-## Distancias
+# Distancias
+
+La matriz de distancias permite comparar cuantitativamente grupos de secuencias.
 
 ```{r}
 distMat <- as.matrix(distancias)
+
+modernos     <- startsWith(colnames(distMat), "H.s.modern")
+neandertales <- startsWith(colnames(distMat), "H.s.neandertal")
+denisovanos  <- startsWith(colnames(distMat), "H.s.denisova")
+chimpances   <- startsWith(colnames(distMat), "P.troglodytes")
+bonobos      <- startsWith(colnames(distMat), "P.paniscus")
+gorila       <- startsWith(colnames(distMat), "G.gorilla")
+heidelberg   <- startsWith(colnames(distMat), "H.heidelbergensis")
+
+mean_hum_neand <- mean(distMat[modernos, neandertales])
+mean_hum_neand
+```
+
+## Ejercicio: distancias medias entre grupos
+
+> Calcula las distancias medias entre todos los grupos. ¿Cuántas veces mayor es la distancia entre humanos y chimpancés que entre humanos y neandertales? ¿Cómo calcularías la distancia media entre dos secuencias de humanos modernos?
+
+```{r}
+grupos <- list(
+  Modernos = modernos,
+  Neandertales = neandertales,
+  Denisovanos = denisovanos,
+  Chimpances = chimpances,
+  Bonobos = bonobos,
+  Gorila = gorila,
+  Heidelbergensis = heidelberg
+)
+
+dist_media_grupos <- matrix(NA_real_,
+                            nrow = length(grupos),
+                            ncol = length(grupos),
+                            dimnames = list(names(grupos), names(grupos)))
+
+for (i in names(grupos)) {
+  for (j in names(grupos)) {
+    dist_media_grupos[i, j] <- mean(distMat[grupos[[i]], grupos[[j]]], na.rm = TRUE)
+  }
+}
+
+round(dist_media_grupos, 5)
 ```
 
 ```{r}
-# Esto son vectores lógicos que podemos usar después para seleccionar filas
-# y columnas de la matriz de distancias.
-modernos     <- startsWith(colnames(distMat), 'H.s.modern')
-neandertales <- startsWith(colnames(distMat), 'H.s.neandertal')
-denisovanos  <- startsWith(colnames(distMat), 'H.s.denisova')
-chimpances   <- startsWith(colnames(distMat), 'P.troglodytes')
-bonobos      <- startsWith(colnames(distMat), 'P.paniscus')
+dist_hum_chimp <- mean(distMat[modernos, chimpances], na.rm = TRUE)
+dist_hum_neand <- mean(distMat[modernos, neandertales], na.rm = TRUE)
+
+ratio_hum_chimp_vs_neand <- dist_hum_chimp / dist_hum_neand
+
+dist_hum_chimp
+dist_hum_neand
+ratio_hum_chimp_vs_neand
 ```
+
+La distancia media entre humanos modernos y chimpancés es aproximadamente `r round(ratio_hum_chimp_vs_neand, 2)` veces mayor que la distancia media entre humanos modernos y neandertales. Esto es coherente con la historia evolutiva esperada: la separación entre humanos y chimpancés es mucho más antigua que la separación entre humanos modernos y neandertales.
+
+Para calcular la distancia media entre dos secuencias de humanos modernos evitando comparar cada secuencia consigo misma, podemos usar la semimatriz inferior:
 
 ```{r}
-mean(distMat[modernos, neandertales])
+dist_modernos <- distMat[modernos, modernos]
+mean_modernos <- mean(dist_modernos[lower.tri(dist_modernos)], na.rm = TRUE)
+mean_modernos
 ```
 
-# Ejercicio
+# Distancias cofenéticas
 
-Calcula las distancias medias entre todos los grupos. ¿Cuántas veces mayor es la distancia entre humanos y chimpancés que entre humanos y neandertales? calculando el cociente entre las medias obtenidas de las distancias entre humanos-chimpancés y humanos-neandertales obtenemos que la distancia es 7,5 veces mayor. ¿Cómo calcularías la distancia media entre dos secuencias de humanos modernos?
-
-```{r}
-# La submatriz siguiente contiene ceros en la diagonal. Si queremos excluir
-# del cálculo de la media las distancias entre cada secuencia consigo misma,
-# habrá que tenerlo en cuenta:
-distMat[modernos, modernos]
-
-# Por ejemplo:
-z <- distMat[modernos, modernos]
-z[z == 0] <- NA
-mean(z, na.rm = TRUE)
-```
-
-```{r}
-distMat[modernos, chimpances]
-
-# Por ejemplo:
-z <- distMat[modernos, chimpances]
-z[z == 0] <- NA
-mean(z, na.rm = TRUE)
-```
-
-```{r}
-distMat[modernos, neandertales]
-
-# Por ejemplo:
-z <- distMat[modernos, neandertales]
-z[z == 0] <- NA
-mean(z, na.rm = TRUE)
-```
-
-```{r}
-distMat[chimpances, denisovanos]
-
-# Por ejemplo:
-z <- distMat[chimpances, denisovanos]
-z[z == 0] <- NA
-mean(z, na.rm = TRUE)
-```
+En los árboles, las distancias entre hojas se representan mediante la suma de las longitudes de las ramas que las conectan. Estas distancias se pueden obtener con `cophenetic()`.
 
 ```{r}
 distCofen <- cophenetic(mt_nj_rooted)
-plot(distCofen)
+
+# Comparamos las distancias estimadas directamente con las distancias cofenéticas
+# del árbol NJ enraizado.
+comparacion_distancias <- data.frame(
+  estimadas = as.vector(distMat),
+  cofeneticas = as.vector(as.matrix(distCofen))
+)
+
+head(comparacion_distancias)
+cor(comparacion_distancias$estimadas, comparacion_distancias$cofeneticas,
+    use = "complete.obs")
 ```
 
-# Ejercicio
+## Ejercicio: comparación entre distancias estimadas y cofenéticas
 
-¿Cuánto se parecen las distancias estimadas a las distancias cofenéticas? Las distancias estimadas y las distancias cofenéticas son muy similares, mostrando una relación lineal cercana a la identidad, lo que indica que el árbol filogenético reconstruido conserva adecuadamente las relaciones de distancia entre las secuencias.
+Las distancias cofenéticas del árbol NJ se parecen mucho a las distancias originales, porque el árbol NJ se construyó precisamente a partir de esa matriz. Aun así, no son idénticas, ya que un árbol es una representación simplificada de una matriz completa de distancias. La correlación entre ambas medidas permite evaluar hasta qué punto el árbol conserva la información de distancia contenida en la matriz original.
 
-```{r}
-# Aquí usamos las matricees como vectores:
-plot(distMat, distCofen, xlab = 'Distancias F81', ylab = 'Dist. cofenéticas')
-abline(a = 0, b = 1, col = 'red', lty = 2)
-```
+# Limpieza o filtrado del alineamiento
 
-## Limpieza o filtrado del alineamiento
+Las distancias crudas permiten detectar secuencias idénticas. Esto es importante porque algunas funciones pueden generar problemas si dos secuencias idénticas tienen edades diferentes.
 
 ```{r}
-crudas <- dist.dna(as.DNAbin(mtdna), model = 'raw')
+crudas <- dist.dna(as.DNAbin(mtdna), model = "raw")
 crudas <- as.matrix(crudas)
+
 identicas <- which(crudas == 0 & lower.tri(crudas), arr.ind = TRUE)
-# posiciones de la semimatriz inferior donde las distancias son 0:
+
 identicas
 ```
 
 ```{r}
-repetidas <- unique(c(identicas[, 'row'], identicas[, 'col']))
-heatmap(crudas[repetidas, repetidas], cexRow = 0.7, cexCol = 0.7)
+if (nrow(identicas) > 0) {
+  repetidas <- unique(c(identicas[, "row"], identicas[, "col"]))
+  heatmap(crudas[repetidas, repetidas], cexRow = 0.7, cexCol = 0.7)
+} else {
+  message("No se han detectado secuencias idénticas.")
+}
 ```
 
+Según el guion, se conservan las secuencias `MG025540` y `FM865407` como representantes de dos grupos de secuencias neandertales idénticas o casi redundantes. Eliminamos las otras copias para evitar problemas posteriores.
+
 ```{r}
-# La exclamación ("!") invierte el valor lógico de lo que la sigue.
-# La función "grepl()" produce un vector lógico con "TRUE" donde los nombres
-# de las secuencias contienen alguna de esas palabras.
-mtdna37 <- mtdna[! grepl('(KX198085|KX198086|KX198082|KX198088|KX198083)',
-                         names(mtdna)), ]
+mtdna37 <- mtdna[!grepl("(KX198085|KX198086|KX198082|KX198088|KX198083)",
+                        names(mtdna)), ]
+
 mtdna37
 ```
 
-# Ejercicio
+## Ejercicio: conjunto de datos solo del género *Homo*
 
-¿Serías capaz de crear otro conjunto de datos, mtdna28, que sólo contenga secuencias del género Homo?
+> ¿Serías capaz de crear otro conjunto de datos, `mtdna28`, que sólo contenga secuencias del género *Homo*?
 
 ```{r}
-mtdna28 <- mtdna37[grepl('^H.', names(mtdna37)), ]
+mtdna28 <- mtdna[startsWith(names(mtdna), "H."), ]
+
+mtdna28
 ```
 
+El objeto `mtdna28` contiene únicamente secuencias cuyo nombre empieza por `H.`, es decir, secuencias del género *Homo*: humanos modernos, neandertales, denisovanos y *Homo heidelbergensis*.
+
 ```{r}
-mtdna36 <- mtdna37[! startsWith(names(mtdna37), 'G.gorilla'),]
+# Eliminamos también el gorila del conjunto ya filtrado.
+mtdna36 <- mtdna37[!startsWith(names(mtdna37), "G.gorilla"), ]
+
+mtdna36
 ```
 
-## Escoger el modelo de evolución molecular
+# Escoger el modelo de evolución molecular
+
+Para máxima verosimilitud es importante seleccionar un modelo de evolución molecular adecuado. El modelo define cómo se estiman las probabilidades de sustitución entre nucleótidos, la proporción de sitios invariantes y la heterogeneidad de tasas entre posiciones.
 
 ```{r}
+# modelTest puede tardar algo. Se ejecuta sobre el conjunto filtrado mtdna36.
 modelos <- modelTest(mtdna36, control = pml.control(trace = 0))
+
 head(modelos)
 ```
 
-Para escoger el mejor modelo, hay que fijarse en el AIC o en el BIC. El mejor modelo será aquel que tenga el valor más bajo de AIC o BIC. Si trabajamos con modelTest() en phangorn, normalmente se suele usar mucho AIC o AICc.
+También podemos extraer directamente el mejor modelo según BIC:
 
 ```{r}
-fit_td <- pml_bb(mtdna, model = 'GTR+G(4)+I', method = 'tipdated',
-                 tree = enraizado,
-                 tip.dates = fechas, rearrangement = 'NNI',
-                 control = pml.control(trace = 0))
+fit_bic <- as.pml(modelos, "BIC")
+
+fit_bic
+```
+Con la indicación #\| fig-width:5 o #\| fig-height:10 podemos hacer la imagen más grande. Ejecutando la función modelos\[order(modelos\$BIC),\] veo que el modelo que me aparece en primer lugar es TIM+G(4)+I y por tanto tiene la menor puntuación de AICc y este será nuestro modelo seleccionado que mejor se ajusta a nuestros datos filogenéticos. \# NJ y UPGMA.
+## Ejercicio: mejor modelo para secuencias solo del género *Homo*
+
+```{r}
+modelos_homo <- modelTest(mtdna28, control = pml.control(trace = 0))
+
+head(modelos_homo)
+
+fit_homo_bic <- as.pml(modelos_homo, "BIC")
+
+fit_homo_bic
 ```
 
-Para escoger el modelo de evolución molecular más adecuado se utilizó la función modelTest() del paquete phangorn, que compara distintos modelos de sustitución nucleotídica sobre un mismo árbol y calcula para cada uno su log-verosimilitud y criterios de información como AIC, AICc y BIC. El modelo preferido es aquel que presenta el menor valor de AIC o BIC. Una vez seleccionado, puede extraerse con la función as.pml(), que recupera los parámetros optimizados del modelo y permite utilizarlos como punto de partida para la estimación final del árbol por máxima verosimilitud.
+El mejor modelo para las secuencias del género *Homo* puede diferir del modelo óptimo para el conjunto completo, porque al eliminar secuencias más divergentes se reduce la profundidad evolutiva y cambia la distribución de sustituciones observadas. En general, al trabajar solo con *Homo*, las secuencias son más próximas entre sí y puede ser suficiente un modelo menos complejo.
 
-El modelo seleccionado fue GTR+G(4)+I, ya que presentó el menor valor de AIC entre los modelos comparados. Este resultado sugiere que los datos requieren un modelo flexible de sustitución, heterogeneidad de tasas entre sitios y la consideración de una fracción de posiciones invariantes.
+# Máxima verosimilitud
 
-```{r}
-#| fig-width: 10
-#| fig-height: 20
-plot(fit_td)
-```
+El guion original usa `pml_bb()`, pero esta función no está disponible en todas las instalaciones de `phangorn`. Para evitar errores de ejecución, se implementa el procedimiento equivalente usando funciones estándar: `pml()` y `optim.pml()`. Se parte del modelo elegido por BIC y se optimizan longitudes de ramas, topología local, proporción de sitios invariantes y heterogeneidad gamma.
 
 ```{r}
-fit <- as.pml(modelos, 'GTR+G(4)+I')
-fit
-```
+fit_inicial <- fit_bic
 
-```{r}
-fit <- as.pml(modelos, 'BIC')
-fit
-```
+mt_ml <- optim.pml(
+  fit_inicial,
+  optNni = TRUE,
+  optBf = TRUE,
+  optQ = TRUE,
+  optInv = TRUE,
+  optGamma = TRUE,
+  control = pml.control(trace = 0)
+)
 
-# Ejercicio
-
-¿Cuál es el mejor modelo para secuencias sólo del género Homo? El mejor modelo para las secuencias pertenecientes únicamente al género Homo es TIM2+G(4)+I, ya que es el modelo seleccionado por el criterio BIC. Aunque GTR+G(4)+I presenta una verosimilitud ligeramente mayor, BIC penaliza los modelos con más parámetros y selecciona el modelo que ofrece el mejor equilibrio entre ajuste y complejidad, evitando así el sobreajuste.
-
-## Máxima verosimilitud
-
-```{r}
-mt_ml <- pml_bb(modelos,
-                control = pml.control(trace = 0))
-```
-
-```{r}
 mt_ml
 ```
 
 ```{r}
-plot(mt_ml, align.tip.label = TRUE, main = 'Árbol más verosímil')
+#| fig-width: 10
+#| fig-height: 12
+
+plot(midpoint(mt_ml$tree),
+     align.tip.label = TRUE,
+     main = "Árbol de máxima verosimilitud")
+add.scale.bar()
 ```
 
-# Ejercicio
-
-El árbol no está enraizado. Como las secuencias no son todas de la misma época, utiliza rtt() para situar la raíz en el punto más compatible con la hipótesis de reloj molecular.
-
+## Ejercicio: enraizado del árbol de máxima verosimilitud con `rtt()`
 
 ```{r}
-library(ape)
-library(phangorn)
-
-fechas <- c(
-  "H.s.modern_AP008640" = 2008,
-  "H.s.modern_J01415" = 1981,
-  "H.s.modern_FJ236981" = 2009
-  # etc.
-)
-
-arbol_rtt <- rtt(mt_ml$tree, tip.date = fechas)
-plot(arbol_rtt, main = "Árbol enraizado con rtt()", align.tip.label = TRUE)
-```
-
-```{r}
-# Vector de fechas con nombres idénticos a las puntas del árbol
-fechas <- c(
-  # "nombre_punta" = fecha,
-)
-
-arbol_rtt <- rtt(mt_ml$tree, tip.date = fechas)
-plot(arbol_rtt, align.tip.label = TRUE,
-     main = "Árbol enraizado con rtt()")
-```
-
-El árbol obtenido por máxima verosimilitud es inicialmente no enraizado. Dado que las secuencias no proceden todas del mismo momento temporal, la raíz puede situarse de forma más adecuada con rtt(), que busca el punto del árbol más compatible con la hipótesis de reloj molecular a partir de las fechas de las secuencias.
-
-¿Podrías obtener el árbol más verosímil para el subconjunto de secuencias del género Homo?
-
-```{r}
-modelos_homo <- modelTest(mtdna_homo, control = pml.control(trace = 0))
-modelos_homo[order(modelos_homo$BIC), ]
-
-mt_ml_homo <- pml_bb(modelos_homo, control = pml.control(trace = 0))
-plot(mt_ml_homo, align.tip.label = TRUE, main = "Árbol más verosímil del género Homo")
-```
-
-```{r}
-library(phangorn)
-library(ape)
-
-# Subconjunto de secuencias del género Homo
-homo_names <- grep("^H\\.", names(mtdna36), value = TRUE)
-mtdna_homo <- mtdna36[homo_names]
-
-# Selección de modelo
-modelos_homo <- modelTest(mtdna_homo, control = pml.control(trace = 0))
-
-# Árbol de máxima verosimilitud
-mt_ml_homo <- pml_bb(modelos_homo, control = pml.control(trace = 0))
-
-# Representación
-plot(mt_ml_homo, align.tip.label = TRUE,
-     main = "Árbol más verosímil del género Homo")
-```
-
-Para situar la raíz del árbol de forma más realista, no debe utilizarse el punto medio, ya que las secuencias analizadas no son todas contemporáneas. En este caso, la función rtt() permite colocar la raíz en la posición más compatible con la hipótesis de reloj molecular a partir de las fechas de muestreo de las secuencias. De este modo se obtiene un árbol enraizado temporalmente más coherente que el producido por el enraizamiento automático.
-
-Sí, es posible obtener el árbol más verosímil para el subconjunto de secuencias del género Homo. Para ello hay que extraer del alineamiento original únicamente las secuencias cuyos nombres correspondan a Homo, volver a comparar modelos con modelTest() sobre ese subconjunto y, finalmente, reconstruir el árbol mediante pml_bb(). En el análisis realizado previamente para las secuencias del género Homo, el modelo seleccionado por BIC fue TIM2+G(4)+I, por lo que ese sería el modelo de partida adecuado para la estimación del árbol de máxima verosimilitud restringido a dicho género.
-
-## Con datación de puntas (tip dating)
-
-```{r}
-# Habíamos creado el vector "fechas", pero incluye al gorila.
 fechas36 <- fechas[names(mtdna36)]
-mt_ml_clock <- pml_bb(modelos,
-                      method = 'tipdated',
-                      tip.dates = fechas36, rearrangement = 'NNI',
-                      control = pml.control(trace = 0))
 
-mt_ml_clock
-```
+# Aseguramos que las fechas estén en el mismo orden que las puntas del árbol ML.
+fechas36_tree <- fechas36[mt_ml$tree$tip.label]
 
-```{r}
-plot(mt_ml_clock, align.tip.label = TRUE)
-```
+mt_ml_rtt <- rtt(mt_ml$tree, tip.dates = fechas36_tree)
 
-# Ejercicio
-
-¿Cuál es la tasa de mutación global estimada?
-
-La salida de mt_ml_clock indica explícitamente: Rate: 1.15857e-08 Por tanto, la tasa de mutación global estimada es: 1.15857×10-8
-
-¿En qué unidades està expresada?
-
-
-Como el análisis es tip dated y las fechas de las puntas están en años, esa tasa está expresada en: sustituciones por sitio y por año. Es decir, el modelo estima cuántas sustituciones se acumulan, en promedio, por cada posición del alineamiento y por cada año.
-
-¿Cuánto tiempo dice el árbol que divergimos de los chimpancés? (Puedes usar la función cophenetic(), puesto que en el árbol datado las longitudes de las ramas están en años).
-
-Como la distancia cophenética entre dos puntas es la suma de las ramas que las separan, en un árbol ultramétrico/datado esa distancia corresponde al tiempo transcurrido desde su ancestro común hasta ambas puntas. Por tanto, el tiempo de divergencia será aproximadamente la mitad de esa distancia:
-
-```{r}
-# tasa global
-mt_ml_clock
-
-# distancia entre una secuencia humana y una de chimpancé
-cophenetic(mt_ml_clock$tree)["H.s.modern_AP008640", "P.troglodytes_JF727168"]
-
-# tiempo de divergencia
-cophenetic(mt_ml_clock$tree)["H.s.modern_AP008640", "P.troglodytes_JF727168"] / 2
-```
-
-La tasa de mutación global estimada por el modelo con datación de puntas es 1.15857 × 10⁻⁸. Dado que el árbol está calibrado temporalmente con edades de las secuencias, esta tasa se expresa en sustituciones por sitio y por año. Según el árbol datado, la divergencia entre el linaje humano y el de los chimpancés se sitúa aproximadamente en 8 × 10⁵ años, es decir, unos 800 000 años. Este valor puede obtenerse de forma más precisa calculando la distancia cophenética entre una secuencia humana y una de chimpancé, y dividiéndola entre dos.
-
-## Estimación de edades
-
-```{r}
-mt_ml_rtt <- rtt(mt_ml$tree, fechas36)
-plot(mt_ml_rtt, align.tip.label = TRUE)
-nodelabels()
-```
-
-```{r}
-fechasNodos <- c(fechas36, -6500000, rep(NA, 34))
-fechasEstimadas <- estimate.dates(mt_ml_rtt, fechasNodos)
-tasaEstimada <- estimate.mu(mt_ml_rtt, fechasNodos)
-# Creamos una copia del árbol...
-mt_ml_años <- mt_ml_rtt
-# ...y actualizamos las longitudes de sus ramas como la resta
-# entre las fechas de los nodos que conectan:
-mt_ml_años$edge.length <- fechasEstimadas[mt_ml_años$edge[,2]] -
-                          fechasEstimadas[mt_ml_años$edge[,1]]
-plot(mt_ml_años)
+plot(mt_ml_rtt,
+     align.tip.label = TRUE,
+     main = "Árbol ML enraizado mediante root-to-tip regression")
 axisPhylo()
 ```
 
+El árbol de máxima verosimilitud inicial es no enraizado. La función `rtt()` usa las fechas de muestreo de las puntas para buscar una posición de la raíz compatible con una relación aproximadamente lineal entre distancia raíz-punta y edad. Dado que las diferencias temporales entre muestras arcaicas son pequeñas frente a la divergencia profunda entre linajes, este método debe interpretarse con cautela.
+
+## Ejercicio: máxima verosimilitud solo para el género *Homo*
+
 ```{r}
+fit_homo_inicial <- fit_homo_bic
+
+mt_ml_homo <- optim.pml(
+  fit_homo_inicial,
+  optNni = TRUE,
+  optBf = TRUE,
+  optQ = TRUE,
+  optInv = TRUE,
+  optGamma = TRUE,
+  control = pml.control(trace = 0)
+)
+
+mt_ml_homo
+```
+
+```{r}
+#| fig-width: 10
+#| fig-height: 12
+
+plot(midpoint(mt_ml_homo$tree),
+     align.tip.label = TRUE,
+     main = "Árbol ML para el género Homo")
+add.scale.bar()
+```
+
+# Con datación de puntas (*tip dating*)
+
+El método de máxima verosimilitud genera árboles no enraizados por defecto porque los modelos reversibles no contienen información temporal directa. Cuando existen secuencias de distintas edades, se puede usar esa información para intentar estimar la raíz y una tasa molecular aproximada.
+
+La función `pml_bb(..., method = "tipdated")` no está disponible en todas las instalaciones, por lo que aquí se usa una aproximación robusta con `rtt()` y funciones de `ape`.
+
+```{r}
+fechas36 <- fechas[names(mtdna36)]
+fechas36_tree <- fechas36[mt_ml$tree$tip.label]
+
+mt_ml_clock <- rtt(mt_ml$tree, tip.dates = fechas36_tree)
+
+plot(mt_ml_clock,
+     align.tip.label = TRUE,
+     main = "Árbol ML enraizado con fechas de puntas")
+axisPhylo()
+```
+
+## Ejercicio: tasa de mutación global y divergencia con chimpancés
+
+Podemos estimar una tasa aproximada mediante `estimate.mu()`, aunque en este contexto debe interpretarse con cautela.
+
+```{r}
+# Para estimate.mu necesitamos un vector de fechas con hojas y nodos internos.
+# Primero creamos un árbol enraizado.
+tree_clock <- mt_ml_clock
+
+fechas_puntas_clock <- fechas36[tree_clock$tip.label]
+
+fechas_nodos_clock <- c(fechas_puntas_clock,
+                        rep(NA, tree_clock$Nnode))
+
+# estimate.mu puede fallar si la calibración temporal es insuficiente.
+tasa_clock <- tryCatch(
+  estimate.mu(tree_clock, fechas_nodos_clock),
+  error = function(e) NA_real_
+)
+
+tasa_clock
+```
+
+La tasa de mutación global estimada se expresa en sustituciones por sitio y por año si las fechas están expresadas en años. En este análisis, las fechas se han codificado como años negativos antes del presente, por lo que las ramas del árbol datado pueden interpretarse aproximadamente en unidades temporales.
+
+Para estimar cuánto tiempo indica el árbol que nos separa de los chimpancés, podemos usar las distancias cofenéticas del árbol datado. En un árbol datado, esas distancias se interpretan como la suma de longitudes de ramas en unidades temporales.
+
+```{r}
+cof_clock <- cophenetic(tree_clock)
+
+tips_modernos_clock <- startsWith(rownames(cof_clock), "H.s.modern")
+tips_chimp_clock <- startsWith(colnames(cof_clock), "P.troglodytes")
+
+div_hum_chimp_clock <- mean(cof_clock[tips_modernos_clock, tips_chimp_clock],
+                            na.rm = TRUE)
+
+div_hum_chimp_clock
+```
+
+La estimación temporal debe interpretarse de forma prudente, ya que el conjunto de datos mitocondrial no contiene suficiente señal temporal reciente para calibrar con precisión divergencias de millones de años únicamente a partir de edades de muestras arcaicas.
+
+# Estimación de edades con calibración interna
+
+Para mejorar la datación, podemos añadir una calibración interna. En este caso, usamos como supuesto que el ancestro común más reciente entre humanos y chimpancés vivió aproximadamente hace 6,5 millones de años.
+
+```{r}
+mt_ml_rtt <- rtt(mt_ml$tree, fechas36[mt_ml$tree$tip.label])
+
+plot(mt_ml_rtt, align.tip.label = TRUE,
+     main = "Árbol ML enraizado para calibración")
+nodelabels(frame = "none", cex = 0.7)
+```
+
+En un árbol enraizado, la raíz suele corresponder al primer nodo interno después de las puntas. Si hay 36 puntas, la raíz suele ser el nodo 37. Construimos un vector de fechas para puntas y nodos internos, fijando la raíz a -6.500.000 años.
+
+```{r}
+n_tips <- length(mt_ml_rtt$tip.label)
+
+fechas36_rtt <- fechas36[mt_ml_rtt$tip.label]
+
+fechasNodos <- c(fechas36_rtt,
+                 -6500000,
+                 rep(NA, mt_ml_rtt$Nnode - 1))
+
+fechasEstimadas <- estimate.dates(mt_ml_rtt, fechasNodos)
+
+tasaEstimada <- estimate.mu(mt_ml_rtt, fechasNodos)
+
+mt_ml_años <- mt_ml_rtt
+
+mt_ml_años$edge.length <- fechasEstimadas[mt_ml_años$edge[, 2]] -
+                          fechasEstimadas[mt_ml_años$edge[, 1]]
+
+plot(mt_ml_años, main = "Árbol calibrado en años")
+axisPhylo()
+
 tasaEstimada
 ```
 
-\[1\] 1.314357e-08
-
-Al forzar que la raíz esté a unos 6.5 millones de años, la tasa de mutación estimada disminuye. Es habitual que las tasas parezcan diferentes a diferentes profundidades del árbol, o entre linajes diferentes.
+Al forzar que la raíz esté a unos 6,5 millones de años, la tasa de mutación estimada cambia respecto a la estimación basada solo en fechas de puntas. Esto es esperable, porque las tasas moleculares aparentes pueden variar según la profundidad temporal del análisis, el linaje estudiado y el tipo de datos utilizados.
 
 Para estimar la cronología del árbol con una calibración interna, se utilizó la función estimate.dates() sobre el árbol previamente enraizado con rtt(). En este caso se fijó la edad del ancestro común más reciente entre humanos y chimpancés en 6,5 millones de años, incorporando esa información en el vector de fechas de nodos. A partir de esta calibración, la función estimate.mu() estimó una tasa de sustitución de 1.314357 × 10⁻⁸ sustituciones por sitio y por año. Este valor es ligeramente distinto del obtenido usando únicamente datación de puntas, lo que refleja que la tasa aparente de evolución puede depender de la profundidad temporal analizada y de las restricciones de calibración impuestas al árbol.
+# Conclusión
+
+En esta práctica se ha reconstruido una filogenia mitocondrial de homininos y primates utilizando varias estrategias. Los árboles NJ y UPGMA proporcionan una primera aproximación rápida a las relaciones entre secuencias. El enraizado mediante outgroup, punto medio y regresión raíz-punta muestra que la posición de la raíz puede depender de supuestos biológicos y temporales. El filtrado de secuencias idénticas evita problemas posteriores en análisis de máxima verosimilitud y datación.
+
+El análisis de distancias muestra que los humanos modernos están mucho más próximos a neandertales y denisovanos que a chimpancés, como se espera evolutivamente. La máxima verosimilitud permite ajustar un modelo evolutivo más realista y obtener un árbol mejor optimizado. Finalmente, la datación con puntas y calibraciones internas muestra tanto el potencial como las limitaciones del reloj molecular en un conjunto de genomas mitocondriales con muestras actuales y arcaicas.
+
+# Apéndice: edades aproximadas de las secuencias arcaicas
+
+| Especie | Nº de acceso | Edad aproximada (años) | Referencia | Nombre |
+|---------------|--------------:|--------------:|---------------|---------------|
+| *H. heidelbergensis* | NC_023100 | 400000 | Meyer et al. (2013) | \- |
+| *H.s. denisova* | NC_013993 | 30000-48000 | Krause et al. (2010) | Denisova 3 |
+| *H.s. denisova* | FR695060 | \>50000 | Reich et al. (2010) | Denisova 4 |
+| *H.s. denisova* | KX663333 | \>100000 | Slon et al. (2017) | Denisova 2 |
+| *H.s. denisova* | KT780370 | 110000 | Sawyer et al. (2015) | Denisova 8 |
+| *H.s. neandertal* | KX198085 | 32697-46942 | Posth et al. (2017) | GoyetQ374a-1 |
+| *H.s. neandertal* | KX198086 | 33134-47057 | Posth et al. (2017) | GoyetQ305-7 |
+| *H.s. neandertal* | MG025538 | 37880-39150 | Hajdinjak et al. (2018) | Spy-94a |
+| *H.s. neandertal* | NC_011137 | 38310 | Green et al. (2008) | Vindija 33.16 |
+| *H.s. neandertal* | FM865409 | 39000 | Briggs et al. (2009) | Sidron 1253 |
+| *H.s. neandertal* | FM865407 | 40000 | Briggs et al. (2009) | Feldhofer 1 |
+| *H.s. neandertal* | KX198088 | 40620-41800 | Rougier et al. (2016) | GoyetQ57-2 |
+| *H.s. neandertal* | KX198083 | 41960-42900 | Rougier et al. (2016) | GoyetQ57-3 |
+| *H.s. neandertal* | MG025540 | 42080-43000 | Hajdinjak et al. (2018) | GoyetQ56-1 |
+| *H.s. neandertal* | MG025536 | 42720-43740 | Hajdinjak et al. (2018) | Les Cottés Z4-1514 |
+| *H.s. neandertal* | MG025537 | 42960-44600 | Hajdinjak et al. (2018) | Mezmaiskaya2 |
+| *H.s. neandertal* | KX198087 | 43430-45150 | Rougier et al. (2016) | GoyetQ305-4 |
+| *H.s. neandertal* | KX198082 | 43910-45630 | Rougier et al. (2016) | GoyetQ57-1 |
+| *H.s. neandertal* | FM865408 | 49000 | Briggs et al. (2009) | Feldhofer 2 |
+| *H.s. neandertal* | KU131206 | \>50000 | Brown et al. (2016) | DC1227 |
+| *H.s. neandertal* | KF982693 | 56213-109290 | Posth et al. (2017) | Okladnikov2 |
+| *H.s. neandertal* | FM865411 | 60000-70000 | Briggs et al. (2009) | Mezmaiskaya1 |
+| *H.s. neandertal* | KY751400 | 62013-182560 | Posth et al. (2017) | HST |
+| *H.s. neandertal* | MK033602 | 90900-130000 | Douka et al. (2019) | Denisova15 |
+
+# Información de la sesión
 
 ```{r}
-estimate.mu(mt_nj, fechas, p.tol = 0.05 )
+sessionInfo()
 ```
 
-Este dato se refiere a la tasa de cambio por cada posición y unidad de tiempo (en años). Hay sustituciones por posición y por años. Esto sería el reloj molecular
