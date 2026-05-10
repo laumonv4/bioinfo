@@ -1,0 +1,67 @@
+# PSIBLAST 2.12.0+
+# Iteration: 1
+# Query: Q9CC91.1 RecName: Full=Type-5 uracil-DNA glycosylase [Mycobacterium leprae TN]
+# Database: ../../data/swissprot
+# Fields: query acc.ver, subject acc.ver, % identity, alignment length, mismatches, gap opens, q. start, q. end, s. start, s. end, evalue, bit score
+# 8 hits found
+Q9CC91.1	Q9CC91.1	100.000	229	0	0	1	229	1	229	1.01e-169	468
+Q9CC91.1	P64786.1	85.526	228	33	0	2	229	40	267	2.11e-143	401
+Q9CC91.1	Q5SJ65.1	50.000	214	103	4	16	229	10	219	4.40e-61	190
+Q9CC91.1	Q8ZXE0.1	47.619	210	102	4	19	228	23	224	1.42e-56	179
+Q9CC91.1	Q96YD0.1	25.967	181	113	8	50	227	27	189	3.97e-08	53.4
+Q9CC91.1	Q8ZYS2.1	29.814	161	93	6	45	202	21	164	9.69e-08	52.2
+Q9CC91.1	O28007.1	30.769	156	88	7	50	202	27	165	8.02e-06	46.9
+Q9CC91.1	Q5SKC5.1	29.560	159	75	8	12	168	6	129	0.001	41.3
+# PSIBLAST 2.12.0+
+# Iteration: 2
+# Query: Q9CC91.1 RecName: Full=Type-5 uracil-DNA glycosylase [Mycobacterium leprae TN]
+# Database: ../../data/swissprot
+# Fields: query acc.ver, subject acc.ver, % identity, alignment length, mismatches, gap opens, q. start, q. end, s. start, s. end, evalue, bit score
+# 10 hits found
+Q9CC91.1	Q9CC91.1	100.000	229	0	0	1	229	1	229	6.75e-95	277
+Q9CC91.1	P64786.1	85.526	228	33	0	2	229	40	267	1.97e-90	267
+Q9CC91.1	Q5SJ65.1	49.533	214	104	4	16	229	10	219	7.34e-69	210
+Q9CC91.1	Q8ZXE0.1	45.495	222	113	4	7	228	11	224	5.42e-67	205
+Q9CC91.1	Q96YD0.1	25.248	202	128	9	29	227	8	189	2.26e-44	148
+Q9CC91.1	O28007.1	26.630	184	113	7	48	228	25	189	6.88e-39	133
+Q9CC91.1	Q97WF1.1	20.968	186	126	8	43	225	20	187	1.92e-34	122
+Q9CC91.1	Q8ZYS2.1	27.778	180	109	7	45	221	21	182	1.95e-34	121
+Q9CC91.1	Q5SKC5.1	25.871	201	106	10	12	210	6	165	4.36e-26	100
+Q9CC91.1	Q9WYY1.1	23.077	182	118	7	46	226	27	187	8.47e-24	94.3
+# PSIBLAST 2.12.0+
+# Iteration: 3
+# Query: Q9CC91.1 RecName: Full=Type-5 uracil-DNA glycosylase [Mycobacterium leprae TN]
+# Database: ../../data/swissprot
+# Fields: query acc.ver, subject acc.ver, % identity, alignment length, mismatches, gap opens, q. start, q. end, s. start, s. end, evalue, bit score
+# 11 hits found
+Q9CC91.1	Q9CC91.1	100.000	229	0	0	1	229	1	229	4.70e-94	275
+Q9CC91.1	P64786.1	85.526	228	33	0	2	229	40	267	1.58e-90	267
+Q9CC91.1	Q8ZXE0.1	45.495	222	113	4	7	228	11	224	6.49e-73	221
+Q9CC91.1	Q5SJ65.1	48.624	218	108	4	12	229	6	219	4.24e-71	216
+Q9CC91.1	Q96YD0.1	25.248	202	128	9	29	227	8	189	6.57e-56	177
+Q9CC91.1	Q97WF1.1	20.603	199	135	9	30	225	9	187	5.14e-52	167
+Q9CC91.1	O28007.1	24.876	201	127	9	31	228	10	189	1.82e-50	162
+Q9CC91.1	Q9WYY1.1	22.222	198	130	8	30	226	13	187	2.18e-43	144
+Q9CC91.1	Q8ZYS2.1	26.000	200	125	8	25	221	3	182	5.03e-42	141
+Q9CC91.1	Q5SKC5.1	25.871	201	106	10	12	210	6	165	7.94e-38	130
+Q9CC91.1	P30314.2	19.355	186	125	8	44	228	10	171	1.68e-12	68.1
+# PSIBLAST 2.12.0+
+# Iteration: 4
+# Query: Q9CC91.1 RecName: Full=Type-5 uracil-DNA glycosylase [Mycobacterium leprae TN]
+# Database: ../../data/swissprot
+# Fields: query acc.ver, subject acc.ver, % identity, alignment length, mismatches, gap opens, q. start, q. end, s. start, s. end, evalue, bit score
+# 11 hits found
+Q9CC91.1	Q9CC91.1	100.000	229	0	0	1	229	1	229	9.65e-93	271
+Q9CC91.1	P64786.1	85.526	228	33	0	2	229	40	267	1.31e-89	264
+Q9CC91.1	Q8ZXE0.1	45.495	222	113	4	7	228	11	224	9.04e-73	220
+Q9CC91.1	Q5SJ65.1	48.624	218	108	4	12	229	6	219	1.16e-70	215
+Q9CC91.1	Q96YD0.1	25.243	206	131	9	25	227	4	189	5.05e-55	175
+Q9CC91.1	Q97WF1.1	20.603	199	135	9	30	225	9	187	3.17e-52	167
+Q9CC91.1	O28007.1	25.121	207	131	9	25	228	4	189	5.04e-51	164
+Q9CC91.1	Q8ZYS2.1	26.000	200	125	8	25	221	3	182	1.61e-45	150
+Q9CC91.1	Q9WYY1.1	22.222	198	130	8	30	226	13	187	1.61e-45	150
+Q9CC91.1	Q5SKC5.1	26.368	201	105	10	12	210	6	165	5.19e-38	131
+Q9CC91.1	P30314.2	19.355	186	125	8	44	228	10	171	4.01e-36	135
+
+Search has CONVERGED!
+# BLAST processed 4 queries
