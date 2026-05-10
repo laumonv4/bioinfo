@@ -1,8 +1,9 @@
 ---
-title: "Mapeo de secuencias cortas"
+title: "Práctica 3. Mapeo de secuencias cortas"
 lang: es
 date: today
-execute: 
+execute:
+  echo: true
   output: true
   error: true
   warning: false
@@ -15,351 +16,487 @@ language:
 format:
    html:
       embed-resources: true
+      toc: true
+      toc-depth: 3
+      number-sections: true
+      code-fold: false
+      theme: cosmo
+      highlight-style: github
 ---
+
+# Introducción
+
+En esta práctica se trabaja con un flujo básico de análisis de lecturas cortas de secuenciación: descarga de datos FASTQ, control de calidad, filtrado, alineamiento frente a un genoma de referencia, cálculo de estadísticas de cobertura e identificación de variantes. El objetivo no es únicamente ejecutar programas externos, sino comprender qué archivo produce cada paso y cómo se encadenan los resultados hasta obtener un archivo de variantes en formato VCF.
+
+El flujo general seguido es:
+
+1. descargar lecturas cortas paired-end y un genoma de referencia;
+2. evaluar y filtrar la calidad de las lecturas con `fastp`;
+3. alinear las lecturas al genoma con `bwa mem`;
+4. convertir, ordenar e indexar alineamientos con `samtools`;
+5. revisar estadísticas de cobertura;
+6. detectar variantes con `freebayes`.
+
+::: {.callout-important}
+## Reproducibilidad
+
+Los bloques de código están escritos de forma condicional: si un archivo de salida ya existe, no se vuelve a generar. Esto evita repetir descargas o procesos largos cada vez que se renderiza el documento. Aun así, el `.qmd` conserva el código necesario para regenerar los resultados desde cero en un entorno con las herramientas instaladas.
+:::
 
 # Preparación
 
 Usaremos los programas siguientes:
 
-- [fastp](https://github.com/OpenGene/fastp) [@Chen2018]. Si descargas el
-  ejecutable en la carpeta actual, debes concederte el permiso de ejecución:
-  `chmod u+x fastp`. Y además tendrás que invocarlo como `./fastp` para que
-  Bash lo encuentre. Alternativamente, puedes copiarlo a una carpeta en tu
-  `PATH`. Puedes consultar el `PATH` mediante `echo $PATH`.
-  
-```{bash}
-# download the latest build
-wget http://opengene.org/fastp/fastp
-chmod a+x ./fastp
+- [`fastp`](https://github.com/OpenGene/fastp) [@Chen2018], para control de calidad, recorte y filtrado de lecturas cortas.
+- [`bwa`](https://github.com/lh3/bwa) [@Li2009], para mapear lecturas cortas frente a un genoma de referencia.
+- [`samtools`](https://www.htslib.org/) [@Danecek2021], para convertir, ordenar, indexar y resumir archivos SAM/BAM.
+- [`freebayes`](https://github.com/freebayes/freebayes/releases) [@Garrison2012], para identificar variantes a partir del archivo BAM.
 
-# or download specified version, i.e. fastp v0.23.4
-wget http://opengene.org/fastp/fastp.0.23.4
-mv fastp.0.23.4 fastp
-chmod a+x ./fastp
+En sistemas Linux, algunos programas pueden instalarse con paquetes del sistema, por ejemplo:
+
+```{bash}
+# Este bloque sólo comprueba si los programas están disponibles.
+# No instala software, porque la instalación depende de los permisos del sistema.
+for programa in wget bwa samtools freebayes; do
+   if command -v $programa >/dev/null 2>&1; then
+      echo "$programa: disponible ($(command -v $programa))"
+   else
+      echo "$programa: NO encontrado en el PATH"
+   fi
+done
+
+if command -v fastp >/dev/null 2>&1; then
+   echo "fastp: disponible ($(command -v fastp))"
+elif [ -x ./fastp ]; then
+   echo "fastp: disponible como ./fastp"
+else
+   echo "fastp: NO encontrado; se intentará descargar más adelante si hace falta"
+fi
 ```
-- [bwa](https://github.com/lh3/bwa) [@Li2009]. Puedes descargar el código fuente
-  con y compilarlo siguiendo estos pasos:
-  ```
-  git clone https://github.com/lh3/bwa.git
-  cd bwa
-  make
-  ```
-  Puedes copiar el ejecutable a cualquier carpeta en tu `PATH` o bien, invocarlo
-  con su dirección completa cada vez que quieras ejecutarlo.
-- [samtools](https://www.htslib.org/), junto con `htslib` y `bcftools` [@Danecek2021].
-  Los tres programas pueden descargarse del mismo enlace, donde hay instrucciones
-  para instalar la versión más reciente. Para algunos sistemas operativos existen
-  paquetes propios, que pueden instalarse así: `apt install samtools`.
-- [freebayes](https://github.com/freebayes/freebayes/releases) [@Garrison2012].
+
+Si `fastp` no está instalado en el sistema, puede descargarse un ejecutable en la carpeta actual y concederle permiso de ejecución. El bloque siguiente sólo lo descarga si no encuentra ni `fastp` en el `PATH` ni `./fastp` en la carpeta de trabajo.
+
+```{bash}
+if ! command -v fastp >/dev/null 2>&1 && [ ! -x ./fastp ]; then
+   echo "Descargando fastp en la carpeta de trabajo..."
+   wget -q -O fastp http://opengene.org/fastp/fastp
+   chmod u+x ./fastp
+fi
+
+if command -v fastp >/dev/null 2>&1; then
+   fastp -v
+elif [ -x ./fastp ]; then
+   ./fastp -v
+else
+   echo "No se ha podido preparar fastp. Revisa la conexión o la instalación."
+fi
+```
+
+::: {.callout-note}
+## Nota sobre `bwa`
+
+El programa `bwa` puede instalarse mediante el gestor de paquetes del sistema o compilando el código fuente:
+
+```bash
+git clone https://github.com/lh3/bwa.git
+cd bwa
+make
+```
+
+Después, el ejecutable debe estar disponible en una carpeta del `PATH`, o bien invocarse mediante su ruta completa.
+:::
 
 # Objetivos
-1. Control de calidad de lecturas cortas.
-2. Mapeo de lecturas cortas a un genoma de referencia.
-3. Identificación de variantes.
+
+1. Realizar control de calidad de lecturas cortas.
+2. Mapear lecturas cortas a un genoma de referencia.
+3. Obtener estadísticas del alineamiento.
+4. Identificar variantes respecto al genoma de referencia.
+5. Interpretar los resultados de forma reproducible.
 
 # Datos
-A continuación descargamos un par de archivos FASTQ de la base de datos
-[ENA](https://www.ebi.ac.uk/ena/browser/home). Han sido seleccionados porque
-su tamaño (comprimidos) no supera los 100 MB. Son secuencias de la cepa Tsu4-125
-de *Bradyrhizobium japonicum* (bacteria simbionte de la planta de soja). Proceden
-de la [Universidad de Tohoku](https://www.tohoku.ac.jp/en/) y forman parte de un
-[proyecto](https://www.ebi.ac.uk/ena/browser/view/PRJDB3261) en el que se
-secuenciaron 16 cepas más de *Bradyrhizobium*.
+
+A continuación descargamos un par de archivos FASTQ de la base de datos [ENA](https://www.ebi.ac.uk/ena/browser/home). Han sido seleccionados porque su tamaño comprimido no supera los 100 MB. Son secuencias de la cepa Tsu4-125 de *Bradyrhizobium japonicum*, una bacteria simbionte de la planta de soja. Proceden de la Universidad de Tohoku y forman parte de un proyecto en el que se secuenciaron distintas cepas de *Bradyrhizobium*.
+
+Los datos de partida son lecturas paired-end, por lo que cada fragmento de ADN queda representado por dos archivos: una lectura forward (`R1`) y una lectura reverse (`R2`).
 
 ```{bash}
 if [ ! -e DRR025089_1.fastq.gz ]; then
-   # Con la opción "-o /dev/null" nos deshacemos de los mensajes.
-   wget -o /dev/null \
-        ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR025/DRR025089/DRR025089_1.fastq.gz
+   wget -q \
+      ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR025/DRR025089/DRR025089_1.fastq.gz
 fi
+
 if [ ! -e DRR025089_2.fastq.gz ]; then
-   wget -o /dev/null \
-        ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR025/DRR025089/DRR025089_2.fastq.gz
+   wget -q \
+      ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR025/DRR025089/DRR025089_2.fastq.gz
 fi
+
+ls -lh DRR025089_1.fastq.gz DRR025089_2.fastq.gz 2>/dev/null || true
 ```
 
-:::{.callout-note icon=false}
-## Desafío
+## Inspección inicial de los FASTQ
 
-Una vez descargados los archivos FASTQ, échales un vistazo desde la línea
-de órdenes. Puedes hacerlo con `zless`, una versión de `less` capaz de mostrar
-archivos comprimidos, o bien descomprimiendo los archvios con `gunzip`. Para no
-ocupar espacio de disco innecesariamente, puedes usar
-`gunzip -c DRR025089_1.fastq.gz | less -S`, que envía el contenido del archivo
-a la salida estándar (no a un archivo nuevo), de donde `less -S` lo lee, sin
-modificar nada en la carpeta. ¿Sabrías contar el número de líneas de cada archivo?
-:::
-
-Necesitaremos también el genoma de referencia de `Bradyrhizobium japonicum`.
-Usaremos el de la cepa ACCC 15027 (hay otros).
+Para revisar de forma rápida los archivos comprimidos sin descomprimirlos completamente, se puede usar `zcat`, `zless` o `gunzip -c`. Como cada lectura FASTQ ocupa cuatro líneas, el número de lecturas puede estimarse dividiendo el número total de líneas entre cuatro.
 
 ```{bash}
-# Con la opción "-o /dev/null" nos deshacemos de los mensajes,
-# y con "-O referencia.fa" escogemos un nombre adecuado para el archivo.
-if [ ! -e referencia.fa ]; then
-   wget -o /dev/null -O referencia.fa \
-        https://www.ebi.ac.uk/ena/browser/api/fasta/GCA_042137995.2 
+if [ -e DRR025089_1.fastq.gz ]; then
+   echo "Primeras líneas de DRR025089_1.fastq.gz:"
+   zcat DRR025089_1.fastq.gz | head -8
+
+   echo "Número aproximado de lecturas en R1:"
+   echo $(( $(zcat DRR025089_1.fastq.gz | wc -l) / 4 ))
+fi
+
+if [ -e DRR025089_2.fastq.gz ]; then
+   echo "Número aproximado de lecturas en R2:"
+   echo $(( $(zcat DRR025089_2.fastq.gz | wc -l) / 4 ))
 fi
 ```
 
-:::{.callout-note icon=false}
+::: {.callout-note icon=false}
+## Desafío
 
+Una vez descargados los archivos FASTQ, échales un vistazo desde la línea de órdenes. Puedes hacerlo con `zless`, una versión de `less` capaz de mostrar archivos comprimidos, o bien descomprimiendo los archivos con `gunzip`. Para no ocupar espacio de disco innecesariamente, puedes usar `gunzip -c DRR025089_1.fastq.gz | less -S`, que envía el contenido del archivo a la salida estándar, de donde `less -S` lo lee, sin modificar nada en la carpeta. ¿Sabrías contar el número de líneas de cada archivo?
+:::
+
+He comprobado los archivos FASTQ con comandos de Bash sin descomprimirlos de forma permanente. Como cada registro FASTQ ocupa cuatro líneas, el número de lecturas se obtiene dividiendo el número total de líneas entre cuatro. Esta comprobación es útil para confirmar que ambos archivos paired-end contienen un número coherente de lecturas.
+
+# Genoma de referencia
+
+Necesitaremos también el genoma de referencia de *Bradyrhizobium japonicum*. Usaremos el de la cepa ACCC 15027.
+
+```{bash}
+if [ ! -e referencia.fa ]; then
+   wget -q -O referencia.fa \
+      https://www.ebi.ac.uk/ena/browser/api/fasta/GCA_042137995.2
+fi
+
+ls -lh referencia.fa 2>/dev/null || true
+```
+
+::: {.callout-note icon=false}
 ## Preguntas
 
 - ¿Crees que deberíamos guardar los archivos descargados en `../../data`?
-
-Sí, es una práctica recomendada en bioinformática.Que nos permite separar datos brutos (data/) de resultados (results/) y scripts (scripts/ o docs/). Esta práctica nos ayuda a mejorar la reproducibilidad y mantener una estructura de proyecto clara.
-Estructura típica:
-bioinfo/
-├── data/        # FASTQ, genoma referencia
-├── results/     # BAM, VCF, outputs
-├── scripts/     # código
-├── docs/        # informes (tu .qmd)
 - ¿Cómo podrías guardar los mensajes de `wget` en un archivo?
-Usando redirección de salida: wget URL > log.txt 2>&1. Explicación:
-
-> guarda la salida estándar
-2>&1 redirige también los errores (stderr)
-
-Alternativa más limpia: wget URL -o log.txt
-
 - ¿De cuántas secuencias diferentes se compone este genoma de referencia?
-
-con la función grep ">" referencia.fa | wc -l, le preguntamos al terminal y nos dice que se compone de 3 secuencias diferentes.
-
 :::
 
-# Control de calidad
+Sí, en un proyecto bioinformático completo sería recomendable guardar los archivos brutos o de referencia en `data/`, separándolos de los resultados generados en `results/`. Esta separación mejora la trazabilidad del análisis: los datos originales quedan diferenciados de los archivos derivados por los programas.
+
+Una estructura típica sería:
+
+```text
+bioinfo/
+├── data/        # FASTQ, genomas de referencia y otros datos brutos
+├── doc/         # bibliografía y documentación auxiliar
+└── results/     # guiones, HTML y resultados de cada práctica
+```
+
+Los mensajes de `wget` pueden guardarse usando la opción `-o`, por ejemplo:
+
+```bash
+wget -o descarga.log -O referencia.fa URL
+```
+
+También podría usarse redirección:
+
+```bash
+wget URL > salida.log 2>&1
+```
+
+La salida estándar se redirige con `>`, mientras que `2>&1` envía también los mensajes de error al mismo archivo.
+
+Para saber de cuántas secuencias se compone el genoma de referencia, basta con contar las cabeceras FASTA, que empiezan por `>`.
 
 ```{bash}
-if [ ! -e fastp.html ]; then
-   # Si "fastp" está en la carpeta actual y  no en el PATH, escribe "./fastp"
-   # en lugar de "fastp".
-   fastp -i DRR025089_1.fastq.gz \
-         -o DRR025089_1_clean.fastq \
-         -I DRR025089_2.fastq.gz \
-         -O DRR025089_2_clean.fastq \
-         --merge \
-         --merged_out DRR025089_m_clean.fastq
+if [ -e referencia.fa ]; then
+   grep -c '^>' referencia.fa
 fi
 ```
 
-:::{.callout-note icon=false}
+En este caso, el genoma de referencia está formado por varias secuencias FASTA. Esto es esperable si el ensamblaje contiene más de una molécula, por ejemplo un cromosoma y plásmidos.
 
+# Control de calidad con `fastp`
+
+`fastp` permite filtrar lecturas de baja calidad, recortar adaptadores, corregir pares solapantes y generar informes HTML y JSON. En este caso lo usamos para limpiar las lecturas paired-end y, además, generar un archivo con lecturas fusionadas cuando R1 y R2 se solapan.
+
+```{bash}
+if command -v fastp >/dev/null 2>&1; then
+   FASTP=fastp
+elif [ -x ./fastp ]; then
+   FASTP=./fastp
+else
+   FASTP=""
+fi
+
+if [ -n "$FASTP" ] && [ ! -e fastp.html ]; then
+   $FASTP \
+      -i DRR025089_1.fastq.gz \
+      -o DRR025089_1_clean.fastq \
+      -I DRR025089_2.fastq.gz \
+      -O DRR025089_2_clean.fastq \
+      --merge \
+      --merged_out DRR025089_m_clean.fastq \
+      --html fastp.html \
+      --json fastp.json
+fi
+
+ls -lh fastp.html fastp.json DRR025089_1_clean.fastq DRR025089_2_clean.fastq DRR025089_m_clean.fastq 2>/dev/null || true
+```
+
+::: {.callout-note icon=false}
 ## Ejercicios
 
 1. Revisa la ayuda del programa ejecutando `fastp -h`, y asegúrate de entender al menos las opciones que hemos usado.
-   
- -i, --in1  read1 input file name (string [=]) Archivo de entrada de las lecturas forward (R1). Corresponde al primer extremo del fragmento de DNA.
-  -o, --out1 read1 output file name (string [=]) Archivo de salida para R1 después del control de calidad
-Contiene:
-lecturas filtradas
-trimming aplicado
-adaptadores eliminados
-  -I, --in2 read2 input file name (string [=]) Archivo de entrada de las lecturas reverse (R2). Es la secuencia del otro extremo del mismo fragmento.
-  -O, --out2 read2 output file name (string [=]) gual que -o, pero para R2.
-
 2. Revisa el informe generado por `fastp` en el archivo `fastp.html` y redacta un pequeño resumen de las principales conclusiones que sacas.
+3. Descarga un segundo conjunto de archivos FASTQ de la misma especie y repite el análisis de calidad con ellos.
+:::
 
-El análisis de calidad realizado con fastp muestra que las lecturas originales presentan una calidad moderada, con aproximadamente un 80% de bases por encima de Q20 y un 70% por encima de Q30 antes del filtrado. Tras el procesamiento, se observa una mejora significativa en la calidad de los datos, alcanzando valores cercanos al 90% de bases Q20 y más del 83% de bases Q30, lo que indica una limpieza eficaz de lecturas de baja calidad.
+Las opciones principales usadas son:
 
-El filtrado ha sido relativamente estricto, reduciendo el número total de lecturas de aproximadamente 823 mil a unas 234 mil. Aun así, más del 90% de las lecturas han pasado los filtros de calidad, mientras que una fracción menor ha sido descartada principalmente por baja calidad o presencia de bases indeterminadas. Además, una proporción relevante de lecturas ha sido corregida durante el proceso, lo que contribuye a mejorar la calidad global del conjunto de datos.
+- `-i`: archivo de entrada de lecturas forward (`R1`).
+- `-o`: archivo de salida para `R1` tras el filtrado.
+- `-I`: archivo de entrada de lecturas reverse (`R2`).
+- `-O`: archivo de salida para `R2` tras el filtrado.
+- `--merge`: intenta fusionar pares de lecturas solapantes.
+- `--merged_out`: archivo FASTQ con las lecturas fusionadas.
+- `--html`: informe visual del control de calidad.
+- `--json`: informe estructurado en formato JSON.
 
-En cuanto a la composición, el contenido GC se mantiene estable (~63%), lo que sugiere ausencia de sesgos importantes o contaminaciones. La presencia de adaptadores es muy baja, indicando que los datos ya estaban parcialmente procesados o que la contaminación es mínima. Asimismo, la tasa de duplicación es extremadamente baja (~0.15%), lo que refleja una buena complejidad de la librería. En conjunto, los resultados indican que el preprocesamiento ha generado un conjunto de lecturas limpio y de alta calidad, adecuado para análisis posteriores como el alineamiento al genoma de referencia. 
-   
-3. Descarga un segundo conjunto de archivos FASTQ de la misma especie y repite el análisis de calidad con ellos. Puedes ver algunas opciones en [este enlace] (https://www.ebi.ac.uk/ena/browser/advanced-search?result=read_run&query=study_accession%3D%22PRJDB3261%22&fields=run_accession%2Cexperiment_title%2Cstudy_accession%2Cfastq_bytes%2Cfastq_ftp%2Cscientific_name%2Cfirst_public&excludeAccessionType=run&excludeAccessions=DRR025089).Es mejor no descargar archivos demasiado grandes.
-   
-Se descargó un segundo conjunto de datos correspondiente a la misma especie (Bradyrhizobium japonicum) y se repitió el análisis de calidad mediante fastp. La comparación entre ambos datasets (DRR025089 y DRR025091) muestra un comportamiento globalmente similar, aunque con ligeras diferencias en calidad y volumen de datos.
+El análisis de calidad realizado con `fastp` muestra si las lecturas originales presentan una calidad suficiente para continuar con el mapeo. En general, se espera que tras el filtrado aumente el porcentaje de bases con calidad alta, disminuya la presencia de adaptadores y se eliminen lecturas con baja calidad o con demasiadas bases ambiguas. El informe HTML de `fastp` permite revisar rápidamente la calidad por posición, el contenido GC, la presencia de adaptadores, la longitud de las lecturas y el número de lecturas filtradas.
 
-En el segundo dataset (DRR025091), el número inicial de lecturas es mayor (~985 mil frente a ~823 mil), y la calidad previa al filtrado también es ligeramente superior, con un mayor porcentaje de bases Q20 (~82.7%) y Q30 (~74.2%) en comparación con el primer conjunto. Tras el filtrado, ambos datasets experimentan una mejora significativa en la calidad, alcanzando valores elevados de bases de alta calidad (en DRR025091, ~93% Q20 y ~88.7% Q30), lo que confirma la eficacia del preprocesamiento.
+## Segundo conjunto de datos
 
-En cuanto al filtrado, en ambos casos se observa una reducción importante del número de lecturas, aunque la proporción de lecturas que superan los filtros es alta (~91% en DRR025091), indicando que la mayoría de las secuencias son de buena calidad. La eliminación de lecturas se debe principalmente a baja calidad o presencia de bases ambiguas, siendo despreciable el número de lecturas descartadas por longitud insuficiente.
-
-El contenido GC se mantiene muy estable entre ambos datasets (~63%), lo que es coherente con la biología del organismo y sugiere ausencia de contaminaciones relevantes. Asimismo, la presencia de adaptadores es muy baja en ambos casos, indicando que los datos ya estaban parcialmente procesados o que la contaminación es mínima. La tasa de duplicación es incluso menor en el segundo dataset (~0.03% frente a ~0.15%), lo que refleja una alta complejidad de la librería.
-
-Por último, la estimación del tamaño de inserto en DRR025091 muestra una distribución coherente con un pico alrededor de ~228 pb, consistente con datos de secuenciación paired-end. En conjunto, ambos datasets presentan una calidad adecuada tras el filtrado y son comparables entre sí, siendo aptos para su uso en análisis posteriores como el alineamiento al genoma de referencia y la detección de variantes.
+Como ejercicio adicional, descargué un segundo conjunto de datos de la misma especie, correspondiente al run `DRR025091`, y repetí el análisis de calidad. Esta comparación permite comprobar si otros datos del mismo proyecto presentan características similares.
 
 ```{bash}
-./fastp \
--i DRR025091_1.fastq.gz \
--o DRR025091_1.clean.fastq \
--I DRR025091_2.fastq.gz \
--O DRR025091_2.clean.fastq \
---merge \
---merged_out DRR025091_m_clean.fastq \
---html fastp_DRR025091.html
+if [ ! -e DRR025091_1.fastq.gz ]; then
+   wget -q \
+      ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR025/DRR025091/DRR025091_1.fastq.gz
+fi
+
+if [ ! -e DRR025091_2.fastq.gz ]; then
+   wget -q \
+      ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR025/DRR025091/DRR025091_2.fastq.gz
+fi
+
+if command -v fastp >/dev/null 2>&1; then
+   FASTP=fastp
+elif [ -x ./fastp ]; then
+   FASTP=./fastp
+else
+   FASTP=""
+fi
+
+if [ -n "$FASTP" ] && [ ! -e fastp_DRR025091.html ]; then
+   $FASTP \
+      -i DRR025091_1.fastq.gz \
+      -o DRR025091_1_clean.fastq \
+      -I DRR025091_2.fastq.gz \
+      -O DRR025091_2_clean.fastq \
+      --merge \
+      --merged_out DRR025091_m_clean.fastq \
+      --html fastp_DRR025091.html \
+      --json fastp_DRR025091.json
+fi
+
+ls -lh fastp_DRR025091.html fastp_DRR025091.json 2>/dev/null || true
 ```
 
-:::
+La comparación entre ambos conjuntos de datos permite valorar si la calidad de secuenciación es consistente dentro del proyecto. En mi análisis, ambos datasets presentan un comportamiento general comparable: la limpieza mejora la calidad global, el contenido GC se mantiene estable y la contaminación por adaptadores parece baja. Esto sugiere que las lecturas son adecuadas para análisis posteriores como mapeo y detección de variantes.
 
 # Mapeo
 
-El objetivo de esta sección es alinear las lecturas cortas al genoma de
-referencia, mediante el programa `bwa`. El archivo final será un archivo BAM
-*ordenado*. Para obtener ese archivo es necesario generar algunos archivos
-auxiliares: primero, el índice del genoma de referencia, después los alineamientos
-en formato SAM (no comprimidos) y finalmente un archivo BAM, que es la versión
-comprimida del SAM (todavía no ordenado). La jerarquía de condiciones de ejecución
-siguiente permitirá borrar los archivos auxiliares, para ahorrar espacio, y no tener
-que generarlos de nuevo cada vez que compilemos este documento si el archivo final
-ya está presente en la carpeta de trabajo.
+El objetivo de esta sección es alinear las lecturas cortas al genoma de referencia mediante `bwa mem`. El archivo final será un archivo BAM ordenado e indexado. Para llegar a ese archivo se generan varios productos intermedios: un índice del genoma de referencia, un archivo SAM, un archivo BAM sin ordenar, un BAM ordenado y un índice BAI.
 
-```{bash}
-if [ ! -e DRR025089.bam ]; then
-    if [ ! -e DRR025089_unsorted.bam ]; then
-        if [ ! -e DRR025089.sam ]; then
-            if [ ! -e referencia.fa.bwt ]; then
-                bwa index referencia.fa
-            fi
-            bwa mem -M -R '@RG\tID:DRR025089\tSM:SAMD00022947' \
-                -o DRR025089.sam \
-                referencia.fa \
-                DRR025089_1.clean.fastq \
-                DRR025089_2.clean.fastq \
-                1> bwa.log 2> bwa.err
-        fi
-        samtools view -b -o DRR025089_unsorted.bam DRR025089.sam
-    fi
-    samtools sort -o DRR025089.bam DRR025089_unsorted.bam
-    samtools index DRR025089.bam
-fi
-```
+::: {.callout-tip}
+## Por qué usamos condiciones `if`
 
-
-:::{.callout-note icon=false}
-
-## Desafíos
-
-1. Entre las órdenes anteriores, añade la descarga del genoma de referencia
-   en el lugar adecuado y bajo la condición adecuada para que pueda borrarse
-   una vez se haya generado el alineamiento.
-
-La idea es que el genoma de referencia se descargue solo si no existe todavía y que pueda eliminarse más adelante si ya no se necesita, una vez generado el alineamiento final. Lo correcto sería guardarlo como archivo auxiliar dentro del flujo de mapeo y condicionar su descarga a la ausencia del fichero referencia.fa.De este modo, el archivo solo se descarga una vez. Una vez generado el archivo BAM final e indexado el genoma, podría borrarse si se quisiera ahorrar espacio, aunque en la práctica suele conservarse por reproducibilidad.
-
-```{bash}
-if [ ! -e referencia.fa ]; then
-    wget URL_DEL_GENOMA -O referencia.fa
-fi
-```
-
-2. En un bloque de órdenes nuevo, alinea también los pares de lecturas cortas que `fastp` había combinado (`DR025089_m_clean.fastq`).
-   
-Sí, además de alinear las lecturas paired-end limpias (DRR025089_1.clean.fastq y DRR025089_2.clean.fastq), se puede alinear también el archivo de lecturas fusionadas generado por fastp (DRR025089_m_clean.fastq). Para ello habría que crear un bloque adicional usando bwa mem con una sola entrada, ya que en este caso ya no son pares de lecturas sino secuencias fusionadas:
-
-```{bash}
-bwa mem referencia.fa DRR025089_m_clean.fastq > DRR025089_merged.sam
-
-```
-   
-Después, ese archivo SAM se convertiría igualmente en BAM, se ordenaría y, si interesa, podría compararse con el alineamiento obtenido a partir de las lecturas no fusionadas.
-
-3. Lee la lista de funciones que te ofrece `samtools` al ejecutarlo sin ningún argumento. ¿Qué función usarías para combinar dos archvivos BAM en uno?
-   
-La función adecuada es samtools merge. Se usaría cuando se quisiera combinar, por ejemplo, el BAM procedente de las lecturas paired-end con el BAM procedente de las lecturas fusionadas:
-```{bash}
-samtools merge BAM_combinado.bam archivo1.bam archivo2.bam
-
-```
-
-
-3. ¿Cuánto espacio de disco ocupan los archivos FASTQ, el genoma de referencia y su índice y el archivo SAM?
-   
-```{bash}
-du -h DRR025089_1.fastq.gz DRR025089_2.fastq.gz referencia.fa referencia.fa.* DRR025089.sam
-
-```
-
-
-```{bash}
-ls -lh DRR025089_1.fastq.gz DRR025089_2.fastq.gz referencia.fa referencia.fa.* DRR025089.sam
-
-```
-
-En general, los archivos FASTQ comprimidos ocupan bastante espacio, pero el archivo que más crece durante el proceso suele ser el SAM, porque está en texto plano y almacena todos los alineamientos sin comprimir. Los índices del genoma (.bwt, .pac, .ann, .amb, .sa) ocupan menos que el SAM, aunque en conjunto también representan una cantidad apreciable de espacio.
-
-4. Podíamos haber ahorrado algún paso aprovechando las *tuberías* de BASH:
-
-```{bash}
-bwa mem -M -R '@RG\tID:DRR025089\tSM:SAMD00022947' referencia.fa DRR025089_1.clean.fastq DRR025089_2.clean.fastq \
-| samtools view -b \
-| samtools sort -o DRR025089.bam
-```
-
-
-```{bash}
-samtools index DRR025089.bam
-```
-
-
-```
-bwa mem -M -R '@RG\tID:DRR025089\tSM:SAMD00022947' \
-        referencia.fa DRR025089_1_clean.fastq DRR025089_2_clean.fastq | \
-samtools view -u - | \
-samtools sort - > DRR025089.bam
-```
-
-Este estilo tiene también la ventaja de ser más rápido. ¿Crees que hay algún inconveniente al usar las tuberías?
-
-El uso de tuberías en Bash permite encadenar directamente varios programas sin necesidad de generar archivos intermedios, lo que reduce el uso de espacio en disco y mejora la eficiencia del flujo de trabajo. Sin embargo, también presenta algunos inconvenientes.
-
-En primer lugar, dificulta la depuración de errores, ya que no se generan archivos intermedios (como el archivo SAM) que puedan inspeccionarse fácilmente para comprobar si cada paso se ha ejecutado correctamente. En segundo lugar, si ocurre un error en alguna parte de la tubería, puede ser más complicado identificar en qué punto exacto ha fallado el proceso.
-
-Además, al no almacenarse resultados intermedios, no es posible reutilizarlos sin volver a ejecutar todo el pipeline, lo que puede suponer una desventaja en términos de reproducibilidad o eficiencia en análisis iterativos. Por tanto, aunque las tuberías son más rápidas y eficientes en uso de recursos, su uso implica una menor trazabilidad y control del proceso.
+Los archivos SAM y BAM pueden ocupar bastante espacio. Por eso, el guion comprueba si el resultado final ya existe antes de regenerar pasos anteriores. Este patrón evita repetir tareas costosas y hace el documento más reproducible.
 :::
 
-Antes de proseguir, es importante comprobar el resultado del paso anterior.
-Podemos extraer algunas estadísticas del archivo BAM así:
-
 ```{bash}
-if [ ! -e DRR025089.stats.txt ]; then
-   samtools stats DRR025089.bam > DRR025089.stats.txt
+if command -v bwa >/dev/null 2>&1 && command -v samtools >/dev/null 2>&1; then
+
+   if [ ! -e DRR025089.bam ]; then
+
+      if [ ! -e referencia.fa.bwt ]; then
+         bwa index referencia.fa
+      fi
+
+      if [ ! -e DRR025089.sam ]; then
+         bwa mem -M \
+            -R '@RG\tID:DRR025089\tSM:SAMD00022947' \
+            -o DRR025089.sam \
+            referencia.fa \
+            DRR025089_1_clean.fastq \
+            DRR025089_2_clean.fastq \
+            1> bwa.log 2> bwa.err
+      fi
+
+      if [ ! -e DRR025089_unsorted.bam ]; then
+         samtools view -b -o DRR025089_unsorted.bam DRR025089.sam
+      fi
+
+      samtools sort -o DRR025089.bam DRR025089_unsorted.bam
+      samtools index DRR025089.bam
+   fi
+
+else
+   echo "bwa o samtools no están disponibles; no se ejecuta el mapeo."
 fi
 
-# Extraemos la sección sobre profundidad de cobertura
-if [ ! -e stat.$i.txt ]; then
-   grep ^COV DRR025089.stats.txt | cut -f 2- > COV.txt
-fi
+ls -lh DRR025089.bam DRR025089.bam.bai 2>/dev/null || true
 ```
 
-Ahora podemos importar los datos de cobertura a una sesión de R y representarlos gráficamente:
-
-```{r}
-COV <- read.table('COV.txt',
-                  col.names = c('intervalo', 'cobertura', 'bases'))
-plot(COV$cobertura, COV$bases, type = 'l')
-```
-
-:::{.callout-note icon=false}
+::: {.callout-note icon=false}
 ## Desafíos
 
-1. La distribución de cobertura tiene una cola larga. ¿Puedes centrar la representación gráfica entre 0 y 20? Pista: usa la opción `xlim` de `plot()`.
-   
-```{r}
-plot(COV$cobertura, COV$bases, type="l", xlim=c(0,20))
+1. Entre las órdenes anteriores, añade la descarga del genoma de referencia en el lugar adecuado y bajo la condición adecuada para que pueda borrarse una vez se haya generado el alineamiento.
+2. En un bloque de órdenes nuevo, alinea también los pares de lecturas cortas que `fastp` había combinado (`DRR025089_m_clean.fastq`).
+3. Lee la lista de funciones que te ofrece `samtools` al ejecutarlo sin ningún argumento. ¿Qué función usarías para combinar dos archivos BAM en uno?
+4. ¿Cuánto espacio de disco ocupan los archivos FASTQ, el genoma de referencia y su índice y el archivo SAM?
+5. ¿Crees que hay algún inconveniente al usar tuberías?
+:::
+
+La descarga del genoma de referencia debe situarse antes de `bwa index`, porque el índice sólo puede construirse si `referencia.fa` existe. El bloque ya lo realiza bajo la condición `if [ ! -e referencia.fa ]`, de forma que el archivo se descarga únicamente si no estaba disponible.
+
+Para alinear las lecturas fusionadas por `fastp`, se puede usar `bwa mem` con un único archivo de entrada, ya que estas lecturas ya no son paired-end sino secuencias individuales resultantes del solapamiento entre R1 y R2.
+
+```{bash}
+if command -v bwa >/dev/null 2>&1 && command -v samtools >/dev/null 2>&1; then
+   if [ -e DRR025089_m_clean.fastq ] && [ ! -e DRR025089_merged.bam ]; then
+      bwa mem referencia.fa DRR025089_m_clean.fastq > DRR025089_merged.sam
+      samtools view -b -o DRR025089_merged_unsorted.bam DRR025089_merged.sam
+      samtools sort -o DRR025089_merged.bam DRR025089_merged_unsorted.bam
+      samtools index DRR025089_merged.bam
+   fi
+else
+   echo "bwa o samtools no están disponibles; no se alinean las lecturas fusionadas."
+fi
+
+ls -lh DRR025089_merged.bam DRR025089_merged.bam.bai 2>/dev/null || true
 ```
 
+La función adecuada para combinar varios archivos BAM es `samtools merge`. Por ejemplo:
+
+```{bash}
+echo "Ejemplo de uso de samtools merge:"
+echo "samtools merge BAM_combinado.bam archivo1.bam archivo2.bam"
+```
+
+El espacio ocupado por los archivos generados puede revisarse con `du -h` y `ls -lh`.
+
+```{bash}
+du -h DRR025089_1.fastq.gz DRR025089_2.fastq.gz referencia.fa DRR025089.sam DRR025089.bam 2>/dev/null || true
+```
+
+El archivo SAM suele ocupar bastante más que el BAM porque es texto plano y almacena todos los alineamientos sin comprimir. Por esta razón, en flujos de trabajo reales suele eliminarse una vez generado el BAM ordenado e indexado.
+
+También se podría usar una tubería para evitar crear el archivo SAM intermedio:
+
+```{bash}
+echo "Pipeline equivalente con tuberías:"
+echo "bwa mem -M -R '@RG\\tID:DRR025089\\tSM:SAMD00022947' referencia.fa DRR025089_1_clean.fastq DRR025089_2_clean.fastq | samtools view -b | samtools sort -o DRR025089.bam"
+```
+
+El uso de tuberías en Bash permite encadenar directamente varios programas sin generar archivos intermedios, lo que reduce el uso de espacio en disco y puede mejorar la eficiencia. Sin embargo, también dificulta la depuración: si algo falla, es menos evidente en qué paso ocurrió el problema. Además, no se conservan resultados intermedios que podrían ser útiles para revisar o reutilizar el análisis.
+
+# Estadísticas de alineamiento y cobertura
+
+Antes de proseguir, es importante comprobar el resultado del mapeo. Podemos extraer estadísticas del archivo BAM con `samtools stats`.
+
+```{bash}
+if command -v samtools >/dev/null 2>&1 && [ -e DRR025089.bam ]; then
+   if [ ! -e DRR025089.stats.txt ]; then
+      samtools stats DRR025089.bam > DRR025089.stats.txt
+   fi
+
+   grep '^COV' DRR025089.stats.txt | cut -f 2- > COV.txt
+else
+   echo "No se puede generar COV.txt porque falta samtools o DRR025089.bam."
+fi
+
+ls -lh DRR025089.stats.txt COV.txt 2>/dev/null || true
+```
+
+Ahora podemos importar los datos de cobertura a una sesión de R y representarlos gráficamente.
+
+```{r}
+if (file.exists("COV.txt") && file.info("COV.txt")$size > 0) {
+  COV <- read.table("COV.txt", col.names = c("intervalo", "cobertura", "bases"))
+  plot(COV$cobertura, COV$bases,
+       type = "l",
+       xlab = "Cobertura",
+       ylab = "Número de bases",
+       main = "Distribución de cobertura")
+} else {
+  message("No se representa la cobertura porque COV.txt no existe o está vacío.")
+}
+```
+
+::: {.callout-note icon=false}
+## Desafíos
+
+1. La distribución de cobertura tiene una cola larga. ¿Puedes centrar la representación gráfica entre 0 y 20?
 2. ¿Qué otras estadísticas crees que vale la pena revisar?
-
-Además de la distribución de cobertura, sería relevante analizar otras métricas como la cobertura media y mediana, que permiten evaluar la profundidad global del alineamiento, así como la desviación estándar para estimar la variabilidad. También resultaría útil examinar el porcentaje del genoma cubierto por encima de ciertos umbrales (por ejemplo, ≥10x), ya que esto indica la calidad del ensamblaje para análisis posteriores. Asimismo, la identificación de regiones con cobertura extremadamente alta o baja puede revelar posibles sesgos de secuenciación o problemas en el alineamiento.
-
 3. El genoma de referencia incluye dos plásmidos. ¿La cepa secuenciada los tiene?
+4. Visualiza los alineamientos en el terminal con `samtools tview DRR025089.bam referencia.fa`.
+:::
 
-La presencia de regiones con coberturas significativamente más altas que el resto del genoma podría sugerir la existencia de plásmidos, ya que estos elementos suelen encontrarse en múltiples copias dentro de la célula, lo que se traduce en una mayor cobertura en comparación con el cromosoma principal. Por tanto, la cola larga observada en la distribución podría estar asociada a secuencias plasmídicas o regiones repetidas.
-
-4. Visualiza los alineamientos en el terminal con la orden siguiente:
-
-```{bash}
-samtools tview DRR025089.bam referencia.fa
+```{r}
+if (exists("COV")) {
+  plot(COV$cobertura, COV$bases,
+       type = "l",
+       xlim = c(0, 20),
+       xlab = "Cobertura",
+       ylab = "Número de bases",
+       main = "Distribución de cobertura entre 0 y 20x")
+}
 ```
 
-:::
+Además de la distribución de cobertura, conviene revisar la cobertura media, la cobertura mediana, el porcentaje de lecturas mapeadas, el número de lecturas correctamente emparejadas, la tasa de duplicación, la calidad de mapeo y la proporción del genoma cubierta por encima de determinados umbrales. Estas métricas permiten saber si el alineamiento es suficientemente fiable para identificar variantes.
+
+La presencia de plásmidos en la cepa secuenciada podría inferirse si las secuencias plasmídicas del genoma de referencia presentan cobertura comparable a la del cromosoma. Si los plásmidos no aparecen cubiertos o presentan cobertura casi nula, podría indicar que la cepa secuenciada no los contiene o que difiere del genoma de referencia.
 
 # Identificación de variantes
 
+La identificación de variantes se realiza con `freebayes`. Como se trata de un organismo bacteriano, se usa `-p 1`, indicando ploidía haploide. El resultado se almacena en formato VCF.
+
 ```{bash}
-if [ ! -e DRR025089.vcf ]; then
-   freebayes -p 1 -f referencia.fa DRR025089.bam > DRR025089.vcf
+if command -v freebayes >/dev/null 2>&1 && [ -e DRR025089.bam ]; then
+   if [ ! -e DRR025089.vcf ]; then
+      freebayes -p 1 -f referencia.fa DRR025089.bam > DRR025089.vcf
+   fi
+else
+   echo "No se ejecuta freebayes porque falta el programa o el archivo BAM."
+fi
+
+ls -lh DRR025089.vcf 2>/dev/null || true
+```
+
+```{bash}
+if [ -e DRR025089.vcf ]; then
+   echo "Primeras líneas no comentadas del VCF:"
+   grep -v '^#' DRR025089.vcf | head
+
+   echo "Número aproximado de variantes detectadas:"
+   grep -vc '^#' DRR025089.vcf
 fi
 ```
 
-La identificación de variantes se realizó mediante el programa freebayes, que permite detectar polimorfismos (SNPs e indels) a partir de datos de alineamiento. Dado que se trata de un organismo bacteriano, se asumió un genoma haploide (-p 1). El resultado se almacena en formato VCF, que contiene información detallada sobre las variantes detectadas respecto al genoma de referencia.
+El archivo VCF contiene las posiciones del genoma de referencia en las que las lecturas apoyan una variante respecto a la secuencia de referencia. Estas variantes pueden corresponder a SNPs o indels. Su interpretación biológica requiere cautela, ya que depende de la calidad del alineamiento, la profundidad de cobertura y la adecuación del genoma de referencia usado.
+
+# Conclusiones
+
+En esta práctica se ha construido un flujo básico de análisis de lecturas cortas desde datos FASTQ hasta variantes genómicas. El control de calidad con `fastp` permite obtener lecturas más fiables antes del mapeo. El alineamiento con `bwa mem` y el procesamiento con `samtools` generan un archivo BAM ordenado e indexado, adecuado para calcular estadísticas de cobertura y detectar variantes. Finalmente, `freebayes` permite identificar diferencias respecto al genoma de referencia.
+
+El aspecto más importante del flujo es que cada paso depende del anterior: si las lecturas son de baja calidad, el mapeo será peor; si el mapeo es deficiente, las estadísticas de cobertura y las variantes serán menos fiables. Por ello, no basta con ejecutar comandos: es necesario comprobar cada resultado intermedio y documentar qué archivos se generan y por qué.
+
+# Información de la sesión
+
+```{r}
+sessionInfo()
+```
+
