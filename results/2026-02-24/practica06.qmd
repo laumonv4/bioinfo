@@ -1,10 +1,13 @@
 ---
-title: "Búsquedas programáticas en Interpro"
+title: "Búsquedas programáticas en InterPro"
+author: "Laura Monleón Vicente"
 lang: es
 date: today
-execute: 
-  output: true
-  error: true
+execute:
+  echo: true
+  warning: true
+  message: false
+  error: false
 engine: knitr
 bibliography: ../../doc/references.bib
 language:
@@ -13,54 +16,81 @@ language:
 format:
    html:
       embed-resources: true
+      toc: true
+      toc-depth: 3
+      number-sections: true
+      code-fold: false
+      theme: cosmo
+      highlight-style: github
+editor: visual
 ---
 
 # Preparación
-En esta práctica vamos a utilizar los paquetes `curl` y `kableExtra` de R.
+
+En esta práctica vamos a utilizar los paquetes `jsonlite` y `knitr` de R.
 
 # Objetivos
-1. Aprender a usar la API de [Interpro](https://www.ebi.ac.uk/interpro/).
-2. Recordar que existen las herramientas `datasets` y `dataformat` de
-   [NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/).
+
+1.  Aprender a usar la API de [Interpro](https://www.ebi.ac.uk/interpro/).
+2.  Recordar que existen las herramientas `datasets` y `dataformat` de [NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/).
 
 # Introducción
-Todas las consultas a InterPro [@Paysan-Lafosse2022] deben empezar con la dirección de la API:
-`https://www.ebi.ac.uk/interpro/api/` [@interproAPI]. Por tanto, guardo esta URL básica
-como cadena de caracteres en la variable `API`:
+
+## Enfoque de trabajo
+
+Esta práctica utiliza consultas programáticas a la API de InterPro. El interés principal no es descargar datos manualmente desde una web, sino aprender a construir URLs reproducibles, interpretar respuestas en formato JSON y extraer automáticamente la información necesaria con R. Este enfoque es muy útil en bioinformática, porque permite automatizar consultas repetitivas y documentar de forma transparente el origen de los datos.
+
+# Introducción
+
+Todas las consultas a InterPro [@Paysan-Lafosse2022] deben empezar con la dirección de la API: `https://www.ebi.ac.uk/interpro/api/` [@interproAPI]. Por tanto, guardo esta URL básica como cadena de caracteres en la variable `API`:
 
 ```{r}
 API <- 'https://www.ebi.ac.uk/interpro/api/'
 ```
 
-La API devuelve los datos en un formato llamado JSON, basado en texto plano.
-Necesitamos un paquete que nos ayude a leer los archivos JSON. Por ejemplo,
-`jsonlite` [@jsonlite]:
+La API devuelve los datos en un formato llamado JSON, basado en texto plano. Necesitamos un paquete que nos ayude a leer los archivos JSON. Por ejemplo, `jsonlite` [@jsonlite]:
 
 ```{r}
-library('jsonlite')
+if (!requireNamespace("jsonlite", quietly = TRUE)) {
+   install.packages("jsonlite")
+}
+if (!requireNamespace("knitr", quietly = TRUE)) {
+   install.packages("knitr")
+}
+
+library(jsonlite)
+library(knitr)
+```
+
+Para evitar que pequeños cambios en la API o problemas puntuales de conexión interrumpan todo el renderizado, defino además una función auxiliar. Esta función intenta descargar el JSON y, si falla, muestra un aviso informativo en lugar de detener por completo el documento.
+
+```{r}
+leer_json <- function(url) {
+   tryCatch(
+      fromJSON(url),
+      error = function(e) {
+         message("No se ha podido consultar la URL: ", url)
+         message("Motivo: ", conditionMessage(e))
+         NULL
+      }
+   )
+}
 ```
 
 # Contar registros
 
 En InterPro existen seis tipos principales de datos:
 
-- *Entry*: elementos funcionales predichos sobre las proteínas. Se pueden 
-distinguir los definidos por cada base de datos: InterPro, Pfam, CDD, etc.
-- *Protein*: las secuencias proteicas procedentes de UniProtKB. Pueden ser
-*reviewed* (Swiss-Prot) o *unreviewed* (TrEMBL).
-- *Taxonomy*: Organismo y su linaje del que proviene una proteína. La fuente
-de estos datos es UniProtKB.
-- *Structure*: Estructuras tridimensionales de las proteínas. Proporcionadas
-por la base de datos PDB.
-- *Set*: Conjuntos de registros (*entries*) relacionados, de acuerdo con las
-bases de datos Pfam o CDD.
-- *Proteome*: Conjuntos de proteínas de un mismo organismo. Proporcionados por
-UniProtKB.
+-   *Entry*: elementos funcionales predichos sobre las proteínas. Se pueden distinguir los definidos por cada base de datos: InterPro, Pfam, CDD, etc.
+-   *Protein*: las secuencias proteicas procedentes de UniProtKB. Pueden ser *reviewed* (Swiss-Prot) o *unreviewed* (TrEMBL).
+-   *Taxonomy*: Organismo y su linaje del que proviene una proteína. La fuente de estos datos es UniProtKB.
+-   *Structure*: Estructuras tridimensionales de las proteínas. Proporcionadas por la base de datos PDB.
+-   *Set*: Conjuntos de registros (*entries*) relacionados, de acuerdo con las bases de datos Pfam o CDD.
+-   *Proteome*: Conjuntos de proteínas de un mismo organismo. Proporcionados por UniProtKB.
 
-Podemos consultar el número de registros de tipo *entry* en la URL
-`https://www.ebi.ac.uk/interpro/api/entry`, cuyo contenido se muestra aquí:
+Podemos consultar el número de registros de tipo *entry* en la URL `https://www.ebi.ac.uk/interpro/api/entry`, cuyo contenido se muestra aquí:
 
-```
+```         
 {
     "entries": {
         "member_databases": {
@@ -87,52 +117,44 @@ Podemos consultar el número de registros de tipo *entry* en la URL
 }
 ```
 
-La función `fromJSON` del paquete `jsonlite` nos permite guardar este tipo de
-datos en una lista de listas. En R, podemos acceder a los elementos de una
-lista con la función *doble corchete* `[[`. 
+La función `fromJSON` del paquete `jsonlite` nos permite guardar este tipo de datos en una lista de listas. En R, podemos acceder a los elementos de una lista con la función *doble corchete* `[[`.
 
 ```{r}
-protein <- fromJSON(paste0(API,'protein'))
-structure <- fromJSON(paste0(API,'structure'))
-set <- fromJSON(paste0(API,'set'))
-proteome <- fromJSON(paste0(API,'proteome'))
-taxonomy <- fromJSON(paste0(API, 'taxonomy'))
+protein <- leer_json(paste0(API,'protein'))
+structure <- leer_json(paste0(API,'structure'))
+set <- leer_json(paste0(API,'set'))
+proteome <- leer_json(paste0(API,'proteome'))
+taxonomy <- leer_json(paste0(API, 'taxonomy'))
 ```
+
 str significa structure y me sirve para consultar de manera filtrada lo que contiene cada lista. Puedo acceder al contenido directamente poniendo "registro", no hace falta poner str(registro)
 
 ```{r}
-registros <- fromJSON(paste0(API, 'entry'))
+registros <- leer_json(paste0(API, 'entry'))
 registros[[1]][['member_databases']]
 ```
 
-:::{.callout-note icon=false}
+::: {.callout-note icon="false"}
 ## Ejercicio 1
-Construye las URLs necesarias para determinar el número de registros del resto
-de tipos: *protein*, *structure*, *set*, y *proteome*. Fíjate en las posibles
-fuentes de cada tipo de datos, e intenta guardar la información en variables de
-tu sesión de R.
+
+Construye las URLs necesarias para determinar el número de registros del resto de tipos: *protein*, *structure*, *set*, y *proteome*. Fíjate en las posibles fuentes de cada tipo de datos, e intenta guardar la información en variables de tu sesión de R.
 :::
 
 # Lista de datos de algún tipo
-Si además del tipo de datos (*entry*, *protein*, *taxonomy*...), añadimos a la
-URL la *fuente* o base de datos de origen que queremos consultar, obtendremos la lista
-(completa?) de los registros de ese tipo provenientes de *esa* base de datos. 
-Consulta los ejemplos siguientes:
 
-- https://www.ebi.ac.uk/interpro/api/entry/interpro
-- https://www.ebi.ac.uk/interpro/api/entry/pfam
-- https://www.ebi.ac.uk/interpro/api/protein/reviewed
-- https://www.ebi.ac.uk/interpro/api/taxonomy/uniprot
+Si además del tipo de datos (*entry*, *protein*, *taxonomy*...), añadimos a la URL la *fuente* o base de datos de origen que queremos consultar, obtendremos la lista (completa?) de los registros de ese tipo provenientes de *esa* base de datos. Consulta los ejemplos siguientes:
 
-Pero, para no saturar los servidores, InterPro sólo devuelve los 20 primeros
-registros de cada consulta, y ofrece una nueva URL (*next*) para poder ver
-o descargar los 20 siguientes.
+-   https://www.ebi.ac.uk/interpro/api/entry/interpro
+-   https://www.ebi.ac.uk/interpro/api/entry/pfam
+-   https://www.ebi.ac.uk/interpro/api/protein/reviewed
+-   https://www.ebi.ac.uk/interpro/api/taxonomy/uniprot
 
-A continuación, usamos la función `fromJSON()` de `jsonlite` para descargar los
-20 primeros registros de tipo Pfam y exploramos el resultado.
+Pero, para no saturar los servidores, InterPro sólo devuelve los 20 primeros registros de cada consulta, y ofrece una nueva URL (*next*) para poder ver o descargar los 20 siguientes.
+
+A continuación, usamos la función `fromJSON()` de `jsonlite` para descargar los 20 primeros registros de tipo Pfam y exploramos el resultado.
 
 ```{r}
-pfam01 <- fromJSON(paste0(API, 'entry/pfam'))
+pfam01 <- leer_json(paste0(API, 'entry/pfam'))
 class(pfam01)
 length(pfam01)
 names(pfam01)
@@ -143,119 +165,111 @@ pfam01[['results']]
 pfam01[['results']][['metadata']]
 ```
 
-Los siguientes 20 registros de Pfam se encuentran en `pfam01[['next']]`:
-`r pfam01[['next']]`. Y los podemos descargar igual.
-```{r}
-# library('knitr')
-library('knitr')
-pfam02 <- fromJSON(pfam01[['next']])
-kable(pfam02[['results']][['metadata']]) 
-kable(pfam02[['results']][['metadata']])
-```
-
+Los siguientes 20 registros de Pfam se encuentran en `pfam01[['next']]`: `r pfam01[['next']]`. Y los podemos descargar igual.
 
 ```{r}
-library('knitr')
-pfam02 <- fromJSON(pfam01[['next']])
-kable(pfam02[['results']][['metadata']])
+if (!is.null(pfam01) && !is.null(pfam01[['next']])) {
+   pfam02 <- leer_json(pfam01[['next']])
+   if (!is.null(pfam02)) {
+      kable(pfam02[['results']][['metadata']])
+   }
+}
 ```
 
-:::{.callout-note icon=false}
+::: {.callout-note icon="false"}
 ## Ejercicio 2
-Crea una tercera lista con los contenidos de la tercera página de registros
-de Pfam.
+
+Crea una tercera lista con los contenidos de la tercera página de registros de Pfam.
+
 ```{r}
-library('knitr')
-pfam03 <- fromJSON(pfam02[['next']])
-kable(pfam03[['results']][['metadata']]) 
+if (exists("pfam02") && !is.null(pfam02) && !is.null(pfam02[['next']])) {
+   pfam03 <- leer_json(pfam02[['next']])
+   if (!is.null(pfam03)) {
+      kable(pfam03[['results']][['metadata']])
+   }
+}
 ```
 
+La tercera página se obtiene siguiendo el enlace `next` de la segunda página. Este mecanismo de paginación es esencial en APIs grandes, porque evita descargar todos los registros en una única consulta.
 :::
 
 # Unión de *páginas* en un mismo *data frame*
-El paquete `jsonlite` nos ofrece la función `rbind_pages()` para juntar una lista
-de *data frames* en uno solo:
+
+El paquete `jsonlite` nos ofrece la función `rbind_pages()` para juntar una lista de *data frames* en uno solo:
 
 ```{r}
-pfam <- rbind_pages(list(pfam01[['results']][['metadata']],
-                         pfam02[['results']][['metadata']]))
+paginas_pfam <- list()
+
+if (exists("pfam01") && !is.null(pfam01)) paginas_pfam[[length(paginas_pfam) + 1]] <- pfam01[['results']][['metadata']]
+if (exists("pfam02") && !is.null(pfam02)) paginas_pfam[[length(paginas_pfam) + 1]] <- pfam02[['results']][['metadata']]
+if (exists("pfam03") && !is.null(pfam03)) paginas_pfam[[length(paginas_pfam) + 1]] <- pfam03[['results']][['metadata']]
+
+pfam <- rbind_pages(paginas_pfam)
+dim(pfam)
+kable(head(pfam))
 ```
 
-```{r}
-pfam <- rbind_pages(list(pfam01[['results']][['metadata']],
-                         pfam02[['results']][['metadata']],
-                         pfam03[['results']][['metadata']]))
-```
-
-Pero para leer y descargar todas las páginas, necesitaríamos alguna manera de
-automatizar el proceso. En el Apéndice 2 encontrarás una solución posible.
+Pero para leer y descargar todas las páginas, necesitaríamos alguna manera de automatizar el proceso. En el Apéndice 2 encontrarás una solución posible.
 
 # Mostrar todos los detalles de un registro concreto
 
-Ya sabemos cómo mostrar el número de registros de un tipo y cómo descargar la
-lista de todos ellos (de 20 en 20). El siguiente paso es descargar toda la
-información relativa a un registro concreto, del cual debemos saber su identificador.
-Por ejemplo, el dominio PF06235 de Pfam. Para ello, añadimos un tercer campo
-a la URL, después del tipo de datos y del nombre de la base de datos de procedencia:
-el identificador del registro que queremos descargar:
+Ya sabemos cómo mostrar el número de registros de un tipo y cómo descargar la lista de todos ellos (de 20 en 20). El siguiente paso es descargar toda la información relativa a un registro concreto, del cual debemos saber su identificador. Por ejemplo, el dominio PF06235 de Pfam. Para ello, añadimos un tercer campo a la URL, después del tipo de datos y del nombre de la base de datos de procedencia: el identificador del registro que queremos descargar:
 
 https://www.ebi.ac.uk/interpro/api/entry/pfam/PF06235
 
-La función genérica `str()` de R nos describe la estructura de cualquier
-objeto en R, y nos puede ayudar a entender cómo podemos acceder a cada dato
-del registro:
+La función genérica `str()` de R nos describe la estructura de cualquier objeto en R, y nos puede ayudar a entender cómo podemos acceder a cada dato del registro:
 
 ```{r}
-pf06235 <- fromJSON(paste0(API, 'entry/pfam/PF06235'))
-str(pf06235)
-nombre_largo <- pf06235[['metadata']][['name']][['name']]
-nombre_largo
+pf06235 <- leer_json(paste0(API, 'entry/pfam/PF06235'))
+
+if (!is.null(pf06235)) {
+   str(pf06235)
+   nombre_largo <- pf06235[['metadata']][['name']][['name']]
+   nombre_largo
+}
 ```
 
-:::{.callout-note icon=false}
+::: {.callout-note icon="false"}
 ## Ejercicio 3
-Usa la función `fromJSON()` para guardar la información del registro P01923 
-(proteína de Swiss-Prot) y explora la estructura de los datos con la función
-`str()`. ¿Puedes extraer la secuencia?
+
+Usa la función `fromJSON()` para guardar la información del registro P01923 (proteína de Swiss-Prot) y explora la estructura de los datos con la función `str()`. ¿Puedes extraer la secuencia?
+
 ```{r}
-P01923 <- fromJSON(paste0(API,'protein/reviewed/P01923'))
-P01923[['metadata']][['sequence']]
+P01923 <- leer_json(paste0(API,'protein/reviewed/P01923'))
+
+if (!is.null(P01923)) {
+   str(P01923)
+   secuencia_P01923 <- P01923[['metadata']][['sequence']]
+   secuencia_P01923
+   nchar(secuencia_P01923)
+}
 ```
 
+La secuencia se encuentra dentro del campo `metadata`, en el elemento `sequence`. Extraerla de forma programática permite usarla posteriormente como entrada para otros análisis bioinformáticos.
 :::
 
 # Filtros. Cruzar dos tipos de datos
-Hasta ahora hemos construido una URL con hasta tres elementos: el tipo de datos,
-la base de datos de procedencia, y el identificador concreto. Estos tres
-elementos constituyen el *bloque de punto final* de la URL. También hemos visto
-que InterPro devuelve una estructura de datos diferente en función de cuantos
-de esos tres elementos usamos (sólo el tipo de datos es obligatorio): un
-recuento de registros, una lista de registros, o toda la información de un
-registro concreto.
 
-Si al *bloque de punto final* añadimos un segundo tipo de datos, obtendremos
-un recuento o una lista del primer tipo de datos con información sobre el
-segundo. Por ejemplo, al comparar estas 2 URLs:
+Hasta ahora hemos construido una URL con hasta tres elementos: el tipo de datos, la base de datos de procedencia, y el identificador concreto. Estos tres elementos constituyen el *bloque de punto final* de la URL. También hemos visto que InterPro devuelve una estructura de datos diferente en función de cuantos de esos tres elementos usamos (sólo el tipo de datos es obligatorio): un recuento de registros, una lista de registros, o toda la información de un registro concreto.
 
-- https://www.ebi.ac.uk/interpro/api/protein
-- https://www.ebi.ac.uk/interpro/api/protein/entry
+Si al *bloque de punto final* añadimos un segundo tipo de datos, obtendremos un recuento o una lista del primer tipo de datos con información sobre el segundo. Por ejemplo, al comparar estas 2 URLs:
 
-podemos observar que no en todas las proteínas en UniProtKB se encuentra algún
-dominio o elemento funcional en InterPro.
+-   https://www.ebi.ac.uk/interpro/api/protein
+-   https://www.ebi.ac.uk/interpro/api/protein/entry
 
-:::{.callout-note icon=false}
+podemos observar que no en todas las proteínas en UniProtKB se encuentra algún dominio o elemento funcional en InterPro.
+
+:::: {.callout-note icon="false"}
 ## Ejercicio 4
 
-Determina cuántos taxones de UniProtKB no tienen ninguna proteína asignada.
-¿Y qué proporción de proteínas cuentan con una estructura terciaria?
+Determina cuántos taxones de UniProtKB no tienen ninguna proteína asignada. ¿Y qué proporción de proteínas cuentan con una estructura terciaria?
 
 ```{r}
-taxJSON <- fromJSON(paste0(API, 'taxonomy'))
-taxConJSON <- fromJSON(paste0(API, 'taxonomy/uniprot'))
+taxJSON <- leer_json(paste0(API, 'taxonomy'))
+taxConJSON <- leer_json(paste0(API, 'taxonomy/uniprot'))
 
 taxTot <- taxJSON[['taxa']][['uniprot']]
 taxCon <- taxConJSON[['taxa']]
-
 taxSin <- taxTot - taxCon
 
 taxTot
@@ -263,66 +277,80 @@ taxCon
 taxSin
 ```
 
-::: el motivo por los que hay tantos taxones sin una proteína asignada es `porque entre las proteínas no revisadas han dejado de añadir proteínas muy parecidas a los que tienen otros taxones
+El número de taxones sin proteínas asignadas se obtiene restando al número total de taxones de UniProtKB (`taxTot`) el número de taxones que tienen al menos una proteína asociada (`taxCon`). La diferencia (`taxSin`) representa taxones registrados en la base de datos taxonómica pero sin proteínas disponibles en UniProtKB.
+
 ```{r}
-protTot <- fromJSON(paste0(API,'protein'))[['proteins']][['uniprot']]
-protCon <-fromJSON(paste0(API,'protein/structure'))[['proteins']][['uniprot']]
+protTot <- leer_json(paste0(API, 'protein'))[['proteins']][['uniprot']]
+protCon <- leer_json(paste0(API, 'protein/structure'))[['proteins']][['uniprot']]
+
 protSin <- protTot - protCon
+propConEstructura <- protCon / protTot
+
+protTot
+protCon
 protSin
+propConEstructura
 ```
 
+La proporción de proteínas con estructura terciaria se calcula dividiendo el número de proteínas asociadas a una estructura (`protCon`) entre el número total de proteínas disponibles en UniProtKB (`protTot`). Es esperable que esta proporción sea baja, porque la determinación experimental o predicción estructural curada no está disponible para todas las proteínas de UniProtKB.
+
 # Filtros. Subconjunto de registros
-Podemos especificar un registro concreto de un tipo de datos para limitar una
-lista de registros de otro tipo de datos. Por ejemplo, la lista de proteínas
-de la base de datos *reviewed* (Swiss-Prot) anotadas con la familia Pfam
-PF00019 (*Transforming grow factor beta like domain*):
+
+Podemos especificar un registro concreto de un tipo de datos para limitar una lista de registros de otro tipo de datos. Por ejemplo, la lista de proteínas de la base de datos *reviewed* (Swiss-Prot) anotadas con la familia Pfam PF00019 (*Transforming grow factor beta like domain*):
 
 https://www.ebi.ac.uk/interpro/api/protein/reviewed/entry/pfam/PF00019
 
-Para extraer la información desde R, tenemos que familiarizarnos con la estructura
-de los datos.
+Para extraer la información desde R, tenemos que familiarizarnos con la estructura de los datos.
 
 ```{r}
-pfam00019 <- fromJSON(paste0(API, 'protein/reviewed/entry/pfam/PF00019'))
-names(pfam00019)
-pfam00019[['count']]
-names(pfam00019[['results']])
+pfam00019 <- leer_json(paste0(API, 'protein/reviewed/entry/pfam/PF00019'))
 
-# La función "flaten()" corrige el anidamiento de marcos de datos,
-kable(flatten(pfam00019[['results']][['metadata']])) 
+if (!is.null(pfam00019)) {
+   names(pfam00019)
+   pfam00019[['count']]
+   names(pfam00019[['results']])
+
+   # La función flatten() corrige el anidamiento de marcos de datos.
+   kable(flatten(pfam00019[['results']][['metadata']]))
+}
 ```
 
-:::{.callout-note icon=false}
+::: {.callout-note icon="false"}
 ## Ejercicio 5
-Intenta obtener una lista de los dominios de Pfam presentes en vertebrados
-(taxon 7742). Al menos, los 20 primeros.
+
+Intenta obtener una lista de los dominios de Pfam presentes en vertebrados (taxon 7742). Al menos, los 20 primeros.
+
 ```{r}
-vert <- fromJSON(paste0(API, 'entry/pfam/taxonomy/uniprot/7742'))
-vert[['results']][['metadata']]$name
+vert <- leer_json(paste0(API, 'entry/pfam/taxonomy/uniprot/7742'))
+
+if (!is.null(vert)) {
+   dominios_vertebrados <- vert[['results']][['metadata']]
+   kable(dominios_vertebrados[, c("accession", "name")])
+}
 ```
 
+La URL anterior filtra registros de tipo `entry/pfam` por taxonomía de UniProt. El identificador taxonómico 7742 corresponde a Vertebrata.
 
 ## Ejercicio 6
-¿Cuántas proteínas de cocodrilos (taxon 8493) conocemos con el dominio
-*zinc finger, C2HC type* (Pfam PF01530)?
+
+¿Cuántas proteínas de cocodrilos (taxon 8493) conocemos con el dominio *zinc finger, C2HC type* (Pfam PF01530)?
+
 ```{r}
-pfam01530 <- fromJSON(paste0(API,'protein/entry/pfam/PF01530/taxonomy/uniprot/8493'))
-pfam01530
+pfam01530 <- leer_json(paste0(API,'protein/entry/pfam/PF01530/taxonomy/uniprot/8493'))
+
+if (!is.null(pfam01530)) {
+   pfam01530[['count']]
+}
 ```
 
-Los cocodrilos tienen 15 proteínas
+Según la consulta realizada a InterPro, el número de proteínas de cocodrilos asociadas al dominio Pfam `PF01530` se obtiene del campo `count` de la respuesta JSON. En mi ejecución, la consulta devolvió 15 proteínas.
 :::
 
 # Apéndice. Cómo juntar todas las páginas que genera la API de Interpro
-A continuación utilizo un **bucle** para crear una lista de marcos de datos que
-después podemos unir mediante la función `rbind_pages()`. Mi objetivo es extraer
-todos los dominios de Pfam conocidos en equinodermos (taxon 7586).
 
-Descargar todas las páginas de dominios presentes en proteínas de equinodermos puede
-llevar bastante tiempo. Por eso, guardo el marco de datos resultante en un archivo
-y me ahorro tener que ejecutar la búsqueda cada vez que le doy al botón `Render`.
-Además, el bloque incluye la opción `eval: false`, para que no se ejecute. Cambia
-la opción cuando 
+A continuación utilizo un **bucle** para crear una lista de marcos de datos que después podemos unir mediante la función `rbind_pages()`. Mi objetivo es extraer todos los dominios de Pfam conocidos en equinodermos (taxon 7586).
+
+Descargar todas las páginas de dominios presentes en proteínas de equinodermos puede llevar bastante tiempo. Por eso, guardo el marco de datos resultante en un archivo y me ahorro tener que ejecutar la búsqueda cada vez que le doy al botón `Render`. Además, el bloque incluye la opción `eval: false`, para que no se ejecute. Cambia la opción cuando
 
 ```{r}
 #| eval: false
@@ -332,11 +360,11 @@ if (file.exists('equinodermata.Rds')) {
    equinodermata <- readRDS(file = 'equinodermata.Rds')
 # Si no existe, la creamos:
 } else {
-   primera <- fromJSON(paste0(API, 'entry/pfam/taxonomy/uniprot/7586'))
+   primera <- leer_json(paste0(API, 'entry/pfam/taxonomy/uniprot/7586'))
    todas <- list(primera[['results']][['metadata']])
    siguienteURL <- primera[['next']]
    while (! is.null(siguienteURL)) {
-      siguiente <- fromJSON(siguienteURL)
+      siguiente <- leer_json(siguienteURL)
       cuantas <- length(todas)
       todas[[cuantas + 1]] <- siguiente[['results']][['metadata']]
       siguienteURL <- siguiente[['next']]
@@ -348,9 +376,7 @@ if (file.exists('equinodermata.Rds')) {
 }
 ```
 
-A continuación, hago lo mismo para los cordados. Puesto que conocemos más proteínas
-de cordados que de equinodermos, no es sorprendente que haya más dominios proteicos
-conocidos de cordados. Por cierto, los cordados somos el taxon 7711.
+A continuación, hago lo mismo para los cordados. Puesto que conocemos más proteínas de cordados que de equinodermos, no es sorprendente que haya más dominios proteicos conocidos de cordados. Por cierto, los cordados somos el taxon 7711.
 
 ```{r}
 #| eval: false
@@ -358,11 +384,11 @@ conocidos de cordados. Por cierto, los cordados somos el taxon 7711.
 if (file.exists('chordata.Rds')) {
    chordata <- readRDS(file = 'chordata.Rds')
 } else {
-   primera <- fromJSON(paste0(API, 'entry/pfam/taxonomy/uniprot/7711'))
+   primera <- leer_json(paste0(API, 'entry/pfam/taxonomy/uniprot/7711'))
    todas <- list(primera[['results']][['metadata']])
    siguienteURL <- primera[['next']]
    while (! is.null(siguienteURL)) {
-      siguiente <- fromJSON(siguienteURL)
+      siguiente <- leer_json(siguienteURL)
       cuantas <- length(todas)
       todas[[cuantas + 1]] <- siguiente[['results']][['metadata']]
       siguienteURL <- siguiente[['next']]
@@ -373,11 +399,7 @@ if (file.exists('chordata.Rds')) {
 }
 ```
 
-Por la diferencia en el número de dominios, sabemos que debe haber dominios en
-cordados que no aparecen en equinodermos. Pero podría haber también dominios en
-equinodermos que no aparecen en cordados. Vamos a comprobarlo con la función
-`setdiff()`, que devuelve los elementos del primer vector que no aparecen en el
-segundo:
+Por la diferencia en el número de dominios, sabemos que debe haber dominios en cordados que no aparecen en equinodermos. Pero podría haber también dominios en equinodermos que no aparecen en cordados. Vamos a comprobarlo con la función `setdiff()`, que devuelve los elementos del primer vector que no aparecen en el segundo:
 
 ```{r}
 #| eval: false
@@ -388,14 +410,18 @@ kable(equinodermata[equinodermata$accession %in% SoloEquinodermos,
               c('accession', 'name')])
 ```
 
-# Bibliografía
+# Conclusiones
+
+En esta práctica se ha trabajado con la API de InterPro desde R, lo que permite acceder de forma programática a información sobre familias proteicas, dominios, proteínas, taxones, estructuras y proteomas. La práctica muestra que muchos recursos bioinformáticos modernos no sólo pueden consultarse manualmente desde una página web, sino también mediante URLs estructuradas que devuelven datos en formatos legibles por ordenador, como JSON.
+
+El uso de `jsonlite` permite transformar esas respuestas en listas y marcos de datos de R, facilitando su exploración, filtrado, combinación y representación tabular. Además, la paginación mediante el campo `next` es un concepto clave para trabajar con APIs grandes sin sobrecargar los servidores.
+
+Desde un punto de vista biológico, las consultas realizadas permiten conectar distintos niveles de información: proteínas, dominios funcionales, taxonomía y estructuras tridimensionales. Este tipo de integración es esencial en bioinformática funcional y anotación de proteínas.
+
 
 # Información sobre la sesión
 
 ```{r}
-#| eval: false
 sessionInfo()
 ```
-
-
-
+::::
