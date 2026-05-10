@@ -13,7 +13,20 @@ language:
 format:
    html:
       embed-resources: true
+      toc: true
+      toc-depth: 3
+      number-sections: true
+      theme: cosmo
+      highlight-style: github
 ---
+
+
+# Introducción
+
+En esta práctica se introducen los principios básicos del control de versiones mediante Git y su integración con Github. El uso de sistemas de control de versiones resulta fundamental en bioinformática y en desarrollo de software científico, ya que permite registrar cambios, mantener histórico de modificaciones, trabajar de forma reproducible y sincronizar proyectos entre distintos dispositivos y colaboradores.
+
+Además de aprender comandos básicos de Git, esta práctica permite comprender conceptos fundamentales como repositorios, commits, ramas y sincronización remota con Github.
+
 
 # Preparación
 Para esta práctica necesitamos tener Git instalado. Podéis comprobar si ya está
@@ -64,7 +77,9 @@ Puedes ver la configuración actual con `git config --list`.
  git config --list
 core.editor=nano -w
 init.defaultbranch=soca
+
 # Creación del repositorio
+
 Desde la carpeta principal, en el terminal ejecutamos `git init`. Se habrá
 creado una carpeta oculta, `.git`. A partir de ese momento, Git observará las
 modificaciones de todos los archivos en esa carpeta y **en todas sus subcarpetas**.
@@ -103,7 +118,9 @@ Archivos sin seguimiento:
         fastp.1
 
 no hay nada agregado al commit pero hay archivos sin seguimiento presentes (usa "git add" para hacerles seguimiento)
+
 # Seguimiento de modificaciones
+
 Utiliza `git add ...` para añadir archivos al área de preparación o "escenario"
 [^1]. Consulta `git status` y cuando los hayas añadido todos, ejecuta
 `git commit -m "...", donde debes sustituir los "..." por un mensaje entrecomillado
@@ -119,6 +136,7 @@ Consulta `git status` y también `git log`. Asegúrate de que la rama lleva el n
 que habías elegido.
 
 # Ignorar cosas
+
 Git está diseñado para compartir archivos pequeños que van cambiando a lo largo
 de un proyecto. No es un sistema de copias de seguridad. La carpeta de datos debería
 ser excluida del seguimiento ofrecido por Git. El motivo es que allí pueden residir
@@ -144,6 +162,7 @@ Estas tres líneas indican:
    asterisco, "*", como comodín: representa cualquier cadena de caracteres.
    
 # Crear un repositorio en Github
+
 Tienes que haber creado una cuenta de usuario o ususaria. Github te guía en la
 creación de un nuevo repositorio. Es recomendable darle el mismo nombre que tiene
 la carpeta en la que has creado tu repositorio local. Puedes configurar el repositorio
@@ -161,6 +180,7 @@ entre las opciones de Github, lo correcto sería añadir un archivo de texto lla
 [de este enlace](https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt).
 
 # Crear un par de llaves SSH
+
 Para identificarte cada vez que actualizas el repositorio remoto, necesitas un
 par de llaves SSH. Las llaves son documentos de texto. Una llave es pública y
 actúa más bien como un cerrojo. Puedes darlo a quien quieras que compruebe tu
@@ -190,6 +210,7 @@ ejemplo, "portatil") y pega la llave pública en el recuadro destinado a ello.
 Por último, confirma la acción pulsando el botón verde.
 
 # Vincular el repositorio local al remoto
+
 En la página de Github donde reside tu repositorio, encontrarás un botón verde
 con la inscripción `<> Code`. Al pincharlo, la pestaña izquierda ("Local") te
 sugiere que puedes "clonar" el repositorio y te ofrece tres opciones, una de
@@ -232,6 +253,7 @@ Desde luego, no es recomendable trabajar con más de un remoto ni más de una ra
 si no es estrictamente necesario.
 
 # Traer actualizaciones del remoto a la carpeta local
+
 Una vez la rama local está configurada para prestar atención a los cambios que
 pueden haber aparecido en una rama remota, al ejecutar `git pull`, automáticamente
 Git intentará implementar en la carpeta local cualquier modificación que se haya
@@ -246,3 +268,10 @@ Cada vez que git se comunique con el remoto en Github, tu ordenador te pedirá
 la contraseña con la que has protegido la llave privada. Se le puede decir al
 ordenador que recuerde la contraseña y no te la pida cada vez, pero este guión
 no da para más.
+
+
+# Conclusiones
+
+Esta práctica permitió familiarizarse con el uso básico de Git y Github como herramientas fundamentales para el control de versiones y la reproducibilidad computacional. Se aprendió a inicializar repositorios, registrar cambios mediante commits, gestionar archivos ignorados con `.gitignore` y sincronizar repositorios locales con repositorios remotos en Github.
+
+El uso de Git constituye una herramienta esencial en bioinformática moderna, ya que facilita el trabajo organizado, la trazabilidad de cambios y la colaboración en proyectos científicos.
