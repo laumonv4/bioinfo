@@ -13,7 +13,25 @@ language:
 format:
    html:
       embed-resources: true
+      toc: true
+      toc-depth: 3
+      number-sections: true
+      code-fold: false
 ---
+
+
+
+## Objetivos de la práctica
+
+En esta práctica se trabaja con marcos de datos (`data.frame` y `tibble`) utilizando R y distintos paquetes del ecosistema tidyverse. Los objetivos principales son:
+
+- Importar y exportar tablas.
+- Manipular datos con `dplyr`.
+- Filtrar, ordenar y resumir información.
+- Representar resultados tabulares de forma clara.
+- Consultar datos remotos en formato JSON.
+- Familiarizarse con estructuras de datos muy utilizadas en bioinformática y análisis biomédico.
+
 
 # Preparación
 
@@ -485,6 +503,7 @@ f <- names(gene) != 'attributes'
 kable(gene[1:15, f]) 
 ```
 
+# Conclusiones
 
-
+A lo largo de esta práctica se han aplicado distintas herramientas de manipulación y análisis de tablas en R. El uso de `dplyr` permite realizar transformaciones de datos de forma eficiente y legible, mientras que `jsonlite` facilita el acceso a recursos remotos y APIs bioinformáticas. Además, la representación tabular y el filtrado de información constituyen herramientas fundamentales en análisis de datos biológicos y biomédicos.
 

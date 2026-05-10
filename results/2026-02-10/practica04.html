@@ -2219,10 +2219,33 @@ vertical-align: -.125em;
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#objetivos-de-la-práctica" id="toc-objetivos-de-la-práctica" class="nav-link active" data-scroll-target="#objetivos-de-la-práctica"><span class="header-section-number">0.1</span> Objetivos de la práctica</a></li>
+  <li><a href="#preparación" id="toc-preparación" class="nav-link" data-scroll-target="#preparación"><span class="header-section-number">1</span> Preparación</a></li>
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link" data-scroll-target="#objetivos"><span class="header-section-number">2</span> Objetivos</a></li>
+  <li><a href="#datos" id="toc-datos" class="nav-link" data-scroll-target="#datos"><span class="header-section-number">3</span> Datos</a></li>
+  <li><a href="#ordenar-una-tabla" id="toc-ordenar-una-tabla" class="nav-link" data-scroll-target="#ordenar-una-tabla"><span class="header-section-number">4</span> Ordenar una tabla</a></li>
+  <li><a href="#archivos-json-y-gff" id="toc-archivos-json-y-gff" class="nav-link" data-scroll-target="#archivos-json-y-gff"><span class="header-section-number">5</span> Archivos JSON y GFF</a>
+  <ul class="collapse">
+  <li><a href="#seleccionar-filas-y-columnas" id="toc-seleccionar-filas-y-columnas" class="nav-link" data-scroll-target="#seleccionar-filas-y-columnas"><span class="header-section-number">5.1</span> Seleccionar filas y columnas</a></li>
+  <li><a href="#agrupar-operar-y-resumir" id="toc-agrupar-operar-y-resumir" class="nav-link" data-scroll-target="#agrupar-operar-y-resumir"><span class="header-section-number">5.2</span> Agrupar, operar y resumir</a></li>
+  </ul></li>
+  <li><a href="#comparar-o-cruzar-datos" id="toc-comparar-o-cruzar-datos" class="nav-link" data-scroll-target="#comparar-o-cruzar-datos"><span class="header-section-number">6</span> Comparar o cruzar datos</a></li>
+  <li><a href="#las-llaves-y-la-función-match" id="toc-las-llaves-y-la-función-match" class="nav-link" data-scroll-target="#las-llaves-y-la-función-match"><span class="header-section-number">7</span> Las llaves y la función <code>match()</code></a>
+  <ul class="collapse">
+  <li><a href="#apéndice" id="toc-apéndice" class="nav-link" data-scroll-target="#apéndice"><span class="header-section-number">7.1</span> Apéndice</a></li>
+  </ul></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones"><span class="header-section-number">8</span> Conclusiones</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -2238,7 +2261,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Última actualización:</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">6 de mayo de 2026</p>
+      <p class="date">10 de mayo de 2026</p>
     </div>
   </div>
   
@@ -2250,20 +2273,32 @@ vertical-align: -.125em;
 </header>
 
 
-<section id="preparación" class="level1">
-<h1>Preparación</h1>
+<section id="objetivos-de-la-práctica" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="objetivos-de-la-práctica"><span class="header-section-number">0.1</span> Objetivos de la práctica</h2>
+<p>En esta práctica se trabaja con marcos de datos (<code>data.frame</code> y <code>tibble</code>) utilizando R y distintos paquetes del ecosistema tidyverse. Los objetivos principales son:</p>
+<ul>
+<li>Importar y exportar tablas.</li>
+<li>Manipular datos con <code>dplyr</code>.</li>
+<li>Filtrar, ordenar y resumir información.</li>
+<li>Representar resultados tabulares de forma clara.</li>
+<li>Consultar datos remotos en formato JSON.</li>
+<li>Familiarizarse con estructuras de datos muy utilizadas en bioinformática y análisis biomédico.</li>
+</ul>
+</section>
+<section id="preparación" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Preparación</h1>
 <p>En esta práctica trabajaremos en el entorno de R, con los paquetes siguientes: <code>dplyr</code>, <code>kableExtra</code> y <code>jsonlite</code>. Para descargar algunos datos de ejemplo, usaremos los programas <code>datasets</code> y <code>dataformat</code> <span class="citation" data-cites="OLeary2024">(<a href="#ref-OLeary2024" role="doc-biblioref">O’Leary et al. 2024</a>)</span>, que pueden descargarse en <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/download-and-install/">este enlace</a>.</p>
 </section>
-<section id="objetivos" class="level1">
-<h1>Objetivos</h1>
+<section id="objetivos" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Objetivos</h1>
 <ol type="1">
 <li>Conocer el uso de <code>datasets</code> y <code>dataformat</code>.</li>
 <li>Ver algún ejemplo de archivo en formato JSON.</li>
 <li>Manipular marcos de datos sin usar hojas de cálculo.</li>
 </ol>
 </section>
-<section id="datos" class="level1">
-<h1>Datos</h1>
+<section id="datos" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Datos</h1>
 <p>Supón que tenemos interés en descargar un genoma de referencia de cualquier especie del género <em>Trypanosoma</em>, así como su anotación funcional, en formato <a href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">GFF3</a>. Veamos primero de qué opciones disponemos:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> trypanosoma_annotated.txt <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
@@ -2674,8 +2709,8 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="ordenar-una-tabla" class="level1">
-<h1>Ordenar una tabla</h1>
+<section id="ordenar-una-tabla" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Ordenar una tabla</h1>
 <p>La función <code>order()</code> produce los índices ordenados de los elementos de un vector. Consulta su ayuda y experimenta con ella. Vamos a usar esta función para ordenar las filas del marco de datos <code>genomas</code> por fecha, que es la tercera columna, llamada <code>Assembly.Release.Date</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observa que asignamos el resultado del ordenamiento al mismo objeto que</span></span>
@@ -3122,8 +3157,8 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="archivos-json-y-gff" class="level1">
-<h1>Archivos JSON y GFF</h1>
+<section id="archivos-json-y-gff" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Archivos JSON y GFF</h1>
 <p>Habiendo visto las opciones, decidimos descargar el genoma y la anotación funcional de una de ellas, por ejemplo GCA_022059095.1.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> ncbi_data/data/GCA_022059095.1/genomic.gff <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
@@ -3133,70 +3168,502 @@ vertical-align: -.125em;
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">unzip</span> ncbi_dataset.zip</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>bash: línea 3: datasets: orden no encontrada
-unzip:  cannot find or open ncbi_dataset.zip, ncbi_dataset.zip.zip or ncbi_dataset.zip.ZIP.</code></pre>
+<pre><code>Collecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [------------------------------------------------]   0% 0/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.37kB 35.3MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.37kB 35.3MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.37kB 35.3MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.37kB 35.3MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.48kB 57.1kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    3.92kB 81.5kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    3.92kB 81.5kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    10.1kB 129kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    18.3kB 231kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    18.3kB 231kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    18.3kB 231kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    18.3kB 231kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    32.8kB 253kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    32.8kB 253kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    32.8kB 253kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    32.8kB 253kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    32.8kB 253kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    32.8kB 253kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    32.8kB 253kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    32.8kB 253kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    65.5kB 316kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    65.5kB 316kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    65.5kB 316kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    131kB 548kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    131kB 548kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    131kB 548kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    131kB 548kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    131kB 548kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    197kB 678kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    197kB 678kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    197kB 678kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    262kB 818kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    262kB 818kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    262kB 818kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    262kB 818kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    360kB 977kB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    426kB 1.14MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    426kB 1.14MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    557kB 1.4MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    590kB 1.47MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    590kB 1.47MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    590kB 1.47MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    623kB 1.41MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    852kB 1.9MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    852kB 1.9MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    852kB 1.9MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    1.21MB 2.53MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    1.21MB 2.53MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    1.21MB 2.53MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    1.21MB 2.53MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    1.34MB 2.56MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    1.74MB 3.28MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    1.74MB 3.28MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    1.87MB 3.36MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.42MB 4.28MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.46MB 4.33MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.46MB 4.33MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.46MB 4.33MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    2.88MB 4.74MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    3.54MB 5.75MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    3.54MB 5.75MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    4.13MB 6.45MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    4.98MB 7.69MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    4.98MB 7.69MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    4.98MB 7.69MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    5.18MB 7.6MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    6.09MB 8.81MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.11MB 10.1MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.11MB 10.1MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.47MB 10.3MB/s
+[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package []
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package []
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package []
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package []
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package []
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [==============&gt;---------------------------------]  33% 2/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [=======================&gt;------------------------]  50% 3/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [=======================&gt;------------------------]  50% 3/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB done
+Validating package files [=======================&gt;------------------------]  50% 3/6
+[1A[2K[1A[2K[1A[2KCollecting 1 genome record [================================================] 100% 1/1
+Downloading: ncbi_dataset.zip    7.96MB valid data package
+Validating package files [================================================] 100% 6/6
+Archive:  ncbi_dataset.zip
+  inflating: README.md               
+  inflating: ncbi_dataset/data/assembly_data_report.jsonl  
+  inflating: ncbi_dataset/data/GCA_022059095.1/GCA_022059095.1_T.mel.1_genomic.fna  
+  inflating: ncbi_dataset/data/GCA_022059095.1/genomic.gff  
+  inflating: ncbi_dataset/data/dataset_catalog.json  
+  inflating: md5sum.txt              </code></pre>
 </div>
 </div>
 <p>En la carpeta <code>ncbi_dataset/data</code> encontrarás un archivo en formato JSON con información sobre los datos descargados, y un archivo en formato “jsonlines”. El formato “jsonlines” es una versión de JSON en la que cada registro ocupa una sola línea. Esto dificulta la visualización, pero agiliza el análisis de los datos en la línea de órdenes. Para ver mejor el contenido del archivo con la extensión <code>jsonl</code>, podríamos utilizar el programa <a href="https://jqlang.org/"><code>jq</code></a>, o bien utilizar la función <code>prettify()</code> del paquete <code>jsonlite</code> de R:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;jsonlite&#39;</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify</span>(<span class="fu">readLines</span>(<span class="st">&#39;ncbi_dataset/data/assembly_data_report.jsonl&#39;</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in file(con, &quot;r&quot;): no fue posible abrir el archivo
-&#39;ncbi_dataset/data/assembly_data_report.jsonl&#39;: No existe el archivo o el
-directorio</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in file(con, &quot;r&quot;): no se puede abrir la conexión</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+    &quot;assemblyInfo&quot;: {
+        &quot;assemblyLevel&quot;: &quot;Contig&quot;,
+        &quot;assemblyName&quot;: &quot;T.mel.1&quot;,
+        &quot;assemblyType&quot;: &quot;haploid&quot;,
+        &quot;submitter&quot;: &quot;University of Edinburgh&quot;,
+        &quot;refseqCategory&quot;: &quot;reference genome&quot;,
+        &quot;bioprojectLineage&quot;: [
+            {
+                &quot;bioprojects&quot;: [
+                    {
+                        &quot;accession&quot;: &quot;PRJNA786535&quot;,
+                        &quot;title&quot;: &quot;Trypanosoma melophagium isolate:St. Kilda Genome sequencing and assembly&quot;
+                    }
+                ]
+            }
+        ],
+        &quot;sequencingTech&quot;: &quot;Oxford Nanopore MinION; DNBseq&quot;,
+        &quot;blastUrl&quot;: &quot;https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastSearch&amp;PROG_DEF=blastn&amp;BLAST_SPEC=GDH_GCA_022059095.1&quot;,
+        &quot;biosample&quot;: {
+            &quot;accession&quot;: &quot;SAMN23701209&quot;,
+            &quot;lastUpdated&quot;: &quot;2021-12-29T05:45:01.878&quot;,
+            &quot;publicationDate&quot;: &quot;2021-12-29T00:00:00.000&quot;,
+            &quot;submissionDate&quot;: &quot;2021-12-06T10:53:03.556&quot;,
+            &quot;sampleIds&quot;: [
+                {
+                    &quot;label&quot;: &quot;Sample name&quot;,
+                    &quot;value&quot;: &quot;T. melophagium&quot;
+                },
+                {
+                    &quot;db&quot;: &quot;SRA&quot;,
+                    &quot;value&quot;: &quot;SRS11278131&quot;
+                }
+            ],
+            &quot;description&quot;: {
+                &quot;title&quot;: &quot;MIGS Eukaryotic sample from Trypanosoma melophagium&quot;,
+                &quot;organism&quot;: {
+                    &quot;taxId&quot;: 715481,
+                    &quot;organismName&quot;: &quot;Trypanosoma melophagium&quot;
+                },
+                &quot;comment&quot;: &quot;Keywords: GSC:MIxS;MIGS:6.0&quot;
+            },
+            &quot;owner&quot;: {
+                &quot;name&quot;: &quot;University of Edinburgh&quot;,
+                &quot;contacts&quot;: [
+                    {
+
+                    }
+                ]
+            },
+            &quot;models&quot;: [
+                &quot;MIGS.eu&quot;,
+                &quot;MIGS/MIMS/MIMARKS.host-associated&quot;
+            ],
+            &quot;bioprojects&quot;: [
+                {
+                    &quot;accession&quot;: &quot;PRJNA786535&quot;
+                }
+            ],
+            &quot;package&quot;: &quot;MIGS.eu.host-associated.6.0&quot;,
+            &quot;attributes&quot;: [
+                {
+                    &quot;name&quot;: &quot;isolate&quot;,
+                    &quot;value&quot;: &quot;St. Kilda&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;isolation_source&quot;,
+                    &quot;value&quot;: &quot;blood&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;ecotype&quot;,
+                    &quot;value&quot;: &quot;St. Kilda&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;collection_date&quot;,
+                    &quot;value&quot;: &quot;2020-09-17&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;env_broad_scale&quot;,
+                    &quot;value&quot;: &quot;Cultured&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;env_local_scale&quot;,
+                    &quot;value&quot;: &quot;Cultured&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;env_medium&quot;,
+                    &quot;value&quot;: &quot;Cultured&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;geo_loc_name&quot;,
+                    &quot;value&quot;: &quot;United Kingdom: Scotland, St. Kilda&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;host&quot;,
+                    &quot;value&quot;: &quot;Ovis aries&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;isol_growth_condt&quot;,
+                    &quot;value&quot;: &quot;This study&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;lat_lon&quot;,
+                    &quot;value&quot;: &quot;57.8287 N 8.6352 W&quot;
+                }
+            ],
+            &quot;status&quot;: {
+                &quot;status&quot;: &quot;live&quot;,
+                &quot;when&quot;: &quot;2021-12-29T05:45:01.878&quot;
+            },
+            &quot;collectionDate&quot;: &quot;2020-09-17&quot;,
+            &quot;ecotype&quot;: &quot;St. Kilda&quot;,
+            &quot;geoLocName&quot;: &quot;United Kingdom: Scotland, St. Kilda&quot;,
+            &quot;host&quot;: &quot;Ovis aries&quot;,
+            &quot;isolate&quot;: &quot;St. Kilda&quot;,
+            &quot;isolationSource&quot;: &quot;blood&quot;,
+            &quot;latLon&quot;: &quot;57.8287 N 8.6352 W&quot;
+        },
+        &quot;assemblyStatus&quot;: &quot;current&quot;,
+        &quot;pairedAssembly&quot;: {
+            &quot;accession&quot;: &quot;GCF_022059095.1&quot;,
+            &quot;status&quot;: &quot;current&quot;,
+            &quot;annotationName&quot;: &quot;Annotation submitted by University of Edinburgh&quot;
+        },
+        &quot;bioprojectAccession&quot;: &quot;PRJNA786535&quot;,
+        &quot;assemblyMethod&quot;: &quot;Wtdbg2 v. 13/05/2021&quot;,
+        &quot;releaseDate&quot;: &quot;2022-02-08&quot;
+    },
+    &quot;assemblyStats&quot;: {
+        &quot;totalSequenceLength&quot;: &quot;23303718&quot;,
+        &quot;totalUngappedLength&quot;: &quot;23303718&quot;,
+        &quot;numberOfContigs&quot;: 64,
+        &quot;contigN50&quot;: 505851,
+        &quot;contigL50&quot;: 15,
+        &quot;numberOfScaffolds&quot;: 64,
+        &quot;scaffoldN50&quot;: 505851,
+        &quot;scaffoldL50&quot;: 15,
+        &quot;numberOfComponentSequences&quot;: 64,
+        &quot;gcCount&quot;: &quot;9608043&quot;,
+        &quot;gcPercent&quot;: 41,
+        &quot;genomeCoverage&quot;: &quot;225&quot;,
+        &quot;atgcCount&quot;: &quot;23303718&quot;
+    },
+    &quot;annotationInfo&quot;: {
+        &quot;name&quot;: &quot;Annotation submitted by University of Edinburgh&quot;,
+        &quot;provider&quot;: &quot;University of Edinburgh&quot;,
+        &quot;releaseDate&quot;: &quot;2022-02-08&quot;,
+        &quot;stats&quot;: {
+            &quot;geneCounts&quot;: {
+                &quot;total&quot;: 9768,
+                &quot;proteinCoding&quot;: 9768
+            }
+        }
+    },
+    &quot;wgsInfo&quot;: {
+        &quot;wgsProjectAccession&quot;: &quot;JAJSEB01&quot;,
+        &quot;masterWgsUrl&quot;: &quot;https://www.ncbi.nlm.nih.gov/nuccore/JAJSEB000000000.1&quot;,
+        &quot;wgsContigsUrl&quot;: &quot;https://www.ncbi.nlm.nih.gov/Traces/wgs/JAJSEB01&quot;
+    },
+    &quot;currentAccession&quot;: &quot;GCA_022059095.1&quot;,
+    &quot;accession&quot;: &quot;GCA_022059095.1&quot;,
+    &quot;pairedAccession&quot;: &quot;GCF_022059095.1&quot;,
+    &quot;sourceDatabase&quot;: &quot;SOURCE_DATABASE_GENBANK&quot;,
+    &quot;organism&quot;: {
+        &quot;taxId&quot;: 715481,
+        &quot;organismName&quot;: &quot;Trypanosoma melophagium&quot;,
+        &quot;infraspecificNames&quot;: {
+            &quot;ecotype&quot;: &quot;St. Kilda&quot;,
+            &quot;isolate&quot;: &quot;St. Kilda&quot;
+        }
+    }
+}
+ </code></pre>
 </div>
 </div>
 <p>Volviendo a lo que nos interesa, vamos a cargar en un marco de datos de una sesión de R la anotación funcional del genoma escogido. Aunque existen funciones específicas para leer archivos GFF, usaremos la función básica <code>read.table()</code>, con alguna precaución.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Como no tiene cabecera, le damos los nombres de las columnas:</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>gff <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;ncbi_dataset/data/GCA_022059095.1/genomic.gff&#39;</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;seqid&#39;</span>, <span class="st">&#39;source&#39;</span>, <span class="st">&#39;type&#39;</span>, <span class="st">&#39;start&#39;</span>, <span class="st">&#39;end&#39;</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&#39;score&#39;</span>, <span class="st">&#39;strand&#39;</span>, <span class="st">&#39;phase&#39;</span>, <span class="st">&#39;attributes&#39;</span>),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">quote =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in file(file, &quot;rt&quot;): no fue posible abrir el archivo
-&#39;ncbi_dataset/data/GCA_022059095.1/genomic.gff&#39;: No existe el archivo o el
-directorio</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in file(file, &quot;rt&quot;): no se puede abrir la conexión</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Como no tiene cabecera, le damos los nombres de las columnas:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>gff <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;ncbi_dataset/data/GCA_022059095.1/genomic.gff&#39;</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;seqid&#39;</span>, <span class="st">&#39;source&#39;</span>, <span class="st">&#39;type&#39;</span>, <span class="st">&#39;start&#39;</span>, <span class="st">&#39;end&#39;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&#39;score&#39;</span>, <span class="st">&#39;strand&#39;</span>, <span class="st">&#39;phase&#39;</span>, <span class="st">&#39;attributes&#39;</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">quote =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Al leer el archivo GFF con <code>read.table()</code>, debemos especificar que el separador de columnas es el tabulador y que no hay texto entrecomillado en el archivo. Esto último se consigue con la opción <code>quote = &#39;&#39;</code>, y sirve para evitar que todo lo que se encuentre entre dos apóstrofes (<em>’</em>) se considere parte de un mismo campo de información, aunque sean cientos de líneas.</p>
 <p>Para comprobar que el archivo ha sido leído completo y sin errores, conviene revisar las dimensiones del marco de datos (<code>dim(gff)</code>) o incluso visualizar el principio (<code>head(gff)</code>) y el final (<code>tail(gff)</code>) del objeto, que es demasiado grande para mostrarlo en pantalla completo.</p>
-<section id="seleccionar-filas-y-columnas" class="level2">
-<h2 class="anchored" data-anchor-id="seleccionar-filas-y-columnas">Seleccionar filas y columnas</h2>
+<section id="seleccionar-filas-y-columnas" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="seleccionar-filas-y-columnas"><span class="header-section-number">5.1</span> Seleccionar filas y columnas</h2>
 <p>En el objeto <code>gff</code> hay 5 valores diferentes de la variable <code>type</code>: “CDS”, “exon”, “gene”, “mRNA” y “region”. Puedes comprobarlo con <code>unique(gff$type)</code>, o con <code>table(gff$type)</code>. Podemos separar la tabla en cinco marcos de datos, que correspondan a esos cinco tipos de anotación funcional.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos un vector booleano como índice de las filas.</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># En las tablas nuevas, no necesitamos la tercera columna</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># y la eliminamos con el &quot;-3&quot;.</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>gene   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;gene&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mrna   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;mRNA&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>exon   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;exon&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cds    <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;CDS&#39;</span>,    <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>region <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;region&#39;</span>, <span class="sc">-</span><span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alinear las órdenes nos ayuda a detectar posibles errores</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos un vector booleano como índice de las filas.</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># En las tablas nuevas, no necesitamos la tercera columna</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># y la eliminamos con el &quot;-3&quot;.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>gene   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;gene&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>mrna   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;mRNA&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>exon   <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;exon&#39;</span>,   <span class="sc">-</span><span class="dv">3</span>]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>cds    <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;CDS&#39;</span>,    <span class="sc">-</span><span class="dv">3</span>]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>region <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;region&#39;</span>, <span class="sc">-</span><span class="dv">3</span>]</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Alinear las órdenes nos ayuda a detectar posibles errores</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -3212,22 +3679,19 @@ directorio</code></pre>
 </div>
 </div>
 </section>
-<section id="agrupar-operar-y-resumir" class="level2">
-<h2 class="anchored" data-anchor-id="agrupar-operar-y-resumir">Agrupar, operar y resumir</h2>
+<section id="agrupar-operar-y-resumir" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="agrupar-operar-y-resumir"><span class="header-section-number">5.2</span> Agrupar, operar y resumir</h2>
 <p>Habiendo separado los diferentes tipos de anotaciones, ahora resulta fácil obtener estadísticas de cada uno. Podemos querer una tabla que nos diga para cada tipo de anotación, cuántos elementos de ese tipo hay en el genoma, qué longitud media tienen y qué desviación estándar. Hay diferentes maneras de conseguirlo. La más rudimentaria implicaría obtener cada estadística individualmente y después juntarlas en una nueva tabla. Por ejemplo, para regiones codificantes (“CDS”):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cds<span class="sc">$</span>longitud <span class="ot">&lt;-</span> cds<span class="sc">$</span>end <span class="sc">-</span> cds<span class="sc">$</span>start <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cds<span class="sc">$</span>longitud <span class="ot">&lt;-</span> cds<span class="sc">$</span>end <span class="sc">-</span> cds<span class="sc">$</span>start <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">tipo       =</span> <span class="st">&#39;CDS&#39;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>   número     <span class="ot">=</span> <span class="fu">nrow</span>(cds),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.Media =</span> <span class="fu">mean</span>(cds<span class="sc">$</span>longitud),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.SD    =</span> <span class="fu">sd</span>(cds<span class="sc">$</span>longitud),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;cds&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">tipo       =</span> <span class="st">&#39;CDS&#39;</span>,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>   número     <span class="ot">=</span> <span class="fu">nrow</span>(cds),</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.Media =</span> <span class="fu">mean</span>(cds<span class="sc">$</span>longitud),</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.SD    =</span> <span class="fu">sd</span>(cds<span class="sc">$</span>longitud),</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;cds&#39; no encontrado</code></pre>
+<pre><code>Error in data.frame(tipo = &quot;CDS&quot;, número = nrow(cds), long.Media = mean(cds$longitud), : argumento ausente, sin argumento por omisión</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -3245,67 +3709,102 @@ directorio</code></pre>
 </div>
 <p>Este tipo de operación es bastante habitual, y se puede hacer sin necesidad de crear marcos de datos parciales. La función <code>split()</code> divide las líneas de un marco de datos en tantos marcos de datos como valores diferentes (<em>niveles</em>) haya en el <em>factor</em> que usemos para definir los grupos. El resultado es un solo objeto: una <em>lista</em> de marcos de datos:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Esto es una lista de marcos de datos:</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>porTipo <span class="ot">&lt;-</span> <span class="fu">split</span>(gff, gff<span class="sc">$</span>type)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Esto es una lista de marcos de datos:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>porTipo <span class="ot">&lt;-</span> <span class="fu">split</span>(gff, gff<span class="sc">$</span>type)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estas funciones nos permiten inspeccionar algunas características</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># del nuevo objeto:</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] &quot;list&quot;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estas funciones nos permiten inspeccionar algunas características</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># del nuevo objeto:</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] &quot;CDS&quot;    &quot;exon&quot;   &quot;gene&quot;   &quot;mRNA&quot;   &quot;region&quot;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(porTipo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(porTipo, class)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         CDS         exon         gene         mRNA       region 
+&quot;data.frame&quot; &quot;data.frame&quot; &quot;data.frame&quot; &quot;data.frame&quot; &quot;data.frame&quot; </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(porTipo, class)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(porTipo, nrow)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(porTipo, nrow)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   CDS   exon   gene   mRNA region 
+ 11304  11304   9768  10057     64 </code></pre>
 </div>
 </div>
 <p>La función <code>sapply()</code>, toma al menos dos argumentos: una lista (o vector) y una función. Devuelve un vector (si es posible) con los resultados de aplicar la función a cada elemento de la lista. Con esto, el resumen que queríamos se puede obtener así:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Primero calculamos las longitudes de todas las anotaciones en gff:</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>gff<span class="sc">$</span>longitud <span class="ot">&lt;-</span> gff<span class="sc">$</span>end <span class="sc">-</span> gff<span class="sc">$</span>start <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Volvemos a separar las filas por tipo, ahora que tenemos las longitudes:</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>porTipo <span class="ot">&lt;-</span> <span class="fu">split</span>(gff, gff<span class="sc">$</span>type)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">tipo =</span> <span class="fu">names</span>(porTipo),</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>   número <span class="ot">=</span> <span class="fu">sapply</span>(porTipo, nrow),</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.Media =</span> <span class="fu">sapply</span>(porTipo, <span class="cf">function</span>(x) <span class="fu">mean</span>(x<span class="sc">$</span>longitud)),</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.SD    =</span> <span class="fu">sapply</span>(porTipo, <span class="cf">function</span>(x)   <span class="fu">sd</span>(x<span class="sc">$</span>longitud))</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;porTipo&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aprovechamos para mostrar nombres de columnas más legibles:</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resumen,</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;Tipo&#39;</span>, <span class="st">&#39;Número&#39;</span>, <span class="st">&#39;Longitud Media&#39;</span>,</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Desviación estándar&#39;</span>),</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;resumen&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Primero calculamos las longitudes de todas las anotaciones en gff:</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>gff<span class="sc">$</span>longitud <span class="ot">&lt;-</span> gff<span class="sc">$</span>end <span class="sc">-</span> gff<span class="sc">$</span>start <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Volvemos a separar las filas por tipo, ahora que tenemos las longitudes:</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>porTipo <span class="ot">&lt;-</span> <span class="fu">split</span>(gff, gff<span class="sc">$</span>type)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>   <span class="at">tipo =</span> <span class="fu">names</span>(porTipo),</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>   número <span class="ot">=</span> <span class="fu">sapply</span>(porTipo, nrow),</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.Media =</span> <span class="fu">sapply</span>(porTipo, <span class="cf">function</span>(x) <span class="fu">mean</span>(x<span class="sc">$</span>longitud)),</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>   <span class="at">long.SD    =</span> <span class="fu">sapply</span>(porTipo, <span class="cf">function</span>(x)   <span class="fu">sd</span>(x<span class="sc">$</span>longitud))</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Aprovechamos para mostrar nombres de columnas más legibles:</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resumen,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;Tipo&#39;</span>, <span class="st">&#39;Número&#39;</span>, <span class="st">&#39;Longitud Media&#39;</span>,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Desviación estándar&#39;</span>),</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: right;">Número</th>
+<th style="text-align: right;">Longitud Media</th>
+<th style="text-align: right;">Desviación estándar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CDS</td>
+<td style="text-align: right;">11304</td>
+<td style="text-align: right;">1358.661</td>
+<td style="text-align: right;">1377.899</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">exon</td>
+<td style="text-align: right;">11304</td>
+<td style="text-align: right;">1358.661</td>
+<td style="text-align: right;">1377.899</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gene</td>
+<td style="text-align: right;">9768</td>
+<td style="text-align: right;">1553.822</td>
+<td style="text-align: right;">1466.322</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mRNA</td>
+<td style="text-align: right;">10057</td>
+<td style="text-align: right;">1549.331</td>
+<td style="text-align: right;">1466.240</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">region</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">364120.594</td>
+<td style="text-align: right;">314801.149</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Las operaciones de agrupar y resumir se pueden hacer también con funciones del paquete <code>dplyr</code>, que forma parte de un conjunto de paquetes diseñados para funcionar armoniosamente entre ellos. Son los paquetes del <a href="https://tidyverse.org/"><code>tidyverse</code></a>, muy populares en ciencia de datos. Casi se pueden considerar un dialecto de R. Las funciones (o <em>verbos</em>) más interesantes de <code>dplyr</code> son <code>group_by()</code> y <code>summarise()</code>.</p>
 <div class="cell" data-meassage="false">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;dplyr&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;dplyr&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
@@ -3320,20 +3819,17 @@ Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observa el uso de &quot;tuberías&quot; (&quot;%&gt;%&quot;):</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> gff <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(type) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>   número     <span class="ot">=</span> <span class="fu">n</span>(),</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">Long.Media =</span> <span class="fu">mean</span>(longitud),</span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">Long.SD    =</span> <span class="fu">sd</span>(longitud)</span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resumen,</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;Tipo&#39;</span>, <span class="st">&#39;Número&#39;</span>, <span class="st">&#39;Longitud Media&#39;</span>,</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Desviación estándar&#39;</span>),</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Observa el uso de &quot;tuberías&quot; (&quot;%&gt;%&quot;):</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> gff <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(type) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   número     <span class="ot">=</span> <span class="fu">n</span>(),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">Long.Media =</span> <span class="fu">mean</span>(longitud),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">Long.SD    =</span> <span class="fu">sd</span>(longitud)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resumen,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;Tipo&#39;</span>, <span class="st">&#39;Número&#39;</span>, <span class="st">&#39;Longitud Media&#39;</span>,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;Desviación estándar&#39;</span>),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">row.names =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in kable_styling(., full_width = FALSE): no se pudo encontrar la función &quot;kable_styling&quot;</code></pre>
 </div>
@@ -3353,8 +3849,8 @@ Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
 </div>
 </section>
 </section>
-<section id="comparar-o-cruzar-datos" class="level1">
-<h1>Comparar o cruzar datos</h1>
+<section id="comparar-o-cruzar-datos" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Comparar o cruzar datos</h1>
 <p>Imagina que un estudio señala los cromosomas siguientes como posiblemente asociados a la resistencia a un fármaco. Quieres saber qué genes hay en estos cinco cromosomas:</p>
 <ul>
 <li>JAJSEB010000048.1</li>
@@ -3365,18 +3861,15 @@ Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
 </ul>
 <p>Antes hemos usado el operador lógico <code>==</code> para crear un vector booleano con el que seleccionar algunas líneas. En este caso usaremos el operador <code>%in%</code>, que compara conjuntos o vectores de caracteres:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>candidatos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;JAJSEB010000048.1&quot;</span>,</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000012.1&quot;</span>,</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000020.1&quot;</span>,</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000016.1&quot;</span>,</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000033.1&quot;</span>)</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>interesantes <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>seqid <span class="sc">%in%</span> candidatos, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(interesantes)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;interesantes&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>candidatos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;JAJSEB010000048.1&quot;</span>,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000012.1&quot;</span>,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000020.1&quot;</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000016.1&quot;</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;JAJSEB010000033.1&quot;</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>interesantes <span class="ot">&lt;-</span> gff[gff<span class="sc">$</span>seqid <span class="sc">%in%</span> candidatos, ]</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(interesantes)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4792   10</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -3402,34 +3895,15 @@ Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
 </ul>
 <p>Aunque existen programas específicos para comparar segmentos cromosómicos (<a href="https://github.com/arq5x/bedtools2">bedtools</a>), continuaremos practicando con marcos de datos de R. Ahora ya no podemos usar <code>%in%</code>, porque de cada cromosoma queremos unos segmentos diferentes. Una estrategia es crear cinco filtros booleanos, y después combinarlos con la operación lógica “o”, es decir <code>|</code>. En cada filtro seleccionaremos las anotaciones que estén completamente contenidas en el intervalo indicado.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000048.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">184638</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">253478</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000012.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">133444</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">348860</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>f3 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000020.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">73393</span>  <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">149614</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>f4 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000016.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">161247</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">272009</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>f5 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000033.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">123135</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">170687</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> f1 <span class="sc">|</span> f2 <span class="sc">|</span> f3 <span class="sc">|</span> f4 <span class="sc">|</span> f5</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;f1&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>interesantes <span class="ot">&lt;-</span> gff[f, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gff&#39; no encontrado</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000048.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">184638</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">253478</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000012.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">133444</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">348860</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>f3 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000020.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">73393</span>  <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">149614</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>f4 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000016.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">161247</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">272009</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>f5 <span class="ot">&lt;-</span> gff<span class="sc">$</span>seqid <span class="sc">==</span> <span class="st">&#39;JAJSEB010000033.1&#39;</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>start <span class="sc">&gt;=</span> <span class="dv">123135</span> <span class="sc">&amp;</span> gff<span class="sc">$</span>end <span class="sc">&lt;=</span> <span class="dv">170687</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> f1 <span class="sc">|</span> f2 <span class="sc">|</span> f3 <span class="sc">|</span> f4 <span class="sc">|</span> f5</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>interesantes <span class="ot">&lt;-</span> gff[f, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -3445,8 +3919,8 @@ Adjuntando el paquete: &#39;dplyr&#39;</code></pre>
 </div>
 </div>
 </section>
-<section id="las-llaves-y-la-función-match" class="level1">
-<h1>Las llaves y la función <code>match()</code></h1>
+<section id="las-llaves-y-la-función-match" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Las llaves y la función <code>match()</code></h1>
 <p>En las bases de datos relacionales se llama <em>llave</em> a la columna o al conjunto de columnas cuyos valores identifican unívocamente cada línea de la tabla. En los marcos de datos de R, las líneas pueden tener nombre, el cual puede usarse como <em>llave</em> o índice para seleccionar líneas. Pero el uso del nombre de las líneas no es recomendable. Lo más práctico es que en cualquier tabla haya una columna cuyos valores no puedan repetirse. Esto ayuda a evitar duplicidades, mantener la integridad de la tabla y relacionar unas tablas con otras.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -3463,26 +3937,26 @@ Nota
 </div>
 <p>El código siguiente descarga la tabla de genomas de <em>Trypanosoma</em> ensamblados a nivel de cromosoma, de la <a href="https://www.ebi.ac.uk/ena/">European Nucleotide Archive</a></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aprenderemos esta sintaxis en el próximo tema:</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>portal <span class="ot">&lt;-</span> <span class="st">&#39;https://www.ebi.ac.uk/ena/portal/api/search?&#39;</span></span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="st">&#39;result=assembly&amp;&#39;</span></span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>query  <span class="ot">&lt;-</span> <span class="st">&#39;query=tax_tree(5690)&amp;&#39;</span></span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>fields <span class="ot">&lt;-</span> <span class="st">&#39;fields=accession%2Cversion%2Cscientific_name%2Cbase_count%2Clast_updated%2Cassembly_level&#39;</span></span>
-<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>URL <span class="ot">&lt;-</span> <span class="fu">paste0</span>(portal, result, query, fields)</span>
-<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>genomas.ena <span class="ot">&lt;-</span> <span class="fu">read.table</span>(URL, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>, <span class="at">quote =</span> <span class="st">&#39;&#39;</span>, <span class="at">na.strings =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aprenderemos esta sintaxis en el próximo tema:</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>portal <span class="ot">&lt;-</span> <span class="st">&#39;https://www.ebi.ac.uk/ena/portal/api/search?&#39;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="st">&#39;result=assembly&amp;&#39;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>query  <span class="ot">&lt;-</span> <span class="st">&#39;query=tax_tree(5690)&amp;&#39;</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>fields <span class="ot">&lt;-</span> <span class="st">&#39;fields=accession%2Cversion%2Cscientific_name%2Cbase_count%2Clast_updated%2Cassembly_level&#39;</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>URL <span class="ot">&lt;-</span> <span class="fu">paste0</span>(portal, result, query, fields)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>genomas.ena <span class="ot">&lt;-</span> <span class="fu">read.table</span>(URL, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>, <span class="at">quote =</span> <span class="st">&#39;&#39;</span>, <span class="at">na.strings =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Tanto el nuevo marco de datos <code>genomas.ena</code>, como el que habíamos creado antes con datos de NCBI, <code>genomas</code>, tienen una columna de valores únicos: “accession” o “Assembly.Accession”. Para los registros comunes entre las dos tablas, podemos transferir información de una a otra. Por ejemplo, vamos a añadir a la tabla <code>genomas</code> la fecha de última modificación del ensamblaje, que encontramos en <code>genomas.ena</code>. Para asegurarnos de que a cada ensamblaje le asignamos el valor correcto, usaremos la función <code>match()</code>.</p>
 <p>En <code>genomas</code>, “Assembly.Accession” incluye un sufijo que indica el número de versión del ensamblaje. Este sufijo no está presente en <code>genomas.ena$accession</code>. Para hacer comparables ambas tablas, quitaremos el sufijo de la primera tabla.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Este es un uso avanzado de `sapply()` y `strsplit()`:</span></span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>acc <span class="ot">&lt;-</span> <span class="fu">sapply</span>(</span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">strsplit</span>(genomas<span class="sc">$</span>Assembly.Accession, <span class="st">&#39;.&#39;</span>, <span class="at">fixed =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">&#39;[&#39;</span>, <span class="dv">1</span></span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>last_updated <span class="ot">&lt;-</span> genomas.ena[<span class="fu">match</span>(genomas<span class="sc">$</span>acc,</span>
-<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>                                          genomas.ena<span class="sc">$</span>accession),</span>
-<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&#39;last_updated&#39;</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Este es un uso avanzado de `sapply()` y `strsplit()`:</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>acc <span class="ot">&lt;-</span> <span class="fu">sapply</span>(</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">strsplit</span>(genomas<span class="sc">$</span>Assembly.Accession, <span class="st">&#39;.&#39;</span>, <span class="at">fixed =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">&#39;[&#39;</span>, <span class="dv">1</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>genomas<span class="sc">$</span>last_updated <span class="ot">&lt;-</span> genomas.ena[<span class="fu">match</span>(genomas<span class="sc">$</span>acc,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>                                          genomas.ena<span class="sc">$</span>accession),</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&#39;last_updated&#39;</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -3500,98 +3974,404 @@ Nota
 </ol>
 </div>
 </div>
-<section id="apéndice" class="level2">
-<h2 class="anchored" data-anchor-id="apéndice">Apéndice</h2>
+<section id="apéndice" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="apéndice"><span class="header-section-number">7.1</span> Apéndice</h2>
 <p>En los archivos GFF, la columna <code>attributes</code> es una lista de parejas de valores “clave = valor”, separadas por punto y coma (“;”). Habiendo creado antes un marco de datos para cada tipo de anotación (genes, CDS, etc.), es de suponer que todas las líneas de un marco de datos tendrán el mismo conjunto de parejas “clave = valor”. Aquí se muestra una manera de extraer esta información y convertirla en columnas adicionales de un marco de datos.</p>
 <p>Veamos el primer valor de <code>attributes</code> en el marco de datos <code>gene</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>gene[<span class="dv">1</span>, <span class="st">&#39;attributes&#39;</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>gene[<span class="dv">1</span>, <span class="st">&#39;attributes&#39;</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] &quot;ID=gene-LSM04_009031;Name=LSM04_009031;gbkey=Gene;gene_biotype=protein_coding;locus_tag=LSM04_009031&quot;</code></pre>
 </div>
 </div>
 <p>La función <code>strsplit()</code> en R divide una cadena de caracteres en partes delimitadas por algún carácter o expresión regular. En este caso, queremos dividir esa cadena por los puntos y coma:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(gene[<span class="dv">1</span>, <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(gene[<span class="dv">1</span>, <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] &quot;ID=gene-LSM04_009031&quot;        &quot;Name=LSM04_009031&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_009031&quot;     </code></pre>
 </div>
 </div>
 <p><code>strsplit()</code> ha dividido la cadena de caracteres original en una <em>lista</em> que contiene un único vector de cinco cadenas de caracteres. El motivo de generar una lista en lugar de un simple vector es que <code>strsplit()</code> puede actuar simultáneamente sobre todas las cadenas de caracteres de un vector, y necesita repartir el resultado en diferentes vectores:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(gene[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(gene[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] &quot;ID=gene-LSM04_009031&quot;        &quot;Name=LSM04_009031&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_009031&quot;     
+
+[[2]]
+[1] &quot;ID=gene-LSM04_007573&quot;        &quot;Name=LSM04_007573&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_007573&quot;     
+
+[[3]]
+[1] &quot;ID=gene-LSM04_000706&quot;        &quot;Name=LSM04_000706&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_000706&quot;     </code></pre>
 </div>
 </div>
 <p>Podemos guardar la lista de los vectores de los atributos de cada gen en un nuevo objeto, para continuar operando sobre el después:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>atributos <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(gene[ , <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>atributos <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(gene[ , <span class="st">&#39;attributes&#39;</span>], <span class="st">&#39;;&#39;</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Veamos los 6 primeros elementos:</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atributos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] &quot;ID=gene-LSM04_009031&quot;        &quot;Name=LSM04_009031&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_009031&quot;     
+
+[[2]]
+[1] &quot;ID=gene-LSM04_007573&quot;        &quot;Name=LSM04_007573&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_007573&quot;     
+
+[[3]]
+[1] &quot;ID=gene-LSM04_000706&quot;        &quot;Name=LSM04_000706&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_000706&quot;     
+
+[[4]]
+[1] &quot;ID=gene-LSM04_000559&quot;        &quot;Name=LSM04_000559&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_000559&quot;     
+
+[[5]]
+[1] &quot;ID=gene-LSM04_006454&quot;        &quot;Name=LSM04_006454&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_006454&quot;     
+
+[[6]]
+[1] &quot;ID=gene-LSM04_009090&quot;        &quot;Name=LSM04_009090&quot;          
+[3] &quot;gbkey=Gene&quot;                  &quot;gene_biotype=protein_coding&quot;
+[5] &quot;locus_tag=LSM04_009090&quot;     </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Veamos los 6 primeros elementos:</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atributos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;atributos&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y la longitud total de la lista:</span></span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(atributos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;atributos&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y la longitud total de la lista:</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(atributos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9768</code></pre>
 </div>
 </div>
 <p>Una vez tenemos una lista de los atributos de cada gen, podemos usar funciones de la familia <code>lapply()</code> para operar en paralelo sobre todos sus elementos. Examina la ayuda de <code>lapply()</code> para familiarizarte con estas funciones. A continuación, la usaremos para separar la clave del valor en todos los atributos de todos los genes. Además asignaremos la clave como nombre del valor correspondiente (en R, los elementos de un vector pueden tener nombre).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>atributos2 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>   atributos,</span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Definimos una función para aplicarla a cada elemento de &quot;atributos&quot;.</span></span>
-<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">function</span>(x) {</span>
-<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># &quot;x&quot; es un vector de atributos de un solo gen</span></span>
-<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>      lista <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(x, <span class="st">&#39;=&#39;</span>)</span>
-<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>      <span class="co"># &quot;lista&quot; es una lista de vectores de 2 componentes, clave y valor</span></span>
-<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>      valores <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lista, <span class="st">&#39;[&#39;</span>, <span class="dv">2</span>)</span>
-<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">names</span>(valores) <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lista, <span class="st">&#39;[&#39;</span>, <span class="dv">1</span>)</span>
-<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(valores)</span>
-<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a>   }</span>
-<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;atributos&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atributos2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>atributos2 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>   atributos,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Definimos una función para aplicarla a cada elemento de &quot;atributos&quot;.</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>   <span class="cf">function</span>(x) {</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># &quot;x&quot; es un vector de atributos de un solo gen</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>      lista <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(x, <span class="st">&#39;=&#39;</span>)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>      <span class="co"># &quot;lista&quot; es una lista de vectores de 2 componentes, clave y valor</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>      valores <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lista, <span class="st">&#39;[&#39;</span>, <span class="dv">2</span>)</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">names</span>(valores) <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lista, <span class="st">&#39;[&#39;</span>, <span class="dv">1</span>)</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(valores)</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atributos2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+                 ID                Name               gbkey        gene_biotype 
+&quot;gene-LSM04_009031&quot;      &quot;LSM04_009031&quot;              &quot;Gene&quot;    &quot;protein_coding&quot; 
+          locus_tag 
+     &quot;LSM04_009031&quot; 
+
+[[2]]
+                 ID                Name               gbkey        gene_biotype 
+&quot;gene-LSM04_007573&quot;      &quot;LSM04_007573&quot;              &quot;Gene&quot;    &quot;protein_coding&quot; 
+          locus_tag 
+     &quot;LSM04_007573&quot; 
+
+[[3]]
+                 ID                Name               gbkey        gene_biotype 
+&quot;gene-LSM04_000706&quot;      &quot;LSM04_000706&quot;              &quot;Gene&quot;    &quot;protein_coding&quot; 
+          locus_tag 
+     &quot;LSM04_000706&quot; 
+
+[[4]]
+                 ID                Name               gbkey        gene_biotype 
+&quot;gene-LSM04_000559&quot;      &quot;LSM04_000559&quot;              &quot;Gene&quot;    &quot;protein_coding&quot; 
+          locus_tag 
+     &quot;LSM04_000559&quot; 
+
+[[5]]
+                 ID                Name               gbkey        gene_biotype 
+&quot;gene-LSM04_006454&quot;      &quot;LSM04_006454&quot;              &quot;Gene&quot;    &quot;protein_coding&quot; 
+          locus_tag 
+     &quot;LSM04_006454&quot; 
+
+[[6]]
+                 ID                Name               gbkey        gene_biotype 
+&quot;gene-LSM04_009090&quot;      &quot;LSM04_009090&quot;              &quot;Gene&quot;    &quot;protein_coding&quot; 
+          locus_tag 
+     &quot;LSM04_009090&quot; </code></pre>
 </div>
 </div>
 <p>El orden de los atributos se ha mantenido idéntico al orden de sus correspondientes genes. Por eso podemos ahora añadir las columnas de atributos que queramos al marco de datos <code>gene</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>ID           <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;ID&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>ID           <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;ID&#39;</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>Name         <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;Name&#39;</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>gene_biotype <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;gene_biotype&#39;</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>locus_tag    <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;locus_tag&#39;</span>)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">names</span>(gene) <span class="sc">!=</span> <span class="st">&#39;attributes&#39;</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(gene[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, f]) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 15%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 15%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">seqid</th>
+<th style="text-align: left;">source</th>
+<th style="text-align: right;">start</th>
+<th style="text-align: right;">end</th>
+<th style="text-align: left;">score</th>
+<th style="text-align: left;">strand</th>
+<th style="text-align: left;">phase</th>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">gene_biotype</th>
+<th style="text-align: left;">locus_tag</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">246</td>
+<td style="text-align: right;">935</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_009031</td>
+<td style="text-align: left;">LSM04_009031</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_009031</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">2204</td>
+<td style="text-align: right;">2776</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_007573</td>
+<td style="text-align: left;">LSM04_007573</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_007573</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">3011</td>
+<td style="text-align: right;">3706</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_000706</td>
+<td style="text-align: left;">LSM04_000706</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_000706</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">4768</td>
+<td style="text-align: right;">4986</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_000559</td>
+<td style="text-align: left;">LSM04_000559</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_000559</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">5540</td>
+<td style="text-align: right;">8959</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_006454</td>
+<td style="text-align: left;">LSM04_006454</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_006454</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">24</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">9198</td>
+<td style="text-align: right;">9512</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_009090</td>
+<td style="text-align: left;">LSM04_009090</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_009090</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">28</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">9877</td>
+<td style="text-align: right;">12936</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_002876</td>
+<td style="text-align: left;">LSM04_002876</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_002876</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">13160</td>
+<td style="text-align: right;">14620</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_001088</td>
+<td style="text-align: left;">LSM04_001088</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_001088</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">36</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">14840</td>
+<td style="text-align: right;">16024</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_006263</td>
+<td style="text-align: left;">LSM04_006263</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_006263</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">40</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">16367</td>
+<td style="text-align: right;">16935</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_007732</td>
+<td style="text-align: left;">LSM04_007732</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_007732</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">46</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">17016</td>
+<td style="text-align: right;">17411</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_006531</td>
+<td style="text-align: left;">LSM04_006531</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_006531</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">52</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">17834</td>
+<td style="text-align: right;">19039</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_007917</td>
+<td style="text-align: left;">LSM04_007917</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_007917</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">56</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">19420</td>
+<td style="text-align: right;">20313</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_009571</td>
+<td style="text-align: left;">LSM04_009571</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_009571</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">60</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">20625</td>
+<td style="text-align: right;">21875</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_003035</td>
+<td style="text-align: left;">LSM04_003035</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_003035</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">64</td>
+<td style="text-align: left;">JAJSEB010000004.1</td>
+<td style="text-align: left;">Genbank</td>
+<td style="text-align: right;">22111</td>
+<td style="text-align: right;">22929</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">gene-LSM04_003619</td>
+<td style="text-align: left;">LSM04_003619</td>
+<td style="text-align: left;">protein_coding</td>
+<td style="text-align: left;">LSM04_003619</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>Name         <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;Name&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>gene_biotype <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;gene_biotype&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>locus_tag    <span class="ot">&lt;-</span> <span class="fu">sapply</span>(atributos2, <span class="st">&#39;[&#39;</span>, <span class="st">&#39;locus_tag&#39;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;atributos2&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">names</span>(gene) <span class="sc">!=</span> <span class="st">&#39;attributes&#39;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(gene[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, f]) </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: objeto &#39;gene&#39; no encontrado</code></pre>
-</div>
-</div>
-
 </section>
+</section>
+<section id="conclusiones" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Conclusiones</h1>
+<p>A lo largo de esta práctica se han aplicado distintas herramientas de manipulación y análisis de tablas en R. El uso de <code>dplyr</code> permite realizar transformaciones de datos de forma eficiente y legible, mientras que <code>jsonlite</code> facilita el acceso a recursos remotos y APIs bioinformáticas. Además, la representación tabular y el filtrado de información constituyen herramientas fundamentales en análisis de datos biológicos y biomédicos.</p>
+
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Bibliografía</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
