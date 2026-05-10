@@ -13,6 +13,10 @@ language:
 format:
    html:
       embed-resources: true
+      toc: true
+      toc-depth: 3
+      number-sections: true
+      code-fold: false
 ---
 
 ```{r setup, include=FALSE}
@@ -26,6 +30,20 @@ En esta práctica vamos a utilizar los paquetes `curl` y `kableExtra` de R.
 1. Aprender a usar la API[^1] de [ENA](https://www.ebi.ac.uk/ena).
 
 [^1]: API: *Application programming interface*. 
+
+# Introducción
+
+## Objetivos de la práctica
+
+Esta práctica se centra en el manejo de secuencias biológicas y herramientas bioinformáticas en R. A lo largo del guion se trabajan operaciones de lectura, manipulación y análisis de secuencias, así como la interpretación biológica de los resultados obtenidos.
+
+Los objetivos principales son:
+
+- Familiarizarse con estructuras de datos biológicas en R.
+- Importar y manipular secuencias nucleotídicas y proteicas.
+- Realizar análisis básicos de composición y similitud.
+- Interpretar resultados desde una perspectiva bioinformática.
+- Generar documentos reproducibles mediante Quarto.
 
 # Introducción
 La base de datos ENA almacena diferentes tipos de secuencias nucleotídicas, y
@@ -194,8 +212,6 @@ curl_download(URLencode(URL), destfile = 'z2.txt')
 ```
 
 
-
-
 # Trabajar con los resultados
 La función `read.table()` de R nos permite leer un archivo (o una URL) para crear
 una tabla. Necesita que todas las filas tengan el mismo número de campos o columnas,
@@ -308,7 +324,6 @@ URL <- 'https://www.ebi.ac.uk/ena/portal/api/controlledVocab?field=topology'
 TopologyVocab <- read.table(URL, header = TRUE, sep = '\t')
 kable(TopologyVocab)
 ```
-
 Por tanto, podemos seleccionar secuencias codificantes de ADN circular con el filtro
 `query=topology="CIRCULAR"`.
 
@@ -318,5 +333,9 @@ Por tanto, podemos seleccionar secuencias codificantes de ADN circular con el fi
 sessionInfo()
 ```
 
+# Conclusiones
 
+La práctica permite aplicar herramientas fundamentales de bioinformática computacional utilizando R y Bioconductor. El trabajo con secuencias biológicas, la exploración de sus propiedades y la automatización de análisis mediante scripts reproducibles constituyen competencias esenciales en bioquímica, genómica y ciencias biomédicas.
+
+El uso de Quarto facilita además la generación de informes integrados donde código, resultados e interpretación biológica quedan documentados conjuntamente.
 
