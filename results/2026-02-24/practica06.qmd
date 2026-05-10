@@ -418,6 +418,7 @@ El uso de `jsonlite` permite transformar esas respuestas en listas y marcos de d
 
 Desde un punto de vista biológico, las consultas realizadas permiten conectar distintos niveles de información: proteínas, dominios funcionales, taxonomía y estructuras tridimensionales. Este tipo de integración es esencial en bioinformática funcional y anotación de proteínas.
 
+# Bibliografía
 
 # Información sobre la sesión
 
