@@ -1,42 +1,147 @@
 ---
-title: "BLAST"
-author: "Laura Monleón"
+title: "Práctica 8. BLAST"
+author: "Laura Monleón Vicente"
 lang: es
 date: today
-execute: 
-  eval: true
-  error: true
+execute:
+  echo: true
+  warning: true
+  message: false
+  error: false
 engine: knitr
 bibliography: ../../doc/references.bib
-format: 
+format:
   html:
     embed-resources: true
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+    highlight-style: github
 editor: visual
 ---
 
-## Ejercicio 1. Identificación aproximada de ortólogos
+# Introducción
 
-# Enmascarar e indexar los proteomas
+BLAST (*Basic Local Alignment Search Tool*) permite realizar alineamientos locales entre una secuencia problema, denominada *query*, y una base de datos de secuencias. Cada secuencia de la base de datos que se alinea con la query se denomina *subject*. La utilidad principal de BLAST es detectar semejanza local entre secuencias, lo que permite inferir homología, asignar funciones putativas, comparar proteomas o detectar el posible origen taxonómico de lecturas no mapeadas.
 
-## Datos de entrada: proteomas de Buchnera y Blochmannia
+En esta práctica se aplican tres usos diferentes de BLAST:
 
-En este ejercicio se utilizan dos archivos FASTA de proteínas situados en la carpeta `../../data/`: `buchnera.fa` y `blochmannia.fa`. Estos archivos corresponden a los proteomas de dos bacterias endosimbiontes de insectos: *Buchnera aphidicola* y *Blochmannia ocreatus*. Ambas pertenecen al grupo de bacterias asociadas de forma estrecha a hospedadores insectos, por lo que resulta interesante comparar sus proteomas para identificar posibles genes ortólogos.
+1.  Identificación aproximada de ortólogos mediante mejores hits recíprocos (*reciprocal best hits*).
+2.  Detección de homologías lejanas mediante PSI-BLAST.
+3.  Identificación taxonómica de lecturas no mapeadas mediante BLASTN remoto.
 
-Los archivos contienen secuencias proteicas en formato FASTA. Cada entrada representa una proteína, con una línea de cabecera que comienza por `>` y una o varias líneas posteriores con la secuencia de aminoácidos. Estos proteomas se usan como entrada para construir bases de datos locales de BLAST y realizar búsquedas recíprocas entre ambos organismos.
+::: callout-note
+Los programas `blastp`, `blastn`, `psiblast`, `blastdbcmd`, `makeblastdb` y `segmasker` son ejecutables externos. Por tanto, se ejecutan en chunks de Bash, no en la consola de R.
+:::
 
-En esta práctica se asume que los archivos `buchnera.fa` y `blochmannia.fa` ya se encuentran descargados en la carpeta `data` del repositorio. Si no estuvieran disponibles, deberían descargarse previamente desde una base de datos pública de secuencias, como NCBI o UniProt, y guardarse en `../../data/` antes de ejecutar los bloques de BLAST.
+# Preparación
+
+Necesitamos tener instalado el paquete `ncbi-blast+`. En sistemas Linux basados en Debian o Ubuntu puede instalarse con:
+
+```{bash}
+#| eval: false
+sudo apt update
+sudo apt install ncbi-blast+
+```
+
+La ayuda completa de cada programa puede consultarse desde la terminal. Por ejemplo:
+
+```{bash}
+blastp -help | head
+```
+
+Para el ejercicio 3 también se utilizan los programas `datasets` y `dataformat` de NCBI. En mi entorno los ejecutables están disponibles en `~/.local/bin/`, por lo que en los chunks se usa esa ruta para evitar problemas de `PATH` durante el renderizado desde RStudio.
+
+Además, se utiliza el paquete de R `Biostrings` para leer secuencias FASTA comprimidas.
+
+```{r}
+if (!requireNamespace("Biostrings", quietly = TRUE)) {
+  stop("El paquete Biostrings no está instalado. Instálalo con BiocManager::install('Biostrings').")
+}
+
+library(Biostrings)
+```
+
+# Objetivos
+
+Los objetivos de esta práctica son:
+
+-   Identificar proteínas posiblemente ortólogas entre dos especies mediante BLASTP.
+-   Aplicar PSI-BLAST para detectar homologías lejanas entre proteínas de una misma superfamilia.
+-   Determinar el origen probable de lecturas no mapeadas mediante BLASTN remoto y análisis taxonómico.
+-   Integrar herramientas externas de Bash con análisis e interpretación en R.
+-   Documentar resultados de forma reproducible mediante Quarto.
+
+# Datos
+
+## Datos del primer ejercicio
+
+En el primer ejercicio se utilizan los proteomas de dos bacterias endosimbiontes de insectos:
+
+-   *Buchnera aphidicola*.
+-   *Blochmannia ocreatus*.
+
+Ambas bacterias presentan genomas reducidos, lo que facilita las búsquedas y permite trabajar con bases de datos locales relativamente pequeñas. Los proteomas pueden descargarse desde UniProt y se asume que están guardados en la carpeta `../../data/` con los nombres:
+
+-   `buchnera.fa`
+-   `blochmannia.fa`
+
+Estos archivos contienen secuencias proteicas en formato FASTA. Cada entrada representa una proteína, con una cabecera iniciada por `>` y una secuencia de aminoácidos asociada.
 
 ```{bash}
 ls -lh ../../data/buchnera.fa ../../data/blochmannia.fa
-head ../../data/buchnera.fa
-head ../../data/blochmannia.fa
+head -5 ../../data/buchnera.fa
+head -5 ../../data/blochmannia.fa
 ```
 
-La comprobación anterior permite verificar que ambos archivos existen, tienen contenido y presentan estructura FASTA antes de utilizarlos como entrada para `segmasker`, `makeblastdb` y `blastp`.
+## Datos del segundo ejercicio
+
+Para el segundo ejercicio se necesita la base de datos SwissProt preparada para BLAST. Debe estar descargada y descomprimida en `../../data/`. Se puede obtener con:
+
+```{bash}
+#| eval: false
+cd ../../data
+update_blastdb --decompress swissprot
+```
+
+Si `update_blastdb` no funcionara, se puede descargar manualmente:
+
+```{bash}
+#| eval: false
+cd ../../data
+wget https://ftp.ncbi.nlm.nih.gov/blast/db/swissprot.tar.gz.md5
+wget https://ftp.ncbi.nlm.nih.gov/blast/db/swissprot.tar.gz
+md5sum -c swissprot.tar.gz.md5
+tar -xzvf swissprot.tar.gz
+rm swissprot.tar.gz swissprot.tar.gz.md5
+```
+
+Comprobamos que la base de datos local existe:
+
+```{bash}
+ls -lh ../../data/swissprot.p* | head
+```
+
+## Datos del tercer ejercicio
+
+El archivo `../../data/contaminacion.fa.gz` contiene lecturas procedentes de un experimento de secuenciación del insecto *Aphis aurantii* con Ion Torrent. Son lecturas que no pudieron mapearse al genoma de referencia del insecto, por lo que podrían corresponder a regiones ausentes en el ensamblaje de referencia o a ADN de otros organismos asociados a la muestra.
+
+```{bash}
+ls -lh ../../data/contaminacion.fa.gz
+```
+
+# Ejercicio 1. Identificación aproximada de ortólogos
+
+Una estrategia habitual para identificar genes ortólogos es comprobar si dos proteínas son, recíprocamente, el mejor resultado de BLAST una respecto a la otra. Este criterio se conoce como *reciprocal best hits* (RBH). Aunque es un método heurístico, suele proporcionar una aproximación razonable cuando se comparan proteomas relativamente cercanos y se busca una primera identificación de ortología.
+
+## Enmascarar e indexar los proteomas
+
+Antes de ejecutar BLASTP, se preparan bases de datos locales para ambos proteomas. Además, se usa `segmasker` para enmascarar regiones de baja complejidad, que podrían producir alineamientos espurios.
 
 ```{bash}
 if [ ! -e ../../data/buchnera.phr ]; then
-   # Creamos un archivo para enmascarar zonas de baja complejidad:
    if [ ! -e ../../data/buchnera_seg.asnb ]; then
       segmasker -in ../../data/buchnera.fa \
                 -infmt fasta \
@@ -45,7 +150,6 @@ if [ ! -e ../../data/buchnera.phr ]; then
                 -out ../../data/buchnera_seg.asnb
    fi
 
-   # Indexamos el FASTA para BLAST:
    makeblastdb -in ../../data/buchnera.fa \
                -input_type fasta \
                -dbtype prot \
@@ -56,11 +160,8 @@ if [ ! -e ../../data/buchnera.phr ]; then
 fi
 ```
 
-# Hay que repetir todo esto para Blochmannia.
-
 ```{bash}
 if [ ! -e ../../data/blochmannia.phr ]; then
-
    if [ ! -e ../../data/blochmannia_seg.asnb ]; then
       segmasker -in ../../data/blochmannia.fa \
                 -infmt fasta \
@@ -79,11 +180,39 @@ if [ ! -e ../../data/blochmannia.phr ]; then
 fi
 ```
 
-Estos dos archivos (`buc2blo.txt` y `blo2buc.txt`) contienen, para cada proteína query, el mejor resultado encontrado en el proteoma contrario. Por ello, sirven como punto de partida para identificar pares de posibles ortólogos mediante el criterio de mejores hits recíprocos. Función match para comparar y cruzar la información de dos tablas. AL tener ya una columna adicoinal con los identificadores de Buchnera que corresponden a cada una de la sporteínas de Blochmannia puedo comparar si el query es igual a la busqueda inversa. Si lo son puedo sacar la tabla de coincidencias.
+## Realizar las búsquedas de BLASTP
 
-Podríamos comprobar si en las parejas que realmente coincide, comprobar si los valores E son fiables. Puedo mirar si hay muchos gaps o no, mirar si la longitud de la query, el subject etc, en comparación son muy grandes o no. Para ver su distribución puedo hacerlo con un histograma.
+El objetivo es encontrar, para cada proteína de *Buchnera aphidicola*, la proteína de *Blochmannia ocreatus* más parecida, y viceversa.
 
-# Comparación de resultados
+### De *Buchnera aphidicola* hacia *Blochmannia ocreatus*
+
+```{bash}
+blastp -query ../../data/buchnera.fa \
+       -db ../../data/blochmannia \
+       -out buc2blo.txt \
+       -outfmt '6 qseqid sseqid qlen slen length evalue bitscore' \
+       -evalue 0.001 \
+       -max_target_seqs 1
+```
+
+### De *Blochmannia ocreatus* hacia *Buchnera aphidicola*
+
+```{bash}
+blastp -query ../../data/blochmannia.fa \
+       -db ../../data/buchnera \
+       -out blo2buc.txt \
+       -outfmt '6 qseqid sseqid qlen slen length evalue bitscore' \
+       -evalue 0.001 \
+       -max_target_seqs 1
+```
+
+::: callout-note
+La opción `-outfmt 6` genera una tabla tabulada, más fácil de importar en R. La opción `-max_target_seqs 1` conserva únicamente el mejor hit para cada query.
+:::
+
+## Comparación de resultados
+
+Importamos las dos tablas en R:
 
 ```{r}
 buc2blo <- read.table(
@@ -91,64 +220,79 @@ buc2blo <- read.table(
    col.names = c('query', 'subject', 'qlen', 'slen',
                  'length', 'evalue', 'bitscore')
 )
+
 blo2buc <- read.table(
    'blo2buc.txt',
    col.names = c('query', 'subject', 'qlen', 'slen',
                  'length', 'evalue', 'bitscore')
 )
+
+head(buc2blo)
+head(blo2buc)
 ```
 
-Nota. Echa un vistazo a estas tablas de resultados. ¿Sabrías identificar las parejas de proteínas que son recíprocamente la que más se parece una a la otra?
-
+Para identificar los mejores hits recíprocos, renombramos las dos primeras columnas de manera que las parejas puedan compararse directamente:
 
 ```{r}
-# Cambiamos nombres para poder comparar fácilmente
-colnames(buc2blo)[1:2] <- c("buchnera", "blochmannia")
-colnames(blo2buc)[1:2] <- c("blochmannia", "buchnera")
+buc2blo_rbh <- buc2blo
+blo2buc_rbh <- blo2buc
 
-# Unimos ambas tablas por las dos columnas
+colnames(buc2blo_rbh)[1:2] <- c("buchnera", "blochmannia")
+colnames(blo2buc_rbh)[1:2] <- c("blochmannia", "buchnera")
+
 ortologos <- merge(
-   buc2blo[, c("buchnera", "blochmannia")],
-   blo2buc[, c("blochmannia", "buchnera")]
+   buc2blo_rbh[, c("buchnera", "blochmannia")],
+   blo2buc_rbh[, c("blochmannia", "buchnera")]
 )
 
-# Mostramos las parejas recíprocas
 head(ortologos)
-
-# Número total de posibles ortólogos
 nrow(ortologos)
 ```
-Las proteínas identificadas en la tabla `ortologos` representan posibles pares de ortólogos entre Buchnera aphidicola y Blochmannia ocreatus, ya que cada proteína corresponde al mejor resultado BLAST de la otra especie de forma recíproca (*reciprocal best hits*).
 
+Las proteínas incluidas en `ortologos` son candidatas a ortólogas, porque cada una es el mejor resultado BLAST de la otra especie. Las relaciones no recíprocas pueden deberse a duplicaciones génicas, pérdida diferencial de genes, parálogos o diferencias en la anotación de los proteomas.
 
-Nota. ¿Qué datos te gustaría representar gráficamente para ganar confianza en que los resultados son correctos y tienen sentido?
+## Representación gráfica de los resultados
 
-Para evaluar si los resultados obtenidos mediante BLASTP son coherentes biológicamente, sería útil representar gráficamente variables como el bitscore, el valor E (e-value), la longitud del alineamiento y la relación entre las longitudes de las proteínas alineadas. 
+Para ganar confianza en los resultados, es útil representar variables que indiquen la calidad y coherencia de los alineamientos:
 
-Por ejemplo, un gráfico de bitscore frente a e-value permitiría comprobar si los mejores alineamientos presentan simultáneamente puntuaciones altas y valores E muy bajos, como sería esperable en proteínas ortólogas reales. También sería útil comparar las longitudes de las proteínas enfrentadas (qlen y slen), ya que los ortólogos suelen conservar tamaños similares. 
-
-Además, un histograma de las longitudes de alineamiento o un diagrama de dispersión entre qlen y slen ayudarían a detectar alineamientos parciales, proteínas truncadas o posibles falsos positivos.
+-   `bitscore`: puntuación del alineamiento.
+-   `evalue`: probabilidad esperada de obtener un alineamiento similar por azar.
+-   `length`: longitud del alineamiento.
+-   `qlen` y `slen`: longitudes de query y subject.
 
 ```{r}
 plot(buc2blo$qlen,
      buc2blo$slen,
      xlab = "Longitud proteína Buchnera",
      ylab = "Longitud proteína Blochmannia",
-     main = "Comparación de longitudes entre posibles ortólogos")
+     main = "Comparación de longitudes entre mejores hits")
 
-abline(0,1,col="red")
+abline(0, 1, col = "red")
 ```
-## Ejercicio 2
 
-# PSI-BLAST
+En un conjunto de ortólogos esperado, muchas parejas deberían aproximarse a la diagonal, ya que las proteínas ortólogas tienden a conservar tamaños similares. Desviaciones importantes podrían indicar alineamientos parciales, proteínas truncadas o anotaciones diferentes.
+
+```{r}
+plot(buc2blo$length / buc2blo$qlen,
+     buc2blo$bitscore,
+     xlab = "Cobertura aproximada sobre la query",
+     ylab = "Bitscore",
+     main = "Calidad de los alineamientos BLASTP")
+```
+
+Los alineamientos con mayor cobertura y mayor `bitscore` son más convincentes como posibles relaciones homólogas. En cambio, alineamientos cortos con puntuaciones bajas deberían interpretarse con cautela.
+
+# Ejercicio 2. PSI-BLAST
+
+PSI-BLAST permite detectar semejanzas más sutiles que BLASTP convencional, especialmente entre miembros alejados de una superfamilia proteica. A diferencia de BLASTP, PSI-BLAST construye de forma iterativa una matriz de puntuación específica de posición (*PSSM*) a partir de las secuencias detectadas en rondas anteriores.
+
+## Ejecución inicial con P39615
 
 ```{bash}
-# Extraemos la secuencia de SwissProt
 blastdbcmd -db ../../data/swissprot \
            -entry P39615 \
            -out P39615.fa
 
-# Ejecutamos PSI-BLAST
 psiblast -db ../../data/swissprot \
          -query P39615.fa \
          -out P39615.blastout.txt \
@@ -158,31 +302,10 @@ psiblast -db ../../data/swissprot \
          -num_iterations 7 \
          -matrix BLOSUM62
 ```
-El parámetro `-evalue` establece el umbral máximo de valor E para mostrar alineamientos en los resultados. En este caso, se mostrarán alineamientos con valor E inferior o igual a 0.1. 
 
-Por otro lado, `-inclusion_ethresh` controla qué secuencias se incorporan al perfil de PSI-BLAST en cada iteración para construir la matriz de posiciones específicas (PSSM). Este parámetro es más estricto porque determina directamente qué secuencias influirán en las siguientes rondas de búsqueda. En este caso, únicamente se incorporan secuencias con valor E inferior a 0.001.
+## Comparación con otras proteínas
 
-La diferencia principal es que `-evalue` afecta a la visualización de resultados, mientras que `-inclusion_ethresh` afecta a la construcción iterativa del perfil evolutivo utilizado por PSI-BLAST.
-
-```{bash}
-blastdbcmd -db ../../data/swissprot \
-           -entry B1AJI8 \
-           -out B1AJI8.fa
-
-psiblast -db ../../data/swissprot \
-         -query B1AJI8.fa \
-         -out B1AJI8.blastout.txt \
-         -evalue 0.1 \
-         -outfmt 7 \
-         -inclusion_ethresh 0.001 \
-         -num_iterations 7 \
-         -matrix BLOSUM62
-```
-
-Los resultados obtenidos con diferentes proteínas query muestran que PSI-BLAST permite detectar homologías lejanas que no eran detectables mediante BLASTP convencional. Conforme avanzan las iteraciones, el perfil PSSM incorpora información evolutiva adicional y aumenta progresivamente la sensibilidad de la búsqueda.
-
-
-Semejanza entre las proteínas de la misma superfamilia es bastante ténue.
+A continuación se repite el análisis con varias proteínas de la lista propuesta. Es importante que el nombre del archivo de salida dependa de la proteína analizada para evitar sobrescribir resultados.
 
 ```{bash}
 for proteina in Q9CC91 P39615 B1AJI8 P47343; do
@@ -199,55 +322,65 @@ for proteina in Q9CC91 P39615 B1AJI8 P47343; do
 done
 ```
 
-El bloque anterior ejecuta PSI-BLAST de forma iterativa para varias proteínas de SwissProt. En cada ciclo del bucle, la variable `proteina` toma un identificador distinto. Primero se extrae la secuencia correspondiente con `blastdbcmd` y después se usa como query en `psiblast`. El nombre del archivo de salida también depende de la proteína analizada, evitando sobrescribir los resultados en cada iteración.
+::: callout-note
+Durante la ejecución de PSI-BLAST pueden aparecer advertencias relacionadas con el ajuste de puntuación basado en la composición de la secuencia. Estas advertencias no impiden el análisis; PSI-BLAST reajusta automáticamente el parámetro a un valor compatible con el uso de PSSM.
+:::
+
+Comprobamos que los archivos de salida se han generado:
 
 ```{bash}
 ls -lh Q9CC91.blastout.txt P39615.blastout.txt B1AJI8.blastout.txt P47343.blastout.txt
 ```
-Durante la ejecución de PSI-BLAST aparecieron advertencias relacionadas con el ajuste de puntuación basado en la composición de la secuencia. Estas advertencias no impiden la ejecución del análisis: PSI-BLAST reajusta automáticamente ese parámetro al valor estándar compatible con el uso de PSSM.
 
+## Interpretación de parámetros
 
-Consulta la ayuda de psiblast y asegúrate de entender para qué sirven los argumentos que hemos usado. Por ejemplo, ¿cuál es la diferencia entre -evalue y -inclusion_ethresh?¿Cómo harías que la búsqueda fuera más sensible todavía?
+La opción `-evalue` establece el umbral de valor E para mostrar resultados. En este caso, se muestran alineamientos con un valor E igual o inferior a 0.1.
 
-Para aumentar todavía más la sensibilidad de la búsqueda podrían realizarse varias modificaciones:
+La opción `-inclusion_ethresh`, en cambio, determina qué secuencias se incorporan al perfil PSSM en cada iteración. Por tanto, es un parámetro más delicado, porque afecta directamente a cómo se construye el perfil que se usará en las rondas posteriores.
 
-- aumentar el número de iteraciones (`-num_iterations`);
-- utilizar una matriz de sustitución más permisiva para homologías lejanas, como BLOSUM45;
-- aumentar ligeramente el umbral de inclusión (`-inclusion_ethresh`);
-- utilizar una base de datos más amplia;
-- reducir restricciones sobre cobertura o identidad.
+La diferencia principal es que `-evalue` controla qué resultados se reportan, mientras que `-inclusion_ethresh` controla qué secuencias influyen en la construcción iterativa del perfil.
 
-Sin embargo, aumentar demasiado la sensibilidad también incrementa el riesgo de incorporar falsos positivos al perfil iterativo.
+Para hacer la búsqueda más sensible se puede:
 
-## Ejercicio 3
+-   aumentar el número de iteraciones;
+-   utilizar una matriz más permisiva, como BLOSUM45;
+-   relajar ligeramente el umbral de inclusión;
+-   usar una base de datos más amplia.
 
-# Origen de la contaminación en un archivo FASTQ
+Sin embargo, aumentar demasiado la sensibilidad incrementa el riesgo de incorporar falsos positivos al perfil.
 
-# Selección aleatoria de 20 queries
+# Ejercicio 3. Origen de la contaminación en un archivo FASTQ
+
+El archivo `../../data/contaminacion.fa.gz` contiene 33174 lecturas procedentes de un experimento de secuenciación del insecto *Aphis aurantii* con Ion Torrent. Son lecturas que no pudieron mapearse al genoma de referencia del insecto. Esto puede ocurrir porque el genoma de referencia sea incompleto o porque esas lecturas procedan de otros organismos presentes en la muestra: simbiontes, parásitos, microbiota, presas o restos vegetales.
+
+## Selección aleatoria de 20 queries
+
+Para no enviar miles de secuencias a los servidores remotos de NCBI, se toma una muestra aleatoria de 20 lecturas. Para que el resultado sea reproducible, se fija una semilla con `set.seed()` y se guarda la muestra en `muestra.fa`.
 
 ```{r}
-library('Biostrings')
+set.seed(123)
 
 unmapped <- readDNAStringSet('../../data/contaminacion.fa.gz')
-
 n <- length(unmapped)
 
-muestra <- unmapped[sample(1:n, 20)]
+n
 
+muestra <- unmapped[sample(1:n, 20)]
 writeXStringSet(muestra, 'muestra.fa')
+
+muestra
 ```
 
+::: callout-important
+El archivo `muestra.fa` debe conservarse en el repositorio, porque procede de una selección aleatoria. Aunque se use `set.seed()`, conservar el archivo facilita la trazabilidad exacta del análisis.
+:::
 
-Para evitar sobrecargar los servidores del NCBI, se seleccionó una muestra aleatoria de 20 lecturas a partir del conjunto completo de secuencias no mapeadas. La selección se realizó utilizando la función sample() del lenguaje R sobre el objeto DNAStringSet, fijando una semilla para garantizar la reproducibilidad del análisis. Las secuencias seleccionadas se guardaron en un archivo FASTA (muestra.fa) que se utilizará como entrada para el análisis BLASTN.
+## BLASTN remoto
 
-La selección aleatoria permite obtener una muestra representativa del conjunto total de lecturas no mapeadas, lo que facilita la inferencia del origen de la contaminación sin necesidad de analizar la totalidad de las secuencias.
-
-# BLASTN remoto
-
+El siguiente comando realiza una búsqueda remota contra la base de datos `nr` de NCBI. Este paso puede tardar mucho y depende del estado de los servidores externos. Por ese motivo, el chunk se deja documentado pero no se ejecuta automáticamente durante el renderizado.
 
 ```{bash}
 #| eval: false
-
 if [ ! -e resultado.txt ]; then
    blastn -query muestra.fa \
           -db nr \
@@ -259,28 +392,13 @@ if [ ! -e resultado.txt ]; then
 fi
 ```
 
-Este bloque no se ejecuta durante el renderizado porque realiza una búsqueda BLASTN remota contra la base de datos `nr` del NCBI. Al depender de servidores externos, puede tardar mucho tiempo o interrumpirse. El comando se mantiene documentado para indicar cómo se obtendría `resultado.txt` en un entorno con conexión estable y tiempo suficiente de ejecución.
+::: callout-note
+La ejecución remota de BLASTN puede fallar por problemas de conexión con NCBI o por sobrecarga del servicio. Si se dispone de `resultado.txt` generado previamente, los análisis posteriores pueden ejecutarse sin repetir la búsqueda remota.
+:::
 
+## Identificación taxonómica
 
-hace lo siguiente:
-
-usa muestra.fa como archivo de entrada
-busca cada secuencia contra la base de datos remota nr
-guarda los resultados en resultado.txt
-devuelve una tabla tabulada (outfmt 6) con:
-qaccver: identificador de la query
-saccver: identificador de la secuencia encontrada
-length: longitud del alineamiento
-qlen: longitud de la query
-qstart, qend: posiciones alineadas en la query
-evalue: significación estadística
-bitscore: calidad del alineamiento
-staxid: identificador taxonómico de la mejor secuencia encontrada
--max_target_seqs 1 limita la salida a la secuencia más parecida
--evalue 0.001 filtra resultados poco fiables
--remote hace la búsqueda en los servidores del NCBI
-
-# Identificación taxonómica
+A partir del archivo `resultado.txt`, se extraen los identificadores taxonómicos (`staxid`) y se consulta la API de NCBI para obtener información taxonómica más completa.
 
 ```{bash}
 if [ -s resultado.txt ]; then
@@ -293,20 +411,9 @@ else
 fi
 ```
 
-extrae la columna 9 (staxid) de resultado.txt
-elimina taxids repetidos
-genera una lista separada por comas en taxids.txt
-consulta esos taxids en NCBI
-genera un informe tabulado con la clasificación taxonómica en taxreport.txt
+## Interpretación taxonómica de las lecturas
 
-
-Así el HTML compila, queda claro que viste el problema, y tu profesor ve que el guion está bien razonado.
-
-#  Nota
-
-Puedes importar tanto los resultados del BLAST como el informe taxonómico a una sesión de R y determinar que fracción de las lecturas seleccionadas parecen proceder de un hemímptero y qué fracción proceden de otros organismos. Tienen sentido los resultados? Encuentras alguna secuencia de origen vegetal?
-
-## Interpretación taxonómica de las lecturas no mapeadas
+Los resultados de BLAST y el informe taxonómico pueden importarse en R para estimar qué fracción de lecturas procede de hemípteros y qué fracción procede de otros organismos.
 
 ```{r}
 if (file.exists("resultado.txt") &&
@@ -329,7 +436,7 @@ if (file.exists("resultado.txt") &&
     check.names = FALSE
   )
 
-  print(names(tax))
+  names(tax)
 
 } else {
   message("No se importan resultados taxonómicos porque resultado.txt o taxreport.txt no existen o están vacíos.")
@@ -364,55 +471,18 @@ if (exists("blast") && exists("tax")) {
 }
 ```
 
-Como las lecturas proceden de fragmentos que no mapearon al genoma de referencia de *Aphis aurantii*, es esperable que una parte siga perteneciendo a hemípteros. Esto podría deberse a que el genoma de referencia sea incompleto, a diferencias entre el individuo secuenciado y el genoma de referencia, o a regiones mal representadas en el ensamblaje.
+Como las lecturas proceden de fragmentos que no mapearon al genoma de referencia de *Aphis aurantii*, es esperable que una parte siga perteneciendo a hemípteros. Esto puede deberse a que el genoma de referencia sea incompleto, a diferencias entre el individuo secuenciado y el genoma de referencia, o a regiones mal representadas en el ensamblaje.
 
 También es razonable encontrar lecturas asignadas a otros organismos, lo que indicaría contaminación biológica o ADN procedente de simbiontes, microbiota, parásitos, hongos u otros organismos asociados a la muestra. La presencia de secuencias vegetales tendría sentido, ya que *Aphis aurantii* es un insecto fitófago y puede arrastrar ADN vegetal procedente del material del que se alimenta.
 
-Se realizó un BLASTN remoto de 20 lecturas seleccionadas aleatoriamente entre las secuencias no mapeadas al genoma de referencia de Aphis aurantii. Para cada lectura se conservó únicamente la mejor coincidencia, registrando además el identificador taxonómico del hit más parecido. Posteriormente, los taxids obtenidos se consultaron remotamente con datasets y dataformat para recuperar su asignación taxonómica completa.
+# Conclusiones
 
-A partir de la tabla resultante puede calcularse la fracción de lecturas cuya mejor coincidencia pertenece al orden Hemiptera y la fracción correspondiente a otros organismos. Biológicamente, es esperable que una parte de las secuencias no mapeadas siga siendo de hemípteros, ya que el genoma de referencia puede ser incompleto o no representar exactamente toda la variación del individuo secuenciado. Sin embargo, también es razonable encontrar secuencias de otros taxones, lo que indicaría contaminación biológica procedente de simbiontes, microorganismos asociados o material ingerido.
+En esta práctica se han utilizado distintas variantes de BLAST para resolver problemas bioinformáticos concretos. BLASTP permitió comparar dos proteomas bacterianos y detectar posibles relaciones de ortología mediante mejores hits recíprocos. PSI-BLAST permitió extender la búsqueda a homologías más lejanas, incorporando información evolutiva mediante perfiles PSSM. Finalmente, BLASTN remoto permitió plantear la identificación taxonómica de lecturas no mapeadas, aunque este tipo de análisis depende del acceso a servidores externos y puede ser más difícil de reproducir.
 
-La presencia de secuencias de origen vegetal tendría sentido en este contexto, ya que Aphis aurantii es un insecto fitófago y puede arrastrar ADN vegetal en la muestra.
+Desde un punto de vista práctico, la combinación de herramientas de Bash, bases de datos locales, consultas remotas y análisis en R permite construir flujos de trabajo reproducibles y biológicamente interpretables. La práctica también muestra la importancia de conservar determinados archivos intermedios, como `muestra.fa`, cuando proceden de procesos aleatorios o difíciles de repetir exactamente.
 
-# Bloque compacto
+# Información de la sesión
 
 ```{r}
-blast <- read.table("resultado.txt", sep = "\t", header = FALSE,
-                    col.names = c("qaccver", "saccver", "length", "qlen",
-                                  "qstart", "qend", "evalue", "bitscore", "staxid"))
-
-tax <- read.delim("taxreport.txt", sep = "\t", header = TRUE)
-
-names(tax)
-head(tax)
-
-# Ajustar el nombre real de la columna taxonómica si hace falta
-datos <- merge(blast, tax, by.x = "staxid", by.y = "Taxonomy ID")
-
-hemipteros <- grepl("Hemiptera", datos$Lineage, ignore.case = TRUE)
-vegetales <- grepl("Viridiplantae|Streptophyta|Plantae", datos$Lineage, ignore.case = TRUE)
-
-mean(hemipteros)
-mean(!hemipteros)
-mean(vegetales)
-
-datos[vegetales, ]
+sessionInfo()
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
